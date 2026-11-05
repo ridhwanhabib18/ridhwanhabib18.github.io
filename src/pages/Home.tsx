@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
-import { ArrowRight, Download, ExternalLink } from 'lucide-react';
+import { ArrowRight, Download } from 'lucide-react';
+import { CertCard } from '@/components/CertCard';
 import { Seo } from '@/components/Seo';
 import { Reveal } from '@/components/Reveal';
 import { MetricBadge, ProjectCard, Section, StackChips } from '@/components/Parts';
@@ -80,6 +81,16 @@ export default function Home() {
         </div>
       </section>
 
+      <Section id="cert-h" title={t('home.certs')} lead={t('home.certsLead')}>
+        <ul className="grid gap-4 lg:grid-cols-2">
+          {profile.certifications.map((c) => (
+            <li key={c.name}>
+              <CertCard cert={c} />
+            </li>
+          ))}
+        </ul>
+      </Section>
+
       <Section id="proof-h" title={t('home.proof')} lead={t('home.proofNote')}>
         <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {proof.map((p, i) => (
@@ -140,26 +151,6 @@ export default function Home() {
             </div>
           ))}
         </div>
-      </Section>
-
-      <Section id="cert-h" title={t('home.certs')}>
-        <ul className="grid gap-4 sm:grid-cols-2">
-          {profile.certifications.map((c) => (
-            <li key={c.name}>
-              <Card className="h-full gap-2">
-                <CardContent className="flex flex-col items-start gap-2">
-                  {c.level && <Badge variant="secondary">{l(c.level)}</Badge>}
-                  <strong>{c.name}</strong>
-                  {c.issuer && <span className="text-sm text-muted-foreground">{c.issuer}</span>}
-                  <a href={c.url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-sm font-medium text-primary hover:underline">
-                    {t('home.verify')}
-                    <ExternalLink className="size-3.5" aria-hidden="true" />
-                  </a>
-                </CardContent>
-              </Card>
-            </li>
-          ))}
-        </ul>
       </Section>
     </>
   );

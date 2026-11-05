@@ -4,10 +4,41 @@ import type { L10n } from './types';
 const r = resumeData;
 const edu = r.education[0];
 
-/** Extra display data for certifications; the names and links come from the Typst source. */
-const certMeta: Record<string, { issuer: string; level: L10n }> = {
-  'CLF-C02': { issuer: 'Amazon Web Services', level: { en: 'Foundational', id: 'Foundational' } },
-  'AIF-C01': { issuer: 'Amazon Web Services', level: { en: 'Foundational', id: 'Foundational' } },
+interface CertMeta {
+  issuer: string;
+  level: L10n;
+  /** Badge image in public/certs/, downloaded from the Credly badge page. */
+  image: string;
+  /** ISO dates as shown on the Credly badge page. */
+  issued: string;
+  expires: string;
+  summary: L10n;
+}
+
+/** Extra display data for certifications; the names and verify links come from the Typst source, the rest from the Credly badge pages. */
+const certMeta: Record<string, CertMeta> = {
+  'CLF-C02': {
+    issuer: 'Amazon Web Services Training and Certification',
+    level: { en: 'Foundational', id: 'Foundational' },
+    image: 'certs/aws-cloud-practitioner.png',
+    issued: '2026-10-08',
+    expires: '2029-10-08',
+    summary: {
+      en: 'Foundational understanding of IT services and their uses in the AWS Cloud, and the essential AWS services needed to set up AWS-focused projects.',
+      id: 'Pemahaman dasar tentang layanan TI dan penggunaannya di AWS Cloud, serta layanan AWS penting untuk menyiapkan proyek berbasis AWS.',
+    },
+  },
+  'AIF-C01': {
+    issuer: 'Amazon Web Services Training and Certification',
+    level: { en: 'Foundational', id: 'Foundational' },
+    image: 'certs/aws-ai-practitioner.png',
+    issued: '2026-09-24',
+    expires: '2029-09-24',
+    summary: {
+      en: 'AI, machine learning and generative AI concepts in general and on AWS, choosing the right AI/ML technology for a use case, and using it responsibly.',
+      id: 'Konsep AI, machine learning, dan generative AI secara umum dan di AWS, memilih teknologi AI/ML yang tepat untuk suatu kasus, serta menggunakannya secara bertanggung jawab.',
+    },
+  },
 };
 
 export const profile = {
@@ -82,7 +113,7 @@ export const profile = {
   certifications: r.certifications.map((c) => {
     const code = c.name.match(/\(([A-Z0-9-]+)\)\s*$/)?.[1] ?? '';
     const meta = certMeta[code];
-    return { name: c.name, issuer: meta?.issuer ?? '', level: meta?.level, url: c.url };
+    return { name: c.name, url: c.url, issuer: meta?.issuer ?? '', level: meta?.level, image: meta?.image, issued: meta?.issued, expires: meta?.expires, summary: meta?.summary };
   }),
   education: {
     school: edu.institution,

@@ -3,6 +3,7 @@ import { describe, expect, it } from 'vitest';
 // @ts-expect-error plain ESM helpers without types
 import { buildCsp, inlineScriptHashes, withCsp } from '../../scripts/csp-lib.mjs';
 import { analyticsEnabled } from '../lib/analytics';
+import { profile } from '../content/profile';
 import { projects } from '../content/projects';
 import { render } from '../entry-server';
 import { en } from '../i18n/strings';
@@ -128,6 +129,23 @@ describe('content security policy', () => {
     expect(out.indexOf('Content-Security-Policy')).toBeGreaterThan(out.indexOf('<meta charset'));
     expect(out.indexOf('Content-Security-Policy')).toBeLessThan(out.indexOf('<script'));
     expect(() => withCsp('<html><head></head></html>', 'x')).toThrow(/charset/);
+  });
+});
+
+describe('certifications', () => {
+  it('each shows its Credly badge, dates and verify link, and appears on Home before the results', () => {
+    expect(profile.certifications.length).toBeGreaterThan(0);
+    for (const c of profile.certifications) {
+      expect(c.url, c.name).toMatch(/^https:\/\/www\.credly\.com\/badges\/[0-9a-f-]{36}$/);
+      expect(c.image, c.name).toBeTruthy();
+      expect(readFileSync(`public/${c.image}`).subarray(1, 4).toString('latin1'), `${c.image} is a PNG`).toBe('PNG');
+      expect(c.issued && c.expires && c.issued < c.expires, `${c.name} dates`).toBe(true);
+      expect(c.summary?.id, c.name).toBeTruthy();
+    }
+    const home = render('/').html;
+    expect(home.indexOf('Credly badge:')).toBeGreaterThan(-1);
+    expect(home.indexOf('Credly badge:')).toBeLessThan(home.indexOf('Results at a glance'));
+    expect(render('/id/').html).toContain('Berlaku hingga');
   });
 });
 

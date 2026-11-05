@@ -1,9 +1,8 @@
-import { ExternalLink } from 'lucide-react';
+import { CertCard } from '@/components/CertCard';
 import { Seo } from '@/components/Seo';
 import { graph, personLd } from '@/lib/jsonld';
 import { StackChips } from '@/components/Parts';
-import { Badge } from '@/components/ui/badge';
-import { Card, CardContent } from '@/components/ui/card';
+import { Card } from '@/components/ui/card';
 import { useI18n } from '@/i18n';
 import { profile } from '@/content/profile';
 import { eyebrow, h2, narrow } from '@/lib/ui';
@@ -53,20 +52,10 @@ export default function About() {
         </div>
 
         <h2 className={cn(h2, 'mt-12 mb-4')}>{t('about.certs')}</h2>
-        <ul className="grid gap-4 sm:grid-cols-2">
+        <ul className="grid gap-4 lg:grid-cols-2">
           {profile.certifications.map((c) => (
             <li key={c.name}>
-              <Card className="h-full">
-                <CardContent className="flex flex-col items-start gap-2">
-                  {c.level && <Badge variant="secondary">{l(c.level)}</Badge>}
-                  <strong>{c.name}</strong>
-                  {c.issuer && <span className="text-sm text-muted-foreground">{c.issuer}</span>}
-                  <a href={c.url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-sm font-medium text-primary hover:underline">
-                    {t('home.verify')}
-                    <ExternalLink className="size-3.5" aria-hidden="true" />
-                  </a>
-                </CardContent>
-              </Card>
+              <CertCard cert={c} />
             </li>
           ))}
         </ul>
