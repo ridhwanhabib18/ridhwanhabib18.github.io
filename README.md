@@ -18,7 +18,7 @@ Cepat (Bahasa Indonesia): jalankan `npm install`, lalu `npm run dev`, dan buka h
 |---|---|
 | `npm run dev` | Dev server with hot reload on port 5180 (fixed, `strictPort`) |
 | `npm test` | Content, guardrail, demo and render tests |
-| `npm run build` | Guardrail lint, typecheck, production build, GitHub Pages helpers |
+| `npm run build` | Guardrail lint, typecheck, client build, SSR build, pre-render of every page, sitemap and 404 page |
 | `npm run preview` | Serve `dist/` locally |
 
 ## Run automatically in VS Code
@@ -54,6 +54,16 @@ Tailwind CSS v4 with shadcn/ui-style components (Radix primitives, `class-varian
 
 The components were written by hand. To add more from the shadcn registry, run `npx shadcn@latest add <component>`; `components.json` is already configured.
 
+## Pre-rendering
+
+`npm run build` renders every route in both languages (30 pages) to static HTML, so each page answers HTTP 200, carries its own `<title>`, description, canonical URL, `hreflang` and Open Graph tags, and shows content before JavaScript loads. The browser then hydrates the page.
+
+- `src/entry-server.tsx` renders one route; `scripts/prerender.mjs` writes `dist/<route>/index.html`, `404.html` (an empty shell that the client router fills), `sitemap.xml` and `robots.txt`.
+- `src/components/Seo.tsx` collects head data during the server render and keeps it in sync on client navigation.
+- Scroll-reveal content stays visible in the HTML and without JavaScript; it is only hidden after the head script adds the `js` class to `<html>`.
+- The demo's interactive panels need a Web Worker and IndexedDB, so they load on the client only; the page shell and its heading are pre-rendered.
+- To add a page, add its route in `src/App.tsx` and its path in `src/entry-server.tsx` (`pages`). A test fails if a route does not provide metadata.
+
 ## Deploy
 
 `https://ridhwanhabib18.github.io` is a **user site**, so the base path is `/` (no `VITE_BASE` needed).
@@ -85,7 +95,6 @@ All content is typed data in `src/content/` with `{ en, id }` for every user-fac
 
 ## Not done yet
 
-- Static pre-rendering per route (the site is a client-rendered SPA with a `404.html` fallback; per-page metadata is set at runtime).
 - Per-page Open Graph images and a custom domain.
 - A reference ASP.NET Core API sample.
 - Resume PDFs (add the compiled files, then set `pdf` in `resume.ts`).

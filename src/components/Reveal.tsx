@@ -29,11 +29,7 @@ export function Reveal({ children, delay = 0, as: Tag = 'div', className }: { ch
   return (
     <Tag
       ref={ref as never}
-      className={cn(
-        'transition-all duration-500 ease-out motion-reduce:transition-none',
-        shown ? 'translate-y-0 opacity-100' : 'translate-y-3 opacity-0 motion-reduce:translate-y-0 motion-reduce:opacity-100',
-        className,
-      )}
+      className={cn('reveal', shown && 'is-shown', className)}
       style={{ transitionDelay: shown ? `${Math.min(delay, 0.4)}s` : undefined }}
     >
       {children}

@@ -114,7 +114,23 @@
   }
 }
 
+/* Scroll reveal. Content is visible in the pre-rendered HTML and without JavaScript;
+   it is only hidden once the head script has marked the page as "js". */
+.reveal {
+  transition:
+    opacity 500ms ease-out,
+    transform 500ms ease-out;
+}
+html.js .reveal:not(.is-shown) {
+  opacity: 0;
+  transform: translateY(0.75rem);
+}
+
 @media (prefers-reduced-motion: reduce) {
+  html.js .reveal:not(.is-shown) {
+    opacity: 1;
+    transform: none;
+  }
   html:focus-within {
     scroll-behavior: auto;
   }

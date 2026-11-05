@@ -12,8 +12,10 @@
     />
     <link rel="icon" href="%BASE_URL%favicon.svg" type="image/svg+xml" />
     <script>
-      // Dark is the default. Only an explicit "light" choice removes the class, before first paint.
+      // Mark the page as scripted (enables scroll-reveal) and keep dark as the default.
+      // Only an explicit "light" choice removes the dark class, before first paint.
       (function () {
+        document.documentElement.classList.add('js');
         try {
           if (localStorage.getItem('theme') === 'light') document.documentElement.classList.remove('dark');
         } catch (e) {}

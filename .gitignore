@@ -4,3 +4,4 @@ dist
 # internal code-name blocklist used by the guardrail lint; never commit
 blocklist.local.txt
 *.tsbuildinfo
+dist-server

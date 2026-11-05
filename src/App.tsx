@@ -1,4 +1,3 @@
-import { lazy, Suspense } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { Layout } from './components/Chrome';
 import { I18nProvider } from './i18n';
@@ -11,8 +10,7 @@ import About from './pages/About';
 import Resume from './pages/Resume';
 import Contact from './pages/Contact';
 import NotFound from './pages/NotFound';
-
-const Demo = lazy(() => import('./pages/Demo'));
+import Demo from './pages/Demo';
 
 function Shell({ lang }: { lang: Lang }) {
   return (
@@ -28,14 +26,7 @@ const pages = (
     <Route path="work" element={<Work />} />
     <Route path="work/:slug" element={<WorkDetail />} />
     <Route path="experience" element={<Experience />} />
-    <Route
-      path="demo"
-      element={
-        <Suspense fallback={<div className="container page" aria-busy="true" />}>
-          <Demo />
-        </Suspense>
-      }
-    />
+    <Route path="demo" element={<Demo />} />
     <Route path="about" element={<About />} />
     <Route path="resume" element={<Resume />} />
     <Route path="contact" element={<Contact />} />
