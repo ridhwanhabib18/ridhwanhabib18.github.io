@@ -158,3 +158,25 @@ test('Experience keeps every role in the HTML for search engines, even collapsed
   const html = await (await request.get('/experience/')).text();
   expect(html).toContain('RS-232 and RS-485 communication modules');
 });
+
+test.describe('the headline results count up', () => {
+  const first = (page: Page) => page.locator('section', { has: page.locator('#proof-h') }).locator('strong').first();
+
+  test('start low when scrolled into view and end on the final figure, without moving the layout', async ({ page }) => {
+    await page.goto('/');
+    await page.waitForLoadState('networkidle');
+    const box = first(page);
+    await box.scrollIntoViewIfNeeded();
+    const before = await box.boundingBox();
+    await expect(box).toHaveText('about 86% faster', { timeout: 4000 });
+    const after = await box.boundingBox();
+    expect(after!.height).toBe(before!.height);
+    expect(after!.width).toBe(before!.width);
+  });
+
+  test('show the final figures at once when the visitor prefers reduced motion', async ({ page }) => {
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    await page.goto('/');
+    await expect(first(page)).toHaveText('about 86% faster');
+  });
+});

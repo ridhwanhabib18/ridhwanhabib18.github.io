@@ -3,6 +3,7 @@ import { describe, expect, it } from 'vitest';
 // @ts-expect-error plain ESM helpers without types
 import { buildCsp, inlineScriptHashes, withCsp } from '../../scripts/csp-lib.mjs';
 import { analyticsEnabled } from '../lib/analytics';
+import { splitNumber } from '../components/CountUp';
 import { profile } from '../content/profile';
 import { projects } from '../content/projects';
 import { render } from '../entry-server';
@@ -165,5 +166,19 @@ describe('translation review export', () => {
       expect(r.en.trim(), `${r.area} / ${r.where}`).not.toBe('');
       expect(r.id.trim(), `${r.area} / ${r.where}`).not.toBe('');
     }
+  });
+});
+
+describe('count-up numbers', () => {
+  it('splits a value around its first number and leaves other text alone', () => {
+    expect(splitNumber('about 86% faster')).toEqual({ before: 'about ', value: 86, after: '% faster' });
+    expect(splitNumber('about 90% faster (hours to minutes)')?.value).toBe(90);
+    expect(splitNumber('no digits here')).toBeNull();
+  });
+
+  it('keeps the final figures in the pre-rendered home page', () => {
+    const html = render('/').html.replace(/<[^>]+>/g, '');
+    expect(html).toContain('about 86% faster');
+    expect(html).toContain('about 96% faster');
   });
 });

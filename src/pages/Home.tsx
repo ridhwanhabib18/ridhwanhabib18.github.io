@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { ArrowRight, Download } from 'lucide-react';
 import { CertCard } from '@/components/CertCard';
+import { CountUp } from '@/components/CountUp';
 import { Seo } from '@/components/Seo';
 import { Reveal } from '@/components/Reveal';
 import { MetricBadge, ProjectCard, Section, StackChips } from '@/components/Parts';
@@ -99,7 +100,9 @@ export default function Home() {
                 <Card className="h-full gap-2 transition-colors hover:border-primary/60">
                   <CardContent className="flex flex-col items-start gap-2">
                     <MetricBadge type={p.metric.type} />
-                    <strong className="text-2xl leading-tight">{l(p.metric.value)}</strong>
+                    <strong className="text-2xl leading-tight">
+                      <CountUp text={l(p.metric.value)} />
+                    </strong>
                     <span className="text-sm text-muted-foreground">{l(p.metric.label)}</span>
                   </CardContent>
                 </Card>
