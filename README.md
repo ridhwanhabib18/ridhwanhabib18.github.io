@@ -192,7 +192,28 @@ The site can count page views and clicks on the resume and email buttons with [G
 2. In the GitHub repository: Settings, Secrets and variables, Actions, Variables, add `GOATCOUNTER_CODE` with that code.
 3. Push; the next build includes the script, widens the Content Security Policy for it, and shows a one-line privacy note in the footer.
 
-To try it locally, build with `VITE_GOATCOUNTER_CODE=ridhwan npm run build`. Without the variable the build contains no third-party script at all (a test checks this).
+To try it locally, build with `VITE_GOATCOUNTER_CODE=ridhwan npm run build`. Without the variable the build contains no third-party script at all. A test expects statistics to be on exactly when `VITE_GOATCOUNTER_CODE` is set, so it passes both in CI (variable set) and locally (not set).
+
+Status: enabled for the live site with the site code `ridhwanhabib18` (dashboard: `https://ridhwanhabib18.goatcounter.com`). Changing the variable only takes effect after the next deploy (Actions, "Deploy to GitHub Pages", Run workflow).
+
+### If the dashboard shows 0 visits
+
+First, know what was verified: opening the live site in an automated browser loads `https://gc.zgo.at/count.js` (200) and sends `POST https://ridhwanhabib18.goatcounter.com/count?p=...`, which GoatCounter answers with 200. So the site side works. A zero on the dashboard is then almost always about the visitor's browser or network, not about the site. GoatCounter also discards hits from automated browsers (they send `b=153`), so test visits made by scripts never appear.
+
+Likely causes, most common first:
+
+1. **Ad or privacy blocker** (uBlock, AdGuard, Brave Shields and similar) blocks `gc.zgo.at`.
+2. **Do Not Track is on.** The site deliberately loads nothing for those visitors.
+3. **Company network or proxy** blocks the domain.
+4. **GoatCounter's own ignore flag** is set in that browser (for example after using `#toggle-goatcounter` to skip your own visits).
+
+How to check, about a minute:
+
+1. Open the live site in a normal window, press F12, and choose the Network tab.
+2. Reload and type `goatcounter` in the filter box.
+3. You should see `count.js` and `count?p=...` with status 200. If they are red or "blocked", the cause is number 1 or 3.
+
+The most reliable test: open the site on a phone using mobile data (not the company Wi-Fi) and look at the dashboard a few seconds later. If that visit shows up, everything works and only the first browser was blocking it. The dashboard's default period is the current week, so also check that the date range includes today.
 
 ## Printing
 
