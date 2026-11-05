@@ -60,7 +60,7 @@ The components were written by hand. To add more from the shadcn registry, run `
 
 1. Repository name must be exactly `ridhwanhabib18.github.io`.
 2. Settings > Pages > Source: **GitHub Actions**.
-3. Add the repository secret `GUARDRAIL_BLOCKLIST` (comma-separated terms that must never be published). The CI build fails without it.
+3. Optional but recommended: add the repository secret `GUARDRAIL_BLOCKLIST` (comma-separated terms that must never be published). Without it CI only warns and skips the code-name scan; the generic rules still apply.
 4. Push to `main`; `.github/workflows/deploy.yml` tests, builds and deploys.
 
 Everything in a public repository, including its history, is readable. Review content before the first push.

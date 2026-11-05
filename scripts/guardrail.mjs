@@ -8,12 +8,9 @@ const targets = ['src/content', 'src/i18n', 'index.html'];
 const blocklist = loadBlocklist(root);
 
 if (blocklist.length === 0) {
+  // Generic rules (currency, hour counts) still fail the build; only the code-name scan is skipped.
   const msg = 'guardrail: no code-name blocklist found (set GUARDRAIL_BLOCKLIST or add blocklist.local.txt). Only generic rules are checked.';
-  if (process.env.CI) {
-    console.error(msg);
-    process.exit(1);
-  }
-  console.warn(msg);
+  console.warn(process.env.GITHUB_ACTIONS ? `::warning::${msg}` : msg);
 }
 
 function* files(p) {

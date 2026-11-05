@@ -2,7 +2,8 @@ name: Deploy to GitHub Pages
 
 # Target: https://ridhwanhabib18.github.io (user site, so base path "/").
 # In the public repository named ridhwanhabib18.github.io, set Settings > Pages > Source = GitHub Actions.
-# Add the repository secret GUARDRAIL_BLOCKLIST (comma-separated internal code names) for the guardrail lint.
+# Optional: add the repository secret GUARDRAIL_BLOCKLIST (comma-separated terms) to enable the code-name scan in CI.
+# Without it the guardrail only warns; currency and hour-count rules still fail the build.
 
 on:
   push:
