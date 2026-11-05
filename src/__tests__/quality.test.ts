@@ -132,8 +132,9 @@ describe('content security policy', () => {
 });
 
 describe('visit statistics', () => {
-  it('are off unless the build is configured for them', () => {
-    expect(analyticsEnabled).toBe(false);
+  it('are on only when the build is configured for them', () => {
+    // CI sets VITE_GOATCOUNTER_CODE once the owner adds the GitHub variable, so compare against the environment
+    expect(analyticsEnabled).toBe(Boolean(import.meta.env.VITE_GOATCOUNTER_CODE));
   });
 });
 
