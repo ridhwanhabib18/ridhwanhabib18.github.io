@@ -103,12 +103,23 @@ export default function Home() {
         </div>
       </Section>
 
-      <Section id="stack-h" title={t('home.stack')}>
+      <Section
+        id="stack-h"
+        title={t('home.stack')}
+        action={
+          <Button asChild variant="ghost" size="sm">
+            <Link to={path('/about')}>
+              {t('home.stackAll')}
+              <ArrowRight />
+            </Link>
+          </Button>
+        }
+      >
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {profile.stack.map((g) => (
             <div key={g.group.en}>
               <h3 className={cn(eyebrow, 'mb-2')}>{l(g.group)}</h3>
-              <StackChips items={g.items} />
+              <StackChips items={g.items.slice(0, 8)} />
             </div>
           ))}
         </div>
@@ -120,9 +131,9 @@ export default function Home() {
             <li key={c.name}>
               <Card className="h-full gap-2">
                 <CardContent className="flex flex-col items-start gap-2">
-                  <Badge variant="secondary">{l(c.level)}</Badge>
+                  {c.level && <Badge variant="secondary">{l(c.level)}</Badge>}
                   <strong>{c.name}</strong>
-                  <span className="text-sm text-muted-foreground">{c.issuer}</span>
+                  {c.issuer && <span className="text-sm text-muted-foreground">{c.issuer}</span>}
                   <a href={c.url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-sm font-medium text-primary hover:underline">
                     {t('home.verify')}
                     <ExternalLink className="size-3.5" aria-hidden="true" />

@@ -1,10 +1,11 @@
 // Compiles the three resume variants to public/resume/*.pdf with the Typst CLI.
 // Used by CI before the site build, and locally via `npm run resume` (needs Typst 0.14 or newer: winget install Typst.Typst).
+// public=true leaves the phone number and work-authorization line out of the published PDFs.
 // Output is PDF 2.0. To fall back to the widest-compatibility version, change PDF_VERSION to '1.7'.
 import { spawnSync } from 'node:child_process';
 import { mkdirSync, openSync, readSync, closeSync } from 'node:fs';
 
-const SOURCE = 'resume/main.typ';
+const SOURCE = 'resume/resume_us.typ';
 const OUT_DIR = 'public/resume';
 const ROLES = ['lead', 'senior', 'analyst'];
 const PDF_VERSION = '2.0';
@@ -21,7 +22,7 @@ mkdirSync(OUT_DIR, { recursive: true });
 
 for (const role of ROLES) {
   const out = `${OUT_DIR}/ridhwan-habib-resume-${role}.pdf`;
-  const r = spawnSync('typst', ['compile', '--pdf-standard', PDF_VERSION, '--input', `role=${role}`, SOURCE, out], { stdio: 'inherit', shell: process.platform === 'win32' });
+  const r = spawnSync('typst', ['compile', '--pdf-standard', PDF_VERSION, '--input', `role=${role}`, '--input', 'public=true', SOURCE, out], { stdio: 'inherit', shell: process.platform === 'win32' });
   if (r.error || r.status !== 0) {
     console.error(
       r.error

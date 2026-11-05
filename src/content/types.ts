@@ -48,8 +48,8 @@ export interface Role {
   location: string;
   start: string;
   end: string | null;
-  summary: L10n;
-  responsibilities: L10n<string[]>;
+  /** Bullets come from the Typst resume source. */
+  bullets: { title?: L10n; text: L10n }[];
   stack: string[];
   projectSlugs: string[];
 }

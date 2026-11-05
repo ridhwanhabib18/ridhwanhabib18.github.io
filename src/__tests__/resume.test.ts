@@ -4,12 +4,19 @@ import { resumeVariants } from '../content/resume';
 // @ts-expect-error plain ESM helper without types
 import { findViolations, loadBlocklist } from '../../scripts/guardrail-lib.mjs';
 
-const typ = readFileSync('resume/main.typ', 'utf8');
+const typ = readFileSync('resume/resume_us.typ', 'utf8');
 const script = readFileSync('scripts/build-resume.mjs', 'utf8');
 
 describe('resume source and PDF pipeline', () => {
-  it('lets the variant be chosen with --input role=...', () => {
+  it('lets the variant and the public mode be chosen with --input', () => {
     expect(typ).toContain('sys.inputs.at("role"');
+    expect(typ).toContain('sys.inputs.at("public"');
+  });
+
+  it('leaves the phone number and work-authorization line out of public builds', () => {
+    expect(typ).toMatch(/phone: if public \{ "" \} else \{ phone \}/);
+    expect(typ).toContain('#let show-work-auth = not public');
+    expect(script).toContain("'public=true'");
   });
 
   it('has a summary in the source for every variant shown on the site', () => {

@@ -28,5 +28,5 @@ Accessibility note: the Typst documentation recommends PDF/UA-1 for accessible d
 
 ## Related
 
-- Resume source: `resume/main.typ` (one file, three variants chosen with `--input role=lead|senior|analyst`).
+- Resume source: `resume/resume_us.typ` (one file, three variants chosen with `--input role=senior|lead|analyst`; `--input public=true` omits the phone number and the work-authorization line).
 - Pipeline: `.github/workflows/deploy.yml` installs a pinned Typst release and runs `npm run resume` before the site build.

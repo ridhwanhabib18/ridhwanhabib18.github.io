@@ -12,7 +12,7 @@ import { roles } from '@/content/experience';
 import { profile } from '@/content/profile';
 import { getProject } from '@/content/projects';
 import { bullets, container, eyebrow } from '@/lib/ui';
-import { cn } from '@/lib/utils';
+import { capitalize, cn } from '@/lib/utils';
 
 function Dot({ current }: { current?: boolean }) {
   return (
@@ -61,7 +61,6 @@ export default function Experience() {
                         {r.location}
                       </p>
                     </div>
-                    <p className="mt-3">{l(r.summary)}</p>
 
                     <Collapsible open={!!open[r.id]} onOpenChange={(v) => setOpen((o) => ({ ...o, [r.id]: v }))} className="mt-3">
                       <CollapsibleTrigger className="group flex w-full items-center justify-between border-t py-3 text-sm font-semibold outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50">
@@ -70,8 +69,11 @@ export default function Experience() {
                       </CollapsibleTrigger>
                       <CollapsibleContent className="overflow-hidden data-[state=closed]:animate-collapsible-up data-[state=open]:animate-collapsible-down">
                         <ul className={cn(bullets, 'pb-2')}>
-                          {l(r.responsibilities).map((x) => (
-                            <li key={x}>{x}</li>
+                          {r.bullets.map((b) => (
+                            <li key={l(b.text)}>
+                              {b.title && <strong>{l(b.title)}: </strong>}
+                              {capitalize(l(b.text))}
+                            </li>
                           ))}
                         </ul>
                         {projs.length > 0 && (
@@ -113,12 +115,6 @@ export default function Experience() {
           </Reveal>
         </ol>
 
-        <section className="mt-10 max-w-3xl rounded-xl border-l-4 border-primary bg-card p-5" aria-labelledby="lead-h">
-          <h2 id="lead-h" className={cn(eyebrow, 'mb-2')}>
-            {t('exp.leadership')}
-          </h2>
-          <p>{t('exp.leadershipBody')}</p>
-        </section>
       </div>
     </>
   );

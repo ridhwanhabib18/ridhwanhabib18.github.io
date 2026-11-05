@@ -50,9 +50,9 @@ export default function About() {
             <li key={c.name}>
               <Card className="h-full">
                 <CardContent className="flex flex-col items-start gap-2">
-                  <Badge variant="secondary">{l(c.level)}</Badge>
+                  {c.level && <Badge variant="secondary">{l(c.level)}</Badge>}
                   <strong>{c.name}</strong>
-                  <span className="text-sm text-muted-foreground">{c.issuer}</span>
+                  {c.issuer && <span className="text-sm text-muted-foreground">{c.issuer}</span>}
                   <a href={c.url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-sm font-medium text-primary hover:underline">
                     {t('home.verify')}
                     <ExternalLink className="size-3.5" aria-hidden="true" />

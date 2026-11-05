@@ -20,6 +20,7 @@ Cepat (Bahasa Indonesia): jalankan `npm install`, lalu `npm run dev`, dan buka h
 | `npm test` | Content, guardrail, demo and render tests |
 | `npm run build` | Guardrail lint, typecheck, client build, SSR build, pre-render of every page, sitemap and 404 page |
 | `npm run preview` | Serve `dist/` locally |
+| `npm run extract` | Regenerate `src/content/resume.generated.json` from `resume/resume_us.typ` (also runs before `dev` and `build`) |
 | `npm run resume` | Compile the three resume PDFs (PDF 2.0) into `public/resume/` (needs Typst 0.14 or newer) |
 
 ## Run automatically in VS Code
@@ -78,13 +79,23 @@ Everything in a public repository, including its history, is readable. Review co
 
 ## Resume PDFs
 
-The resume source is `resume/main.typ` (Typst). One file produces three variants, chosen with `--input role=lead|senior|analyst`.
+The resume source is `resume/resume_us.typ` (Typst). One file produces three variants, chosen with `--input role=senior|lead|analyst`. CI also passes `--input public=true`, which leaves the phone number and the work-authorization line out of the published PDFs.
 PDFs are exported as **PDF 2.0** (`--pdf-standard 2.0`, Typst 0.14+), and the build fails if a file does not start with `%PDF-2.0`. Modern viewers (Acrobat, Chrome, Edge, Firefox, Preview) open PDF 2.0; some older viewers or applicant-tracking parsers may not. To use the widest-compatibility version instead, set `PDF_VERSION` to `'1.7'` in `scripts/build-resume.mjs`. See [`docs/resume-pdf-version.md`](docs/resume-pdf-version.md) for the reasoning and the trade-off.
 
 - **CI:** `.github/workflows/deploy.yml` installs Typst, runs `npm run resume`, then builds the site, so `public/resume/ridhwan-habib-resume-<role>.pdf` is generated on every push and the Resume page links to it. The PDFs are build output and are not committed.
 - **Locally:** install Typst 0.14 or newer (`winget install Typst.Typst`) and run `npm run resume`; the download buttons then work in `npm run dev` and `npm run preview`. Without the files, the download link returns 404 locally only.
 - **Editing in VS Code:** the *Tinymist Typst* extension previews `resume/main.typ` and can export PDF on save (`tinymist.exportPdf: "onSave"`).
 - The resume text follows the same guardrails as the site (`npm run guardrail` scans `resume/`): percentages only, no currency or hour counts, descriptive system names.
+
+## The resume source is the single source of truth
+
+The website does not re-type resume content. `scripts/extract-resume.mjs` reads `resume/resume_us.typ` and writes `src/content/resume.generated.json`; the Resume, Experience, About and Contact pages and the Home stack and certifications read that file. The same Typst file produces the PDFs.
+
+- **English** comes straight from the source. **Indonesian** comes from `src/content/resume.id.ts`, keyed by the exact English text. If the source text changes, a test fails until the translation is updated, and it also reports stale translations.
+- **Not extracted, on purpose:** the phone number and the work-authorization line. In this public repository the `#let phone` line in `resume/resume_us.typ` is blank (the real number lives only in the private repository), and a test fails if a phone number appears in the source or in published content. When you copy the file from the private repository, blank that line first.
+- **Case studies** (`src/content/projects.ts`) are richer than resume bullets and are written by hand, but a test fails if a percentage in them is not present in the Typst source.
+- Tests also fail if `resume.generated.json` is out of date; run `npm run extract` and commit the result.
+- To change resume content: edit `resume/resume_us.typ`, run `npm run extract`, update any new strings in `resume.id.ts`, run `npm test`.
 
 ## Content guardrails
 
@@ -101,7 +112,8 @@ All content is typed data in `src/content/` with `{ en, id }` for every user-fac
 | Name, links, about, stack, certifications | `src/content/profile.ts` |
 | Case studies, metrics, diagrams | `src/content/projects.ts` |
 | Experience timeline | `src/content/experience.ts` |
-| Resume text (all three variants) | `resume/main.typ` |
+| Resume text (summaries, experience bullets, skills, education, certifications, contact links) | `resume/resume_us.typ`, then run `npm run extract` |
+| Indonesian translation of that text | `src/content/resume.id.ts` (keyed by the exact English source string) |
 | Resume variant labels on the site and PDF links | `src/content/resume.ts` |
 | Availability badge | `available` in `src/content/profile.ts` |
 

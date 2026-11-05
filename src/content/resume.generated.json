@@ -1,0 +1,181 @@
+{
+  "name": "Muhammad Ridhwan Habib Abdillah",
+  "location": "Bekasi Regency, West Java, Indonesia",
+  "email": "eng.ridhwan18@gmail.com",
+  "linkedin": "linkedin.com/in/mridhwanhabib",
+  "github": "github.com/ridhwanhabib18",
+  "summaries": {
+    "senior": "Full Stack .NET Engineer with 4+ years at a global manufacturer, building internal systems with ASP.NET Core, React/TypeScript and SQL Server. Delivered 5 production systems end to end. Cut part review preparation by about 86% and production-line recovery time after program changes by about 90%. Strong in CI/CD, integration testing and system design.",
+    "lead": "Full Stack .NET Engineer and technical lead of a 2-person team at a global manufacturer. Delivered 5 production systems end to end with ASP.NET Core, React/TypeScript and SQL Server. Set coding standards, run code reviews and mentor a junior developer. Cut part review preparation by about 86% and line recovery time by about 90%.",
+    "analyst": "Full Stack .NET Engineer with 4+ years at a global manufacturer who turns requirements from production, engineering, purchasing and management into business cases, PRDs and system designs, then delivers them. Delivered 5 production systems end to end. Cut part review preparation by about 86%."
+  },
+  "experience": [
+    {
+      "title": "Full Stack .NET Developer (System Development Staff)",
+      "company": "PT Indonesia Epson Industry",
+      "location": "Bekasi, Indonesia",
+      "start": "Dec 2022",
+      "end": "Present",
+      "bullets": [
+        {
+          "title": "Leadership",
+          "text": "lead code reviews, mentor a junior developer and set coding standards for a 2-person team; present proposals to production, engineering, purchasing and management at stage-gate design reviews"
+        },
+        {
+          "title": "Parts Engineering Management System",
+          "text": "replaced the paper part review inspection sheet with an online approval workflow (ASP.NET MVC 5, Dapper, 200+ SQL Server stored procedures, Hangfire, Telerik). Cut part review preparation by about 86%, removed manual part master and index creation, eliminated paper and ink, and delivered measured annual cost savings"
+        },
+        {
+          "title": "Production File Distribution & Monitoring System",
+          "text": "replaced flash-disk distribution of line program files with central management, automatic install and real-time file-match monitoring (ASP.NET Core, React, SignalR, WinForms client), rolled out to multiple factories. Cut line recovery after a program change by about 90% (hours to minutes) and removed manual installs by 2 people"
+        },
+        {
+          "title": "Process Inspection Data System",
+          "text": "automated inspection data collection from line PCs (WinForms/ClickOnce) with live production progress dashboards (SignalR, Quartz.NET)"
+        },
+        {
+          "title": "Production Planning & Scheduling System",
+          "text": "replaced manual Excel planning with automated hourly planning, simulation and approval workflow on .NET 10, EF Core, React and a clustered Quartz.NET service. Target: about 48% less planner workload"
+        },
+        {
+          "title": "Paperless Invoice Approval System",
+          "text": "digitized supplier invoice handling with AWS S3 and Textract OCR and Keycloak SSO (ASP.NET Core 8, React/TypeScript). Target: large reduction in manual invoice handling effort"
+        },
+        {
+          "title": "Supporting contributions (3 further projects)",
+          "text": "developed SQL Server stored procedures for the part approval certification workflow (certification preparation about 96% faster); implemented real-time WebSocket communication with SignalR for operator work-cycle time monitoring; and reviewed code for a printer function-test data summary system on the production line"
+        },
+        {
+          "title": "Engineering practice",
+          "text": "built GitHub Actions CI/CD (PR tests, GitVersion, IIS deploy with backup and EF migration), API and database integration tests, and reverse-engineered PRDs, ERDs and ADRs for existing systems"
+        }
+      ]
+    },
+    {
+      "title": "Embedded Systems Engineer Intern",
+      "company": "PT Xirka Silicon Technology",
+      "location": "Bandung, Indonesia",
+      "start": "Jan 2020",
+      "end": "Feb 2020",
+      "bullets": [
+        {
+          "text": "Implemented and tested RS-232 and RS-485 communication modules on embedded boards using Arduino, C and C++"
+        }
+      ]
+    }
+  ],
+  "education": [
+    {
+      "institution": "Universitas Gadjah Mada",
+      "location": "Yogyakarta, Indonesia",
+      "start": "Aug 2018",
+      "end": "Oct 2022",
+      "degree": "Bachelor of Engineering in Electrical Engineering, GPA 3.47 / 4.00"
+    }
+  ],
+  "skills": [
+    {
+      "group": "Programming & Backend",
+      "items": [
+        "C#",
+        "Python",
+        "ASP.NET Core (MVC, Web API, Minimal API)",
+        "ASP.NET MVC 5",
+        ".NET Framework",
+        "Entity Framework Core",
+        "Dapper",
+        "T-SQL",
+        "SQL Server"
+      ]
+    },
+    {
+      "group": "Frontend",
+      "items": [
+        "React",
+        "TypeScript",
+        "JavaScript",
+        "Vite",
+        "Razor",
+        "HTML",
+        "CSS",
+        "Bootstrap",
+        "jQuery",
+        "AJAX"
+      ]
+    },
+    {
+      "group": "Cloud & Integration",
+      "items": [
+        "AWS (S3, EC2, RDS, ECS, Lambda, Bedrock, Textract)",
+        "Keycloak (OIDC/JWT)",
+        "MinIO",
+        "SignalR",
+        "Quartz.NET",
+        "Hangfire",
+        "Elsa Workflows"
+      ]
+    },
+    {
+      "group": "Architecture & Delivery",
+      "items": [
+        "System design",
+        "N-layered Architecture",
+        "Clean Architecture",
+        "Vertical Slice Architecture",
+        "REST APIs",
+        "SDLC",
+        "Agile",
+        "Waterfall",
+        "Requirements Gathering",
+        "Business Case and ROI",
+        "PRDs",
+        "ADRs",
+        "UAT"
+      ]
+    },
+    {
+      "group": "DevOps & Quality",
+      "items": [
+        "Git",
+        "GitHub Actions (CI/CD)",
+        "GitVersion",
+        "IIS",
+        "Docker",
+        "Linux",
+        "integration testing",
+        "code review"
+      ]
+    },
+    {
+      "group": "Desktop, Reporting & Automation",
+      "items": [
+        "WinForms",
+        "ClickOnce",
+        "Telerik Reporting",
+        "SQL Server Reporting Services",
+        "WPF",
+        "Robotic Process Automation (RPA)"
+      ]
+    },
+    {
+      "group": "Additional Technologies",
+      "items": [
+        "Vue.js",
+        "PHP",
+        "Laravel",
+        "Arduino",
+        "C/C++"
+      ]
+    }
+  ],
+  "certifications": [
+    {
+      "name": "AWS Certified Cloud Practitioner (CLF-C02)",
+      "url": "https://www.credly.com/badges/bc1ed2db-21b9-462e-b08a-b3e727911062"
+    },
+    {
+      "name": "AWS Certified AI Practitioner (AIF-C01)",
+      "url": "https://www.credly.com/badges/995a969c-1ada-49e5-84de-53b483dca02f"
+    }
+  ]
+}

@@ -48,14 +48,14 @@ export default function Contact() {
           <li>
             <Item icon={<LinkedinIcon className="size-5" />} label={t('contact.linkedin')}>
               <a className={link} href={profile.linkedin} target="_blank" rel="noopener noreferrer">
-                linkedin.com/in/mridhwanhabib
+                {profile.linkedinText}
               </a>
             </Item>
           </li>
           <li>
             <Item icon={<GithubIcon className="size-5" />} label={t('contact.github')}>
               <a className={link} href={profile.github} target="_blank" rel="noopener noreferrer">
-                github.com/ridhwanhabib18
+                {profile.githubText}
               </a>
             </Item>
           </li>

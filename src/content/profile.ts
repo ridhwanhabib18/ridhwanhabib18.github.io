@@ -1,12 +1,25 @@
+import { degreeName, gpaOf, resumeData, toL10n } from './resume-data';
 import type { L10n } from './types';
 
+const r = resumeData;
+const edu = r.education[0];
+
+/** Extra display data for certifications; the names and links come from the Typst source. */
+const certMeta: Record<string, { issuer: string; level: L10n }> = {
+  'CLF-C02': { issuer: 'Amazon Web Services', level: { en: 'Foundational', id: 'Foundational' } },
+  'AIF-C01': { issuer: 'Amazon Web Services', level: { en: 'Foundational', id: 'Foundational' } },
+};
+
 export const profile = {
-  name: 'Muhammad Ridhwan Habib Abdillah',
+  // Identity and links come from resume/resume_us.typ. The phone number is never published.
+  name: r.name,
   shortName: 'Ridhwan',
-  email: 'eng.ridhwan18@gmail.com',
-  linkedin: 'https://www.linkedin.com/in/mridhwanhabib',
-  github: 'https://github.com/ridhwanhabib18',
-  location: { en: 'Bekasi Regency, West Java, Indonesia', id: 'Kabupaten Bekasi, Jawa Barat, Indonesia' } as L10n,
+  email: r.email,
+  linkedin: `https://www.${r.linkedin}`,
+  linkedinText: r.linkedin,
+  github: `https://${r.github}`,
+  githubText: r.github,
+  location: toL10n(r.location),
   yearsExperience: '4+',
   /** Flip to false to hide the availability badge. */
   available: true,
@@ -62,32 +75,18 @@ export const profile = {
       } as L10n,
     },
   ],
-  stack: [
-    { group: { en: 'Core', id: 'Inti' } as L10n, items: ['C#', 'ASP.NET Core', '.NET Framework', 'Entity Framework Core', 'Dapper', 'SignalR', 'T-SQL', 'SQL Server'] },
-    { group: { en: 'Front end', id: 'Front end' } as L10n, items: ['React', 'TypeScript', 'Vite', 'MUI', 'KendoReact', 'Razor'] },
-    { group: { en: 'Architecture & integration', id: 'Arsitektur & integrasi' } as L10n, items: ['REST APIs', 'Keycloak (OIDC, JWT)', 'AWS S3 / Textract / Cognito', 'MinIO', 'Quartz.NET', 'Hangfire', 'Elsa Workflows'] },
-    { group: { en: 'DevOps & quality', id: 'DevOps & kualitas' } as L10n, items: ['Git', 'GitHub Actions', 'GitVersion', 'Azure DevOps', 'IIS', 'Docker', 'WebApplicationFactory tests'] },
-    { group: { en: 'Desktop & reporting', id: 'Desktop & pelaporan' } as L10n, items: ['WinForms', 'ClickOnce', 'Telerik Reporting', 'EPPlus'] },
-  ],
-  certifications: [
-    {
-      name: 'AWS Certified Cloud Practitioner (CLF-C02)',
-      issuer: 'Amazon Web Services',
-      level: { en: 'Foundational', id: 'Foundational' } as L10n,
-      url: 'https://www.credly.com/badges/bc1ed2db-21b9-462e-b08a-b3e727911062',
-    },
-    {
-      name: 'AWS Certified AI Practitioner (AIF-C01)',
-      issuer: 'Amazon Web Services',
-      level: { en: 'Foundational', id: 'Foundational' } as L10n,
-      url: 'https://www.credly.com/badges/995a969c-1ada-49e5-84de-53b483dca02f',
-    },
-  ],
+  // Skills, certifications and education come from the Typst resume source.
+  stack: r.skills.map((g) => ({ group: toL10n(g.group), items: g.items })),
+  certifications: r.certifications.map((c) => {
+    const code = c.name.match(/\(([A-Z0-9-]+)\)\s*$/)?.[1] ?? '';
+    const meta = certMeta[code];
+    return { name: c.name, issuer: meta?.issuer ?? '', level: meta?.level, url: c.url };
+  }),
   education: {
-    school: 'Universitas Gadjah Mada',
-    degree: { en: 'Bachelor of Engineering (S.T.) in Electrical Engineering', id: 'Sarjana Teknik (S.T.) Teknik Elektro' } as L10n,
-    location: 'Yogyakarta, Indonesia',
-    period: '2018 – 2022',
-    gpa: '3.47 / 4.00',
+    school: edu.institution,
+    degree: toL10n(degreeName(edu.degree)),
+    location: edu.location,
+    period: `${edu.start} – ${edu.end}`,
+    gpa: gpaOf(edu.degree).replace(/^GPA\s*/, ''),
   },
 };
