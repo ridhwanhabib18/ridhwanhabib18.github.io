@@ -20,7 +20,7 @@ Cepat (Bahasa Indonesia): jalankan `npm install`, lalu `npm run dev`, dan buka h
 | `npm test` | Content, guardrail, demo and render tests |
 | `npm run build` | Guardrail lint, typecheck, client build, SSR build, pre-render of every page, sitemap and 404 page |
 | `npm run preview` | Serve `dist/` locally |
-| `npm run test:e2e` | Layout tests in a real browser at phone and desktop widths (run `npm run build` first) |
+| `npm run test:e2e` | Browser tests: phone and desktop layout, share images and profile photo (run `npm run build` first) |
 | `npm run extract` | Regenerate `src/content/resume.generated.json` from `resume/resume_us.typ` (also runs before `dev` and `build`) |
 | `npm run resume` | Compile the three resume PDFs (PDF 2.0) into `public/resume/` (needs Typst 0.14 or newer) |
 
@@ -63,6 +63,19 @@ npm run test:e2e
 At 360 and 390 px wide (touch emulation) it checks every main page, in English and Indonesian, for content that sticks out of the screen or is clipped, that the Resume tabs stay inside their container, that the menu opens, navigates and closes, that header buttons are at least 40 px, and that the architecture diagram is a readable list instead of a sideways-scrolling picture. At 1280 px it checks that the diagram is drawn as a picture. CI runs these tests before deploying.
 
 To look at a phone layout yourself: run `npm run dev -- --host` and open the printed network address on your phone (same Wi-Fi), or use the device toolbar in the browser's developer tools.
+
+## Share images (Open Graph)
+
+`npm run build` also makes one 1200x630 PNG per page (30 files in `dist/og/`) and points each page's `og:image` and `twitter:image` at it, with `twitter:card` set to `summary_large_image`. This is the preview picture LinkedIn, WhatsApp, Slack and X show when a link is shared.
+
+- **Home:** name, headline, positioning line, three labelled results and the profile photo. **Case studies:** the system title, its labelled results (Actual or Target) and its stack. **Other pages:** their title and description. English and Indonesian pages each get their own card.
+- The text comes from the same content files as the site (`src/og.ts`), so cards cannot drift from it. The card layout is `scripts/og-cards-lib.mjs`; `scripts/og-images.mjs` renders it with the browser already installed (Edge on Windows, Chrome elsewhere; override with `PW_CHANNEL`), so `npm run build` needs one of them.
+- The file name comes from the page address (`/work/x/` becomes `og/work-x.png`, `/id/` becomes `og/id.png`).
+- Social networks cache previews. After a deploy, a link that was shared before keeps its old preview until the cache expires; LinkedIn's Post Inspector refreshes it.
+
+## Profile photo
+
+`public/profile.jpg` is shown in the home hero, on the About page and on the share cards. It is a 320x320 JPEG with all metadata removed. Tests fail if it is no longer square or small, or if it contains EXIF, GPS or XMP data (phone photos usually do), because it is published on a public site. To replace it, resize a square photo to about 320 px with a tool that drops metadata, save it as `public/profile.jpg`, and run `npm test`.
 
 ## UI
 
@@ -134,5 +147,5 @@ All content is typed data in `src/content/` with `{ en, id }` for every user-fac
 
 ## Not done yet
 
-- Per-page Open Graph images and a custom domain.
+- A custom domain.
 - A reference ASP.NET Core API sample.

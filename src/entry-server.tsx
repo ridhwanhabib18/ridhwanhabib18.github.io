@@ -17,6 +17,8 @@ export function render(url: string): { html: string; head: HeadData | undefined 
   return { html, head: collector.data };
 }
 
+export { ogExtras } from './og';
+
 const pages = ['/', '/work', '/experience', '/demo', '/about', '/resume', '/contact', ...projects.map((p) => `/work/${p.slug}`)];
 
 /** Every route to pre-render, in both languages. */

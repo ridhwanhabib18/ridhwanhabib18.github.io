@@ -14,6 +14,8 @@ export const profile = {
   // Identity and links come from resume/resume_us.typ. The phone number is never published.
   name: r.name,
   shortName: 'Ridhwan',
+  /** Profile photo in public/. Square, resized and stripped of metadata (a test checks this). */
+  photo: 'profile.jpg',
   email: r.email,
   linkedin: `https://www.${r.linkedin}`,
   linkedinText: r.linkedin,

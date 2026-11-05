@@ -471,4 +471,6 @@ export const projects: Project[] = [
 ];
 
 export const getProject = (slug: string) => projects.find((p) => p.slug === slug);
+/** Systems whose headline result is shown as the proof strip on the home page and on its share card. */
+export const proofSlugs = ['parts-engineering-management', 'production-file-distribution', 'part-approval-certification', 'production-planning-scheduling'];
 export const featured = ['parts-engineering-management', 'production-file-distribution', 'production-planning-scheduling'];

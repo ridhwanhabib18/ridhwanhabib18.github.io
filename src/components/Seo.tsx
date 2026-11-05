@@ -1,13 +1,17 @@
 import { createContext, useContext, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useI18n } from '@/i18n';
-import { absoluteUrl } from '@/lib/site';
+import { absoluteUrl, ogImageUrl } from '@/lib/site';
 import type { Lang } from '@/content/types';
 
 const SITE_NAME = 'Ridhwan Habib';
 
 export interface HeadData {
   title: string;
+  /** The page's own title without the site name, when it has one. */
+  pageTitle?: string;
+  /** Absolute URL of the Open Graph image for this page. */
+  image: string;
   description: string;
   lang: Lang;
   canonical: string;
@@ -45,7 +49,9 @@ export function Seo({ title, description }: { title?: string; description: strin
   const full = title ? `${title} | ${SITE_NAME}` : `${SITE_NAME} | Full Stack .NET Engineer`;
   const urls = { [lang]: absoluteUrl(pathname), [otherLang]: absoluteUrl(switchPath) } as Record<Lang, string>;
 
-  if (collector) collector.data = { title: full, description, lang, canonical: urls[lang], alternates: urls };
+  const image = ogImageUrl(pathname);
+
+  if (collector) collector.data = { title: full, pageTitle: title, image, description, lang, canonical: urls[lang], alternates: urls };
 
   useEffect(() => {
     document.title = full;
@@ -55,11 +61,16 @@ export function Seo({ title, description }: { title?: string; description: strin
     setMeta('meta[property="og:description"]', 'property', 'og:description', description);
     setMeta('meta[property="og:type"]', 'property', 'og:type', 'website');
     setMeta('meta[property="og:url"]', 'property', 'og:url', urls[lang]);
-    setMeta('meta[name="twitter:card"]', 'name', 'twitter:card', 'summary');
+    setMeta('meta[name="twitter:card"]', 'name', 'twitter:card', 'summary_large_image');
+    setMeta('meta[property="og:image"]', 'property', 'og:image', image);
+    setMeta('meta[property="og:image:width"]', 'property', 'og:image:width', '1200');
+    setMeta('meta[property="og:image:height"]', 'property', 'og:image:height', '630');
+    setMeta('meta[property="og:image:alt"]', 'property', 'og:image:alt', title ?? full);
+    setMeta('meta[name="twitter:image"]', 'name', 'twitter:image', image);
     setLink('link[rel="canonical"]', { rel: 'canonical', href: urls[lang] });
     (['en', 'id'] as Lang[]).forEach((l) => setLink(`link[rel="alternate"][hreflang="${l}"]`, { rel: 'alternate', hreflang: l, href: urls[l] }));
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [full, description, lang, urls.en, urls.id]);
+  }, [full, description, lang, urls.en, urls.id, image]);
 
   return null;
 }

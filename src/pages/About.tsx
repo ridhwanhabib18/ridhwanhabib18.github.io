@@ -15,7 +15,16 @@ export default function About() {
     <>
       <Seo title={t('about.title')} description={paras[0]} />
       <div className={cn(narrow, 'py-12')}>
-        <h1 className="text-4xl font-extrabold sm:text-5xl">{t('about.title')}</h1>
+        <div className="flex items-center gap-5">
+          <img
+            src={`${import.meta.env.BASE_URL}${profile.photo}`}
+            alt={profile.name}
+            width={96}
+            height={96}
+            className="size-20 shrink-0 rounded-full object-cover ring-2 ring-primary/40 sm:size-24"
+          />
+          <h1 className="text-4xl font-extrabold sm:text-5xl">{t('about.title')}</h1>
+        </div>
         <div className="mt-6 space-y-4 text-lg text-muted-foreground">
           {paras.map((p) => (
             <p key={p}>{p}</p>

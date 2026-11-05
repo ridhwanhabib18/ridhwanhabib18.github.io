@@ -8,14 +8,14 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { useI18n } from '@/i18n';
 import { profile } from '@/content/profile';
-import { featured, getProject, projects } from '@/content/projects';
+import { featured, getProject, projects, proofSlugs } from '@/content/projects';
 import { container, eyebrow } from '@/lib/ui';
 import { cn } from '@/lib/utils';
 
 const rise = 'animate-in fade-in slide-in-from-bottom-3 duration-500 fill-mode-both motion-reduce:animate-none';
 
 const proofItems = () =>
-  ['parts-engineering-management', 'production-file-distribution', 'part-approval-certification', 'production-planning-scheduling'].map((slug) => ({
+  proofSlugs.map((slug) => ({
     slug,
     metric: getProject(slug)!.metrics[0],
   }));
@@ -30,7 +30,14 @@ export default function Home() {
       <Seo description={l(profile.positioning)} />
 
       <section className="relative overflow-hidden border-b bg-[radial-gradient(60rem_26rem_at_50%_-8%,color-mix(in_oklab,var(--primary)_16%,transparent),transparent_70%)]">
-        <div className={cn(container, 'flex flex-col items-center py-20 text-center sm:py-28')}>
+        <div className={cn(container, 'flex flex-col items-center py-16 text-center sm:py-24')}>
+          <img
+            src={`${import.meta.env.BASE_URL}${profile.photo}`}
+            alt={profile.name}
+            width={112}
+            height={112}
+            className={cn(rise, 'mb-6 size-24 rounded-full object-cover ring-2 ring-primary/40 ring-offset-4 ring-offset-background sm:size-28')}
+          />
           {profile.available && (
             <Badge variant="outline" className={cn(rise, 'max-w-full gap-2 rounded-2xl px-3 py-1 text-center text-sm font-normal whitespace-normal text-muted-foreground sm:rounded-full')}>
               <span className="size-2 rounded-full bg-success" aria-hidden="true" />
