@@ -164,7 +164,7 @@ export const projects: Project[] = [
   {
     slug: 'production-planning-scheduling',
     resumeBullet: 'Production Planning & Scheduling System',
-    beyondResume: ['capacity control', 'WIP stock system', '45+ migrations', 'payback within the first year'],
+    beyondResume: ['capacity control', 'WIP stock system', '45+ migrations', 'minimal API', 'Windows Service', 'payback within the first year'],
     kind: 'delivered',
     title: { en: 'Production Planning & Scheduling System', id: 'Sistem Perencanaan & Penjadwalan Produksi' },
     summary: {
