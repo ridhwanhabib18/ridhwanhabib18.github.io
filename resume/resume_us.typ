@@ -69,12 +69,12 @@
 - *Leadership:* lead code reviews, mentor a junior developer and set coding standards for a 2-person team; present proposals to production, engineering, purchasing and management at stage-gate design reviews
 ]
 
-// TODO: confirm internship dates (LinkedIn says 2021) and delete this block if the page overflows
+// TODO: delete this block if the page overflows
 #work(
   title: "Embedded Systems Engineer Intern",
   company: "PT Xirka Silicon Technology",
   location: "Bandung, Indonesia",
-  dates: dates-helper(start-date: "Jan 2020", end-date: "Feb 2020"),
+  dates: dates-helper(start-date: "Jan 2021", end-date: "Feb 2021"),
 )
 - Implemented and tested RS-232 and RS-485 communication modules on embedded boards using Arduino, C and C++
 
