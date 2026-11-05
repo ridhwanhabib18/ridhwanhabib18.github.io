@@ -1,0 +1,27 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Portfolio: open in Edge (server already running)",
+      "type": "msedge",
+      "request": "launch",
+      "url": "http://localhost:5180",
+      "webRoot": "${workspaceFolder}"
+    },
+    {
+      "name": "Portfolio: start server and open in Edge",
+      "type": "msedge",
+      "request": "launch",
+      "url": "http://localhost:5180",
+      "webRoot": "${workspaceFolder}",
+      "preLaunchTask": "Portfolio: dev server"
+    },
+    {
+      "name": "Portfolio: open in Chrome (server already running)",
+      "type": "chrome",
+      "request": "launch",
+      "url": "http://localhost:5180",
+      "webRoot": "${workspaceFolder}"
+    }
+  ]
+}

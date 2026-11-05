@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="dark light" />
+    <meta name="theme-color" content="#0f0f12" />
+    <title>Muhammad Ridhwan Habib Abdillah | Full Stack .NET Engineer</title>
+    <meta
+      name="description"
+      content="Full Stack .NET Engineer who builds business-critical manufacturing software and proves its value with measurable results."
+    />
+    <link rel="icon" href="%BASE_URL%favicon.svg" type="image/svg+xml" />
+    <script>
+      // Dark is the default. Only an explicit "light" choice removes the class, before first paint.
+      (function () {
+        try {
+          if (localStorage.getItem('theme') === 'light') document.documentElement.classList.remove('dark');
+        } catch (e) {}
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

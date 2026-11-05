@@ -1,0 +1,6 @@
+node_modules
+dist
+*.local
+# internal code-name blocklist used by the guardrail lint; never commit
+blocklist.local.txt
+*.tsbuildinfo
