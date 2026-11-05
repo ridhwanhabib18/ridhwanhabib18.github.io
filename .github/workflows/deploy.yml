@@ -34,7 +34,7 @@ jobs:
       - run: npm ci
       - name: Install Typst
         env:
-          TYPST_VERSION: v0.13.1
+          TYPST_VERSION: v0.14.2
         run: |
           curl -fsSL "https://github.com/typst/typst/releases/download/${TYPST_VERSION}/typst-x86_64-unknown-linux-musl.tar.xz" -o typst.tar.xz
           tar -xJf typst.tar.xz

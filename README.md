@@ -20,7 +20,7 @@ Cepat (Bahasa Indonesia): jalankan `npm install`, lalu `npm run dev`, dan buka h
 | `npm test` | Content, guardrail, demo and render tests |
 | `npm run build` | Guardrail lint, typecheck, client build, SSR build, pre-render of every page, sitemap and 404 page |
 | `npm run preview` | Serve `dist/` locally |
-| `npm run resume` | Compile the three resume PDFs into `public/resume/` (needs the Typst CLI) |
+| `npm run resume` | Compile the three resume PDFs (PDF 2.0) into `public/resume/` (needs Typst 0.14 or newer) |
 
 ## Run automatically in VS Code
 
@@ -79,9 +79,10 @@ Everything in a public repository, including its history, is readable. Review co
 ## Resume PDFs
 
 The resume source is `resume/main.typ` (Typst). One file produces three variants, chosen with `--input role=lead|senior|analyst`.
+PDFs are exported as **PDF 2.0** (`--pdf-standard 2.0`, Typst 0.14+), and the build fails if a file does not start with `%PDF-2.0`. Modern viewers (Acrobat, Chrome, Edge, Firefox, Preview) open PDF 2.0; some older viewers or applicant-tracking parsers may not. To use the widest-compatibility version instead, set `PDF_VERSION` to `'1.7'` in `scripts/build-resume.mjs`.
 
 - **CI:** `.github/workflows/deploy.yml` installs Typst, runs `npm run resume`, then builds the site, so `public/resume/ridhwan-habib-resume-<role>.pdf` is generated on every push and the Resume page links to it. The PDFs are build output and are not committed.
-- **Locally:** install Typst (`winget install Typst.Typst`) and run `npm run resume`; the download buttons then work in `npm run dev` and `npm run preview`. Without the files, the download link returns 404 locally only.
+- **Locally:** install Typst 0.14 or newer (`winget install Typst.Typst`) and run `npm run resume`; the download buttons then work in `npm run dev` and `npm run preview`. Without the files, the download link returns 404 locally only.
 - **Editing in VS Code:** the *Tinymist Typst* extension previews `resume/main.typ` and can export PDF on save (`tinymist.exportPdf: "onSave"`).
 - The resume text follows the same guardrails as the site (`npm run guardrail` scans `resume/`): percentages only, no currency or hour counts, descriptive system names.
 

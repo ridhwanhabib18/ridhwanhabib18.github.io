@@ -23,6 +23,12 @@ describe('resume source and PDF pipeline', () => {
     }
   });
 
+  it('exports PDF 2.0 and verifies the file header', () => {
+    expect(script).toContain("PDF_VERSION = '2.0'");
+    expect(script).toContain("'--pdf-standard', PDF_VERSION");
+    expect(script).toContain('%PDF-${PDF_VERSION}');
+  });
+
   it('keeps the resume text within the confidentiality rules', () => {
     expect(findViolations(typ, loadBlocklist())).toEqual([]);
   });
