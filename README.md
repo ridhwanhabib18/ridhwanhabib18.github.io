@@ -84,7 +84,7 @@ PDFs are exported as **PDF 2.0** (`--pdf-standard 2.0`, Typst 0.14+), and the bu
 
 - **CI:** `.github/workflows/deploy.yml` installs Typst, runs `npm run resume`, then builds the site, so `public/resume/ridhwan-habib-resume-<role>.pdf` is generated on every push and the Resume page links to it. The PDFs are build output and are not committed.
 - **Locally:** install Typst 0.14 or newer (`winget install Typst.Typst`) and run `npm run resume`; the download buttons then work in `npm run dev` and `npm run preview`. Without the files, the download link returns 404 locally only.
-- **Editing in VS Code:** the *Tinymist Typst* extension previews `resume/main.typ` and can export PDF on save (`tinymist.exportPdf: "onSave"`).
+- **Editing in VS Code:** the *Tinymist Typst* extension previews `resume/resume_us.typ` and can export PDF on save (`tinymist.exportPdf: "onSave"`).
 - The resume text follows the same guardrails as the site (`npm run guardrail` scans `resume/`): percentages only, no currency or hour counts, descriptive system names.
 
 ## The resume source is the single source of truth

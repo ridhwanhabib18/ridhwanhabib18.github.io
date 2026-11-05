@@ -8,7 +8,7 @@ export interface ResumeVariant {
   label: L10n;
   target: L10n;
   summary: L10n;
-  /** Path under public/. CI compiles these from resume/main.typ (see scripts/build-resume.mjs). Null shows a "coming soon" button. */
+  /** Path under public/. CI compiles these from resume/resume_us.typ (see scripts/build-resume.mjs). Null shows a "coming soon" button. */
   pdf: string | null;
 }
 
