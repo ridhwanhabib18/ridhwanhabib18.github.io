@@ -61,12 +61,12 @@ export const profile = {
     id: 'Full Stack .NET Engineer',
   } as L10n,
   positioning: {
-    en: 'I build business-critical manufacturing software and prove its value with measurable results.',
-    id: 'Saya membangun perangkat lunak manufaktur yang kritis bagi bisnis dan membuktikan nilainya dengan hasil yang terukur.',
+    en: 'I turn manufacturing requirements into reliable production software—from business case and system design to deployment and production support.',
+    id: 'Saya menerjemahkan kebutuhan manufaktur menjadi perangkat lunak produksi yang andal—dari business case dan desain sistem hingga deployment dan dukungan produksi.',
   } as L10n,
   availability: {
-    en: 'Open to Tech Lead, Senior Software Engineer (.NET) and System Analyst roles',
-    id: 'Terbuka untuk peran Tech Lead, Senior Software Engineer (.NET) dan System Analyst',
+    en: 'Open to Tech Lead, Senior Software Engineer (.NET), Full Stack Developer, and System Analyst roles',
+    id: 'Terbuka untuk peran Tech Lead, Senior Software Engineer (.NET), Full Stack Developer, dan System Analyst',
   } as L10n,
   about: {
     en: [
