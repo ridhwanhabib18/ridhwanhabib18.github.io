@@ -4,7 +4,7 @@ import { join } from 'node:path';
 import { findViolations, loadBlocklist } from './guardrail-lib.mjs';
 
 const root = process.cwd();
-const targets = ['src/content', 'src/i18n', 'index.html'];
+const targets = ['src/content', 'src/i18n', 'resume', 'index.html'];
 const blocklist = loadBlocklist(root);
 
 if (blocklist.length === 0) {

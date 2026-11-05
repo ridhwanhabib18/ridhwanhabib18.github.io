@@ -32,6 +32,16 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
+      - name: Install Typst
+        env:
+          TYPST_VERSION: v0.13.1
+        run: |
+          curl -fsSL "https://github.com/typst/typst/releases/download/${TYPST_VERSION}/typst-x86_64-unknown-linux-musl.tar.xz" -o typst.tar.xz
+          tar -xJf typst.tar.xz
+          sudo install typst-x86_64-unknown-linux-musl/typst /usr/local/bin/typst
+          typst --version
+      - name: Compile resume PDFs
+        run: npm run resume
       - run: npm test
       - run: npm run build
       - uses: actions/upload-pages-artifact@v3

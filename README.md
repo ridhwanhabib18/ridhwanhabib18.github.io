@@ -20,6 +20,7 @@ Cepat (Bahasa Indonesia): jalankan `npm install`, lalu `npm run dev`, dan buka h
 | `npm test` | Content, guardrail, demo and render tests |
 | `npm run build` | Guardrail lint, typecheck, client build, SSR build, pre-render of every page, sitemap and 404 page |
 | `npm run preview` | Serve `dist/` locally |
+| `npm run resume` | Compile the three resume PDFs into `public/resume/` (needs the Typst CLI) |
 
 ## Run automatically in VS Code
 
@@ -75,6 +76,15 @@ The components were written by hand. To add more from the shadcn registry, run `
 
 Everything in a public repository, including its history, is readable. Review content before the first push.
 
+## Resume PDFs
+
+The resume source is `resume/main.typ` (Typst). One file produces three variants, chosen with `--input role=lead|senior|analyst`.
+
+- **CI:** `.github/workflows/deploy.yml` installs Typst, runs `npm run resume`, then builds the site, so `public/resume/ridhwan-habib-resume-<role>.pdf` is generated on every push and the Resume page links to it. The PDFs are build output and are not committed.
+- **Locally:** install Typst (`winget install Typst.Typst`) and run `npm run resume`; the download buttons then work in `npm run dev` and `npm run preview`. Without the files, the download link returns 404 locally only.
+- **Editing in VS Code:** the *Tinymist Typst* extension previews `resume/main.typ` and can export PDF on save (`tinymist.exportPdf: "onSave"`).
+- The resume text follows the same guardrails as the site (`npm run guardrail` scans `resume/`): percentages only, no currency or hour counts, descriptive system names.
+
 ## Content guardrails
 
 `npm run guardrail` (also part of `npm run build` and of the tests) fails on currency figures, absolute hour counts and any term in the blocklist.
@@ -90,11 +100,11 @@ All content is typed data in `src/content/` with `{ en, id }` for every user-fac
 | Name, links, about, stack, certifications | `src/content/profile.ts` |
 | Case studies, metrics, diagrams | `src/content/projects.ts` |
 | Experience timeline | `src/content/experience.ts` |
-| Resume variants and PDF links | `src/content/resume.ts` (set `pdf` to e.g. `resume/lead.pdf` after adding the PDF to `public/resume/`) |
+| Resume text (all three variants) | `resume/main.typ` |
+| Resume variant labels on the site and PDF links | `src/content/resume.ts` |
 | Availability badge | `available` in `src/content/profile.ts` |
 
 ## Not done yet
 
 - Per-page Open Graph images and a custom domain.
 - A reference ASP.NET Core API sample.
-- Resume PDFs (add the compiled files, then set `pdf` in `resume.ts`).
