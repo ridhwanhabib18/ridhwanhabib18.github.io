@@ -27,7 +27,7 @@ const fromSource = (needle: string, id: string, extra: Pick<Role, 'stack' | 'pro
 
 export const roles: Role[] = [
   fromSource('Epson', 'epson', {
-    stack: ['ASP.NET Core', 'C#', 'React', 'TypeScript', 'SQL Server', 'EF Core', 'Dapper', 'SignalR', 'Quartz.NET', 'Hangfire', 'AWS', 'GitHub Actions'],
+    stack: ['ASP.NET Core', 'C#', 'React', 'TypeScript', 'SQL Server', 'Entity Framework Core', 'Dapper', 'SignalR', 'Quartz.NET', 'Hangfire', 'AWS', 'GitHub Actions'],
     projectSlugs: [
       'parts-engineering-management',
       'production-file-distribution',

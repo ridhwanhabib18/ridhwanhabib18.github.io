@@ -8,6 +8,8 @@ import type { Project } from './types';
 export const projects: Project[] = [
   {
     slug: 'parts-engineering-management',
+    resumeBullet: 'Parts Engineering Management System',
+    beyondResume: ['inspection platform'],
     kind: 'delivered',
     title: { en: 'Parts Engineering Management System', id: 'Sistem Manajemen Parts Engineering' },
     summary: {
@@ -78,6 +80,8 @@ export const projects: Project[] = [
   },
   {
     slug: 'production-file-distribution',
+    resumeBullet: 'Production File Distribution & Monitoring System',
+    beyondResume: ['background download', 'scheduled version changes', 'column filtering', 'audit trail', 'Remote update', 'Trialled on lines'],
     kind: 'delivered',
     title: { en: 'Production File Distribution & Monitoring System', id: 'Sistem Distribusi & Monitoring File Produksi' },
     summary: {
@@ -86,7 +90,7 @@ export const projects: Project[] = [
     },
     role: { en: 'End-to-end owner (v1 and v2 upgrade)', id: 'Pemilik end to end (v1 dan upgrade v2)' },
     tags: ['aspnet', 'react', 'realtime', 'integration'],
-    stack: ['ASP.NET Core', 'React', 'SignalR', 'Hangfire', 'WinForms client'],
+    stack: ['ASP.NET Core', 'React', 'SignalR', 'WinForms client'],
     metrics: [
       { label: { en: 'Line recovery after a program change', id: 'Pemulihan lini setelah perubahan program' }, value: { en: 'about 90% faster (hours to minutes)', id: 'sekitar 90% lebih cepat (jam menjadi menit)' }, type: 'actual' },
       { label: { en: 'Manual installation by 2 people', id: 'Instalasi manual oleh 2 orang' }, value: { en: 'removed', id: 'dihilangkan' }, type: 'actual' },
@@ -145,7 +149,6 @@ export const projects: Project[] = [
         { id: 'admin', label: 'Admin web (React)', col: 0, row: 0, kind: 'client' },
         { id: 'api', label: 'ASP.NET Core API', col: 1, row: 1, kind: 'service' },
         { id: 'hub', label: 'SignalR hub', col: 2, row: 0, kind: 'service' },
-        { id: 'jobs', label: 'Hangfire jobs', col: 2, row: 2, kind: 'service' },
         { id: 'db', label: 'Database', col: 1, row: 2, kind: 'data' },
         { id: 'pc', label: 'Line PC (client)', col: 3, row: 1, kind: 'external' },
       ],
@@ -153,7 +156,6 @@ export const projects: Project[] = [
         { from: 'admin', to: 'api' },
         { from: 'api', to: 'hub' },
         { from: 'api', to: 'db' },
-        { from: 'jobs', to: 'db' },
         { from: 'hub', to: 'pc', label: 'live status' },
         { from: 'pc', to: 'api', label: 'file match' },
       ],
@@ -161,6 +163,8 @@ export const projects: Project[] = [
   },
   {
     slug: 'production-planning-scheduling',
+    resumeBullet: 'Production Planning & Scheduling System',
+    beyondResume: ['capacity control', 'WIP stock system', '45+ migrations', 'payback within the first year'],
     kind: 'delivered',
     title: { en: 'Production Planning & Scheduling System', id: 'Sistem Perencanaan & Penjadwalan Produksi' },
     summary: {
@@ -169,7 +173,7 @@ export const projects: Project[] = [
     },
     role: { en: 'End-to-end owner and architect', id: 'Pemilik end to end dan arsitek' },
     tags: ['aspnet', 'react', 'integration', 'data'],
-    stack: ['.NET 10 minimal API', 'EF Core', 'React', 'Quartz.NET'],
+    stack: ['.NET 10', 'EF Core', 'React', 'Quartz.NET'],
     metrics: [
       { label: { en: 'Planner workload', id: 'Beban kerja planner' }, value: { en: 'about 48% less', id: 'sekitar 48% lebih sedikit' }, type: 'target' },
       { label: { en: 'Payback', id: 'Pengembalian investasi' }, value: { en: 'within the first year', id: 'dalam tahun pertama' }, type: 'target' },
@@ -218,7 +222,7 @@ export const projects: Project[] = [
       nodes: [
         { id: 'spa', label: 'React SPA', col: 0, row: 1, kind: 'client' },
         { id: 'api', label: '.NET 10 minimal API', col: 1, row: 1, kind: 'service' },
-        { id: 'db', label: 'SQL Server (EF Core)', col: 2, row: 1, kind: 'data' },
+        { id: 'db', label: 'Database (EF Core)', col: 2, row: 1, kind: 'data' },
         { id: 'quartz', label: 'Quartz.NET service (clustered)', col: 1, row: 0, kind: 'service' },
         { id: 'wip', label: 'WIP stock system', col: 2, row: 0, kind: 'external' },
       ],
@@ -232,6 +236,8 @@ export const projects: Project[] = [
   },
   {
     slug: 'paperless-invoice-approval',
+    resumeBullet: 'Paperless Invoice Approval System',
+    beyondResume: ['Vendor-specific extraction rules'],
     kind: 'delivered',
     title: { en: 'Paperless Invoice Approval System', id: 'Sistem Persetujuan Invoice Paperless' },
     summary: {
@@ -240,7 +246,7 @@ export const projects: Project[] = [
     },
     role: { en: 'End-to-end owner', id: 'Pemilik end to end' },
     tags: ['aspnet', 'react', 'integration'],
-    stack: ['ASP.NET Core 8', 'React', 'TypeScript', 'AWS S3', 'AWS Textract', 'Keycloak'],
+    stack: ['ASP.NET Core 8', 'React', 'TypeScript', 'AWS S3', 'AWS Textract', 'Keycloak SSO'],
     metrics: [
       { label: { en: 'Manual invoice handling effort', id: 'Upaya penanganan invoice manual' }, value: { en: 'large reduction (see approved proposal)', id: 'pengurangan besar (lihat proposal yang disetujui)' }, type: 'target' },
     ],
@@ -298,6 +304,8 @@ export const projects: Project[] = [
   },
   {
     slug: 'process-inspection-data',
+    resumeBullet: 'Process Inspection Data System',
+    beyondResume: ['adjustment-rate'],
     kind: 'delivered',
     title: { en: 'Process Inspection Data System', id: 'Sistem Data Inspeksi Proses' },
     summary: {
@@ -306,7 +314,7 @@ export const projects: Project[] = [
     },
     role: { en: 'End-to-end owner', id: 'Pemilik end to end' },
     tags: ['realtime', 'data', 'integration'],
-    stack: ['WinForms', 'ClickOnce', 'SignalR', 'Quartz.NET', 'SQL Server'],
+    stack: ['WinForms', 'ClickOnce', 'SignalR', 'Quartz.NET'],
     metrics: [
       { label: { en: 'Production progress and adjustment rate', id: 'Progres produksi dan adjustment rate' }, value: { en: 'visible live on dashboards', id: 'terlihat langsung di dashboard' }, type: 'actual' },
     ],
@@ -341,7 +349,7 @@ export const projects: Project[] = [
         { id: 'pc', label: 'Line PC agent (ClickOnce)', col: 0, row: 1, kind: 'external' },
         { id: 'api', label: 'API', col: 1, row: 1, kind: 'service' },
         { id: 'q', label: 'Quartz.NET jobs', col: 1, row: 2, kind: 'service' },
-        { id: 'db', label: 'SQL Server', col: 2, row: 2, kind: 'data' },
+        { id: 'db', label: 'Database', col: 2, row: 2, kind: 'data' },
         { id: 'hub', label: 'SignalR hub', col: 2, row: 1, kind: 'service' },
         { id: 'dash', label: 'Live dashboards', col: 3, row: 1, kind: 'client' },
       ],
@@ -356,6 +364,7 @@ export const projects: Project[] = [
   },
   {
     slug: 'part-approval-certification',
+    resumeBullet: 'Supporting contributions (3 further projects)',
     kind: 'contributed',
     title: { en: 'Part Approval Certification Workflow', id: 'Alur Sertifikasi Persetujuan Part' },
     summary: {
@@ -364,7 +373,7 @@ export const projects: Project[] = [
     },
     role: { en: 'Developer: SQL Server stored procedures', id: 'Developer: stored procedure SQL Server' },
     tags: ['data'],
-    stack: ['SQL Server', 'T-SQL', 'Stored procedures'],
+    stack: ['SQL Server', 'Stored procedures'],
     metrics: [
       { label: { en: 'Certification preparation', id: 'Persiapan sertifikasi' }, value: { en: 'about 96% faster', id: 'sekitar 96% lebih cepat' }, type: 'actual' },
     ],
@@ -397,6 +406,7 @@ export const projects: Project[] = [
   },
   {
     slug: 'operator-cycle-time-monitoring',
+    resumeBullet: 'Supporting contributions (3 further projects)',
     kind: 'contributed',
     title: { en: 'Operator Work-Cycle Time Monitoring', id: 'Monitoring Waktu Siklus Kerja Operator' },
     summary: {
@@ -405,7 +415,7 @@ export const projects: Project[] = [
     },
     role: { en: 'Developer: real-time WebSocket layer', id: 'Developer: lapisan WebSocket real-time' },
     tags: ['realtime'],
-    stack: ['SignalR', 'WebSocket', 'ASP.NET Core'],
+    stack: ['SignalR', 'WebSocket'],
     metrics: [],
     sections: {
       context: {
@@ -428,6 +438,7 @@ export const projects: Project[] = [
   },
   {
     slug: 'printer-function-test-summary',
+    resumeBullet: 'Supporting contributions (3 further projects)',
     kind: 'contributed',
     title: { en: 'Printer Function-Test Data Summary', id: 'Ringkasan Data Function Test Printer' },
     summary: {

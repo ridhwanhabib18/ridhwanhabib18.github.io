@@ -29,6 +29,10 @@ export type Tag = 'aspnet' | 'react' | 'realtime' | 'integration' | 'devops' | '
 
 export interface Project {
   slug: string;
+  /** Title of the matching bullet in the Typst resume source (the source of truth for this system). */
+  resumeBullet: string;
+  /** Details the case study states that the resume source does not. Declared on purpose; a test checks them. */
+  beyondResume?: string[];
   kind: 'delivered' | 'contributed';
   title: L10n;
   summary: L10n;

@@ -93,7 +93,8 @@ The website does not re-type resume content. `scripts/extract-resume.mjs` reads 
 
 - **English** comes straight from the source. **Indonesian** comes from `src/content/resume.id.ts`, keyed by the exact English text. If the source text changes, a test fails until the translation is updated, and it also reports stale translations.
 - **Not extracted, on purpose:** the phone number and the work-authorization line. In this public repository the `#let phone` line in `resume/resume_us.typ` is blank (the real number lives only in the private repository), and a test fails if a phone number appears in the source or in published content. When you copy the file from the private repository, blank that line first.
-- **Case studies** (`src/content/projects.ts`) are richer than resume bullets and are written by hand, but a test fails if a percentage in them is not present in the Typst source.
+- **Case studies** (`src/content/projects.ts`) are richer than resume bullets and are written by hand, but they must not contradict or silently extend the resume. Each one names its resume bullet (`resumeBullet`). Tests fail if: a percentage is not in the Typst source; a per-project stack item (or a technology named in the text or diagram) is not in that system's resume bullet; or a number in the text is not in the bullet. Details that deliberately go beyond the resume (for example "capacity control" or "audit trail") are declared in `beyondResume`, and a test checks each declared detail is really in the case study and really absent from the resume.
+- **Tech-stack chips** on the Experience page must be skills from the Typst source.
 - Tests also fail if `resume.generated.json` is out of date; run `npm run extract` and commit the result.
 - To change resume content: edit `resume/resume_us.typ`, run `npm run extract`, update any new strings in `resume.id.ts`, run `npm test`.
 
