@@ -184,6 +184,24 @@ The mark is the initials written like a code tag, `<RH/>`, drawn from strokes (`
 
 The home page and the footer offer a one-click download of the recommended resume PDF (`primaryResumeKey` in `src/content/resume.ts`); the Contact page has a Copy email button that also announces the result to screen readers.
 
+## Certifications and "Results at a glance"
+
+**Order on the home page:** hero, then Certifications, then Results at a glance, then featured work, stack. Certifications come first on purpose: they are third-party proof a visitor can verify in one click, so they are seen without scrolling far.
+
+**Certifications** are shown by `src/components/CertCard.tsx` on Home and About: Credly badge, level, issuer, date issued, valid until, a short summary and a "Verify on Credly" link. Where the data lives:
+
+- Name and verify link: the Typst resume (`== Certifications` in `resume_us.typ`), the single source of truth.
+- Everything else (issuer, level, dates, summary, badge file): `certMeta` in `src/content/profile.ts`, keyed by the exam code in the name (for example `CLF-C02`). The dates and issuer are copied from the Credly badge page; do not guess them.
+- Badge image: `public/certs/`, downloaded from Credly (`https://images.credly.com/size/680x680/images/<image id>/image.png`, where the image id is in the badge page's `og:image`) and served from the site itself, because the Content Security Policy only allows images from the site.
+
+To add or renew a certification: add the line to the Typst resume, add its entry to `certMeta`, put the badge PNG in `public/certs/`, then `npm run extract`, `npm test` (a test checks the badge is a PNG, the dates are in order, the link is a Credly badge URL, and that certifications appear before the results) and `npm run build`. The valid-until date is written by hand, so update it when a certification is renewed.
+
+**Results at a glance** (`home.proof`) is the strip of four headline percentages (`proofSlugs` in `src/content/projects.ts`; the home share image uses the first three). It matters because a recruiter often scans for a few seconds, and measured results back up the claims in the hero. Keep it honest:
+
+- Percentages only, never USD or absolute hours (see Content guardrails).
+- Every card is labelled Actual (measured after go-live) or Target (from an approved proposal). Never present a target as an actual.
+- Show only results that are confirmed. If a number is not confirmed yet, take it out instead of labelling it Actual.
+
 ## Visit statistics (optional, off by default)
 
 The site can count page views and clicks on the resume and email buttons with [GoatCounter](https://www.goatcounter.com): free for personal sites, no cookies, no personal data, and it stays off for visitors whose browser sends Do Not Track. Nothing is loaded or sent unless you enable it:
