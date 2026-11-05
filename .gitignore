@@ -9,3 +9,10 @@ dist-server
 public/resume/*.pdf
 test-results
 playwright-report
+# generated for reviewers by `npm run translations`
+docs/translation-review.md
+docs/brand-preview.png
+
+# .NET build output
+reference-api/**/bin/
+reference-api/**/obj/

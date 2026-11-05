@@ -3,6 +3,7 @@ import type { Lang } from '../content/types';
 type Dict = Record<string, string>;
 
 export const en: Dict = {
+  'nav.home': 'Home',
   'nav.work': 'Work',
   'nav.experience': 'Experience',
   'nav.demo': 'Live demo',
@@ -21,6 +22,7 @@ export const en: Dict = {
   'cta.readCase': 'Read case study',
   'cta.back': 'Back to work',
   'cta.download': 'Download PDF',
+  'cta.downloadResume': 'Download resume (PDF)',
   'cta.pdfSoon': 'PDF coming soon',
   'badge.delivered': 'Delivered',
   'badge.contributed': 'Contributed',
@@ -115,13 +117,19 @@ export const en: Dict = {
   'contact.github': 'GitHub',
   'contact.location': 'Location',
   'contact.cta': 'Send an email',
+  'contact.copy': 'Copy email',
+  'contact.copied': 'Copied!',
+  'contact.copyFailed': 'Could not copy. Select the address and copy it manually.',
   'footer.built': 'Built with React, TypeScript and Vite. Hosted on GitHub Pages.',
+  'footer.resume': 'Resume (PDF)',
+  'footer.analytics': 'Anonymous, cookie-free visit statistics (GoatCounter). Not recorded if your browser sends Do Not Track.',
   'notfound.title': 'Page not found',
   'notfound.body': 'The page you are looking for does not exist.',
   'notfound.home': 'Go to home',
 };
 
 export const id: Dict = {
+  'nav.home': 'Beranda',
   'nav.work': 'Karya',
   'nav.experience': 'Pengalaman',
   'nav.demo': 'Demo langsung',
@@ -140,6 +148,7 @@ export const id: Dict = {
   'cta.readCase': 'Baca studi kasus',
   'cta.back': 'Kembali ke karya',
   'cta.download': 'Unduh PDF',
+  'cta.downloadResume': 'Unduh resume (PDF)',
   'cta.pdfSoon': 'PDF segera hadir',
   'badge.delivered': 'Diselesaikan',
   'badge.contributed': 'Berkontribusi',
@@ -234,7 +243,12 @@ export const id: Dict = {
   'contact.github': 'GitHub',
   'contact.location': 'Lokasi',
   'contact.cta': 'Kirim email',
+  'contact.copy': 'Salin email',
+  'contact.copied': 'Tersalin!',
+  'contact.copyFailed': 'Gagal menyalin. Pilih alamatnya lalu salin secara manual.',
   'footer.built': 'Dibangun dengan React, TypeScript, dan Vite. Dihosting di GitHub Pages.',
+  'footer.resume': 'Resume (PDF)',
+  'footer.analytics': 'Statistik kunjungan anonim tanpa cookie (GoatCounter). Tidak dicatat jika browser Anda mengirim Do Not Track.',
   'notfound.title': 'Halaman tidak ditemukan',
   'notfound.body': 'Halaman yang Anda cari tidak ada.',
   'notfound.home': 'Ke beranda',

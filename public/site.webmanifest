@@ -1,0 +1,16 @@
+{
+  "name": "Muhammad Ridhwan Habib Abdillah, Full Stack .NET Engineer",
+  "short_name": "Ridhwan Habib",
+  "description": "Portfolio of a Full Stack .NET Engineer who builds business-critical manufacturing software and proves its value with measurable results.",
+  "lang": "en",
+  "start_url": "./",
+  "scope": "./",
+  "display": "browser",
+  "background_color": "#0a0f1a",
+  "theme_color": "#0a0f1a",
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

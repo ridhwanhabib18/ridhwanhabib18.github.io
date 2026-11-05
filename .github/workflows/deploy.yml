@@ -25,9 +25,11 @@ jobs:
     runs-on: ubuntu-latest
     env:
       GUARDRAIL_BLOCKLIST: ${{ secrets.GUARDRAIL_BLOCKLIST }}
+      # Optional visit statistics (GoatCounter). Leave the variable unset to keep them off.
+      VITE_GOATCOUNTER_CODE: ${{ vars.GOATCOUNTER_CODE }}
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
         with:
           node-version: 22
           cache: npm
@@ -46,17 +48,27 @@ jobs:
       - run: npm run build
       - name: Layout tests (phone and desktop widths)
         run: npm run test:e2e
-      - uses: actions/upload-pages-artifact@v3
+      - uses: actions/upload-pages-artifact@v5
         with:
           path: dist
 
+  api:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-dotnet@v6
+        with:
+          dotnet-version: 10.0.x
+      - name: Reference API tests
+        run: dotnet test reference-api --configuration Release
+
   deploy:
     if: github.ref == 'refs/heads/main'
-    needs: build
+    needs: [build, api]
     runs-on: ubuntu-latest
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5

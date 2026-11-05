@@ -1,5 +1,6 @@
 import { ExternalLink } from 'lucide-react';
 import { Seo } from '@/components/Seo';
+import { graph, personLd } from '@/lib/jsonld';
 import { StackChips } from '@/components/Parts';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
@@ -13,7 +14,7 @@ export default function About() {
   const paras = l(profile.about);
   return (
     <>
-      <Seo title={t('about.title')} description={paras[0]} />
+      <Seo title={t('about.title')} description={paras[0]} jsonLd={graph(personLd())} />
       <div className={cn(narrow, 'py-12')}>
         <div className="flex items-center gap-5">
           <img
@@ -34,11 +35,9 @@ export default function About() {
         <h2 className={cn(h2, 'mt-12 mb-4')}>{t('about.how')}</h2>
         <dl className="grid gap-4 sm:grid-cols-2">
           {profile.howIWork.map((h) => (
-            <Card key={h.title.en} className="gap-1">
-              <CardContent>
-                <dt className="font-semibold">{l(h.title)}</dt>
-                <dd className="mt-1 text-sm text-muted-foreground">{l(h.body)}</dd>
-              </CardContent>
+            <Card key={h.title.en} className="gap-1 px-5">
+              <dt className="font-semibold">{l(h.title)}</dt>
+              <dd className="text-sm text-muted-foreground">{l(h.body)}</dd>
             </Card>
           ))}
         </dl>

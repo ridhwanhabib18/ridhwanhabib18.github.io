@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { ArrowRight, ExternalLink } from 'lucide-react';
+import { ArrowRight, Download, ExternalLink } from 'lucide-react';
 import { Seo } from '@/components/Seo';
 import { Reveal } from '@/components/Reveal';
 import { MetricBadge, ProjectCard, Section, StackChips } from '@/components/Parts';
@@ -9,6 +9,8 @@ import { Card, CardContent } from '@/components/ui/card';
 import { useI18n } from '@/i18n';
 import { profile } from '@/content/profile';
 import { featured, getProject, projects, proofSlugs } from '@/content/projects';
+import { primaryResumeKey, resumeHref } from '@/content/resume';
+import { graph, personLd, websiteLd } from '@/lib/jsonld';
 import { container, eyebrow } from '@/lib/ui';
 import { cn } from '@/lib/utils';
 
@@ -27,7 +29,7 @@ export default function Home() {
 
   return (
     <>
-      <Seo description={l(profile.positioning)} />
+      <Seo description={l(profile.positioning)} jsonLd={graph(websiteLd(), personLd())} />
 
       <section className="relative overflow-hidden border-b bg-[radial-gradient(60rem_26rem_at_50%_-8%,color-mix(in_oklab,var(--primary)_16%,transparent),transparent_70%)]">
         <div className={cn(container, 'flex flex-col items-center py-16 text-center sm:py-24')}>
@@ -63,6 +65,14 @@ export default function Home() {
             <Button asChild size="lg" variant="outline">
               <Link to={path('/contact')}>{t('cta.contact')}</Link>
             </Button>
+            {resumeHref(primaryResumeKey) && (
+              <Button asChild size="lg" variant="ghost">
+                <a href={resumeHref(primaryResumeKey)!} download data-event={`resume-download-${primaryResumeKey}`}>
+                  <Download aria-hidden="true" />
+                  {t('cta.downloadResume')}
+                </a>
+              </Button>
+            )}
           </div>
           <p className={cn(rise, 'mt-6 text-sm text-muted-foreground')} style={{ animationDelay: '300ms' }}>
             {profile.yearsExperience} {t('home.years')} · {l(profile.location)}

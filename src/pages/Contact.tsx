@@ -1,5 +1,6 @@
 import { Mail, MapPin } from 'lucide-react';
 import { GithubIcon, LinkedinIcon } from '@/components/BrandIcons';
+import { CopyButton } from '@/components/CopyButton';
 import { Seo } from '@/components/Seo';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
@@ -40,9 +41,12 @@ export default function Contact() {
         <ul className="grid gap-4 sm:grid-cols-2">
           <li>
             <Item icon={<Mail className="size-5" />} label={t('contact.email')}>
-              <a className={link} href={mail}>
-                {profile.email}
-              </a>
+              <span className="flex flex-wrap items-center gap-2">
+                <a className={link} href={mail} data-event="email-click">
+                  {profile.email}
+                </a>
+                <CopyButton value={profile.email} />
+              </span>
             </Item>
           </li>
           <li>

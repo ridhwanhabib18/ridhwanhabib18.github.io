@@ -1,38 +1,11 @@
-import { useEffect, useRef, useState, type ReactNode } from 'react';
+import type { ReactNode } from 'react';
 import { cn } from '@/lib/utils';
 
-/** Fade-and-rise once when 15% visible. Shown immediately under reduced motion or without IntersectionObserver. */
-export function Reveal({ children, delay = 0, as: Tag = 'div', className }: { children: ReactNode; delay?: number; as?: 'div' | 'li' | 'section'; className?: string }) {
-  const ref = useRef<HTMLElement | null>(null);
-  const [shown, setShown] = useState(false);
-
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    if (typeof IntersectionObserver === 'undefined' || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      setShown(true);
-      return;
-    }
-    const io = new IntersectionObserver(
-      ([e]) => {
-        if (e.isIntersecting) {
-          setShown(true);
-          io.disconnect();
-        }
-      },
-      { threshold: 0.15 },
-    );
-    io.observe(el);
-    return () => io.disconnect();
-  }, []);
-
-  return (
-    <Tag
-      ref={ref as never}
-      className={cn('reveal', shown && 'is-shown', className)}
-      style={{ transitionDelay: shown ? `${Math.min(delay, 0.4)}s` : undefined }}
-    >
-      {children}
-    </Tag>
-  );
+/**
+ * Fade-and-rise as the element scrolls into view. Pure CSS (a scroll-driven animation, see globals.css), so content is
+ * visible in the pre-rendered HTML and never waits for JavaScript; browsers without support, and visitors who prefer
+ * reduced motion, simply see the content. `delay` is accepted for older call sites and ignored.
+ */
+export function Reveal({ children, as: Tag = 'div', className }: { children: ReactNode; delay?: number; as?: 'div' | 'li' | 'section'; className?: string }) {
+  return <Tag className={cn('reveal', className)}>{children}</Tag>;
 }

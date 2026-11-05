@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link, NavLink, Outlet, useLocation } from 'react-router-dom';
-import { CodeXml, Menu, Moon, Sun } from 'lucide-react';
+import { Menu, Moon, Sun } from 'lucide-react';
+import { BrandMark } from '@/components/BrandMark';
 import { useI18n } from '@/i18n';
 import { profile } from '@/content/profile';
 import { Button } from '@/components/ui/button';
@@ -8,6 +9,8 @@ import { Sheet, SheetClose, SheetContent, SheetDescription, SheetHeader, SheetTi
 import { Separator } from '@/components/ui/separator';
 import { cn } from '@/lib/utils';
 import { container } from '@/lib/ui';
+import { analyticsEnabled, trackPage } from '@/lib/analytics';
+import { primaryResumeKey, resumeHref } from '@/content/resume';
 
 function ThemeToggle() {
   const { t } = useI18n();
@@ -34,7 +37,7 @@ function LangToggle() {
   const { t, switchPath, otherLang } = useI18n();
   return (
     <Button asChild variant="outline" size="icon" className="size-10 text-xs font-bold sm:size-9">
-      <Link to={switchPath} hrefLang={otherLang} lang={otherLang} aria-label={t('lang.switchLabel')} title={t('lang.switchLabel')}>
+      <Link to={switchPath} hrefLang={otherLang} lang={otherLang} aria-label={`${otherLang.toUpperCase()}: ${t('lang.switchLabel')}`} title={t('lang.switchLabel')}>
         {otherLang.toUpperCase()}
       </Link>
     </Button>
@@ -51,6 +54,7 @@ export function Layout() {
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    trackPage(pathname);
   }, [pathname]);
   useEffect(() => {
     const on = () => setScrolled(window.scrollY > 20);
@@ -79,7 +83,7 @@ export function Layout() {
       <header className={cn('sticky top-0 z-40 w-full border-b transition-colors duration-300', scrolled ? 'border-border bg-background/80 backdrop-blur-md' : 'border-transparent')}>
         <div className={cn(container, 'flex h-16 items-center justify-between gap-4')}>
           <Link to={path('/')} className="flex items-center gap-2 font-bold" aria-label={profile.name}>
-            <CodeXml className="size-5 text-primary" aria-hidden="true" />
+            <BrandMark className="h-6 w-auto text-primary" />
             <span>{profile.shortName}</span>
           </Link>
           <nav className="hidden items-center gap-6 md:flex" aria-label="Primary">
@@ -128,6 +132,7 @@ export function Layout() {
           <div>
             <p className="font-semibold">{profile.name}</p>
             <p className="text-sm text-muted-foreground">{t('footer.built')}</p>
+            {analyticsEnabled && <p className="text-sm text-muted-foreground">{t('footer.analytics')}</p>}
           </div>
           <div className="flex gap-5 text-sm">
             <a className="text-muted-foreground transition-colors hover:text-foreground" href={profile.github} target="_blank" rel="noopener noreferrer">
@@ -139,6 +144,11 @@ export function Layout() {
             <a className="text-muted-foreground transition-colors hover:text-foreground" href={`mailto:${profile.email}`}>
               Email
             </a>
+            {resumeHref(primaryResumeKey) && (
+              <a className="text-muted-foreground transition-colors hover:text-foreground" href={resumeHref(primaryResumeKey)!} download data-event={`resume-download-${primaryResumeKey}`}>
+                {t('footer.resume')}
+              </a>
+            )}
           </div>
         </div>
       </footer>

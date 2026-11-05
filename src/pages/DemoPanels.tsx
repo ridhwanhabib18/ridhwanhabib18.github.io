@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState, type FormEvent } from 'react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardHeader } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Progress } from '@/components/ui/progress';
@@ -43,9 +43,9 @@ function Dashboard() {
   return (
     <Card aria-labelledby="dash-h">
       <CardHeader>
-        <CardTitle id="dash-h" className="text-lg">
+        <h2 id="dash-h" className="text-lg leading-snug font-semibold">
           {t('demo.dashboard')}
-        </CardTitle>
+        </h2>
         <div className="flex flex-wrap items-center gap-3 pt-1 text-sm">
           <span className={cn('size-2.5 rounded-full', status === 'connected' ? 'bg-success' : status === 'connecting' ? 'bg-warning' : 'bg-muted-foreground')} aria-hidden="true" />
           <span>
@@ -136,9 +136,9 @@ function Workflow() {
   return (
     <Card aria-labelledby="wf-h">
       <CardHeader>
-        <CardTitle id="wf-h" className="text-lg">
+        <h2 id="wf-h" className="text-lg leading-snug font-semibold">
           {t('demo.workflow')}
-        </CardTitle>
+        </h2>
         <CardDescription>{t('demo.workflowLead')}</CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">

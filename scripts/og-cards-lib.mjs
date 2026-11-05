@@ -1,5 +1,7 @@
 // HTML for the Open Graph share cards (1200x630). Pure and testable; scripts/og-images.mjs turns it into PNG files.
 
+import { markSvg } from './brand-mark.mjs';
+
 export const OG_WIDTH = 1200;
 export const OG_HEIGHT = 630;
 
@@ -81,7 +83,7 @@ export function cardHtml(card, fonts) {
   </div>
   <div class="foot">
     <div class="id">
-      ${fonts.photo ? `<img class="avatar" src="${fonts.photo}" alt="" />` : `<div class="mark"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m18 16 4-4-4-4M6 8l-4 4 4 4M14.5 4l-5 16"/></svg></div>`}
+      ${fonts.photo ? `<img class="avatar" src="${fonts.photo}" alt="" />` : `<div class="mark">${markSvg({ size: 18 })}</div>`}
       <strong>${escapeHtml(card.name)}</strong><span>${escapeHtml(card.role)}</span>
     </div>
     <div class="domain">${escapeHtml(card.domain)}</div>

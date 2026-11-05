@@ -16,6 +16,8 @@ export interface HeadData {
   lang: Lang;
   canonical: string;
   alternates: Record<Lang, string>;
+  /** schema.org JSON-LD as a ready-to-embed string (already escaped), when the page has structured data. */
+  jsonLd?: string;
 }
 
 /** During pre-rendering the server entry provides a collector here; on the client it is null. */
@@ -41,7 +43,7 @@ function setLink(selector: string, attrs: Record<string, string>) {
 }
 
 /** Unique title, description, canonical and hreflang per page. Pre-rendered at build time, kept in sync on navigation. */
-export function Seo({ title, description }: { title?: string; description: string }) {
+export function Seo({ title, description, jsonLd }: { title?: string; description: string; jsonLd?: object }) {
   const { lang, switchPath, otherLang } = useI18n();
   const { pathname } = useLocation();
   const collector = useContext(HeadCtx);
@@ -51,9 +53,18 @@ export function Seo({ title, description }: { title?: string; description: strin
 
   const image = ogImageUrl(pathname);
 
-  if (collector) collector.data = { title: full, pageTitle: title, image, description, lang, canonical: urls[lang], alternates: urls };
+  const ld = jsonLd ? JSON.stringify(jsonLd).replace(/</g, '\\u003c') : '';
+
+  if (collector) collector.data = { title: full, pageTitle: title, image, description, lang, canonical: urls[lang], alternates: urls, jsonLd: ld || undefined };
 
   useEffect(() => {
+    // Structured data: replace (or remove) the block of the page we navigated away from.
+    const existing = document.getElementById('ld-json');
+    if (ld) {
+      const el = existing ?? Object.assign(document.createElement('script'), { id: 'ld-json', type: 'application/ld+json' });
+      el.textContent = ld;
+      if (!existing) document.head.appendChild(el);
+    } else existing?.remove();
     document.title = full;
     document.documentElement.lang = lang;
     setMeta('meta[name="description"]', 'name', 'description', description);
@@ -70,7 +81,7 @@ export function Seo({ title, description }: { title?: string; description: strin
     setLink('link[rel="canonical"]', { rel: 'canonical', href: urls[lang] });
     (['en', 'id'] as Lang[]).forEach((l) => setLink(`link[rel="alternate"][hreflang="${l}"]`, { rel: 'alternate', hreflang: l, href: urls[l] }));
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [full, description, lang, urls.en, urls.id, image]);
+  }, [full, description, lang, urls.en, urls.id, image, ld]);
 
   return null;
 }

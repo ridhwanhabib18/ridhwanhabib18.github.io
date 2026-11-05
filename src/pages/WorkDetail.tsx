@@ -1,6 +1,7 @@
 import { Link, useParams } from 'react-router-dom';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { Seo } from '@/components/Seo';
+import { breadcrumbLd, graph } from '@/lib/jsonld';
 import { Diagram, MetricRow, StackChips } from '@/components/Parts';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -41,7 +42,15 @@ export default function WorkDetail() {
 
   return (
     <>
-      <Seo title={l(p.title)} description={l(p.summary)} />
+      <Seo
+        title={l(p.title)}
+        description={l(p.summary)}
+        jsonLd={graph(breadcrumbLd([
+          { name: t('nav.home'), path: path('/') },
+          { name: t('nav.work'), path: path('/work') },
+          { name: l(p.title), path: path(`/work/${p.slug}`) },
+        ]))}
+      />
       <article className={cn(narrow, 'py-12 leading-relaxed')}>
         <Button asChild variant="ghost" size="sm" className="-ml-3">
           <Link to={path('/work')}>

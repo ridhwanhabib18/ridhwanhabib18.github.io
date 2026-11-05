@@ -5,8 +5,11 @@ import '@fontsource-variable/inter';
 import '@fontsource-variable/jetbrains-mono';
 import './styles/globals.css';
 import App from './App';
+import { initAnalytics } from './lib/analytics';
 
 const basename = import.meta.env.BASE_URL.replace(/\/$/, '');
+initAnalytics();
+
 const container = document.getElementById('root')!;
 
 const app = (

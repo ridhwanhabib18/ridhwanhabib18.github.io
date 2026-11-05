@@ -63,11 +63,11 @@ export default function Experience() {
                     </div>
 
                     <Collapsible open={!!open[r.id]} onOpenChange={(v) => setOpen((o) => ({ ...o, [r.id]: v }))} className="mt-3">
-                      <CollapsibleTrigger className="group flex w-full items-center justify-between border-t py-3 text-sm font-semibold outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50">
+                      <CollapsibleTrigger className="group flex w-full print:hidden items-center justify-between border-t py-3 text-sm font-semibold outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50">
                         {t('exp.responsibilities')}
                         <ChevronDown className="size-4 transition-transform duration-200 group-data-[state=open]:rotate-180" aria-hidden="true" />
                       </CollapsibleTrigger>
-                      <CollapsibleContent className="overflow-hidden data-[state=closed]:animate-collapsible-up data-[state=open]:animate-collapsible-down">
+                      <CollapsibleContent forceMount className="overflow-hidden data-[state=closed]:animate-collapsible-up data-[state=open]:animate-collapsible-down print:block print:h-auto">
                         <ul className={cn(bullets, 'pb-2')}>
                           {r.bullets.map((b) => (
                             <li key={l(b.text)}>

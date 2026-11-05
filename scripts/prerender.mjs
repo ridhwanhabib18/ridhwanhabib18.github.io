@@ -1,8 +1,9 @@
 // Pre-renders every route to static HTML for GitHub Pages, then writes 404.html, sitemap.xml and robots.txt.
 // Run after `vite build` (client) and `vite build --ssr src/entry-server.tsx --outDir dist-server`.
-import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { mkdirSync, readdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { basename, dirname, join } from 'node:path';
 import { pathToFileURL } from 'node:url';
+import { buildCsp, inlineScriptHashes, withCsp } from './csp-lib.mjs';
 import { generateOgImages } from './og-images.mjs';
 
 const SITE = process.env.SITE_URL ?? process.env.VITE_SITE_URL ?? 'https://ridhwanhabib18.github.io';
@@ -11,10 +12,19 @@ const BASE = (process.env.VITE_BASE ?? '/').replace(/\/$/, '');
 const { render, routes, ogExtras } = await import(pathToFileURL(join(process.cwd(), 'dist-server/entry-server.js')).href);
 const template = readFileSync('dist/index.html', 'utf8');
 
+// Content Security Policy (meta tag), allowing only this site's own files plus the hashes of its inline scripts.
+const csp = buildCsp({ hashes: inlineScriptHashes(template), analyticsCode: process.env.VITE_GOATCOUNTER_CODE || undefined });
+
+// Preload the two Latin font files so text shows in its final font as early as possible (less layout shift, faster LCP).
+const fontPreloads = readdirSync('dist/assets')
+  .filter((f) => /^(inter|jetbrains-mono)-latin-wght-normal-.*\.woff2$/.test(f))
+  .map((f) => `<link rel="preload" href="${BASE}/assets/${f}" as="font" type="font/woff2" crossorigin />`);
+
 const esc = (s) => s.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 
 function headTags(h) {
   return [
+    ...fontPreloads,
     `<link rel="canonical" href="${esc(h.canonical)}" />`,
     `<link rel="alternate" hreflang="en" href="${esc(h.alternates.en)}" />`,
     `<link rel="alternate" hreflang="id" href="${esc(h.alternates.id)}" />`,
@@ -29,6 +39,7 @@ function headTags(h) {
     `<meta property="og:image:alt" content="${esc(h.pageTitle ?? h.title)}" />`,
     `<meta name="twitter:card" content="summary_large_image" />`,
     `<meta name="twitter:image" content="${esc(h.image)}" />`,
+    ...(h.jsonLd ? [`<script id="ld-json" type="application/ld+json">${h.jsonLd}</script>`] : []),
   ].join('\n    ');
 }
 
@@ -40,13 +51,13 @@ function inject(html, head, body) {
   out = out.replace('</head>', `    ${headTags(head)}\n  </head>`);
   const rootEmpty = '<div id="root"></div>';
   if (!out.includes(rootEmpty)) throw new Error('prerender: <div id="root"></div> not found in dist/index.html');
-  return out.replace(rootEmpty, `<div id="root">${body}</div>`);
+  return withCsp(out.replace(rootEmpty, `<div id="root">${body}</div>`), csp);
 }
 
 const outFile = (route) => (route === '/' ? 'dist/index.html' : join('dist', route, 'index.html'));
 
 // The empty shell is kept as the 404 page: the client router renders its own not-found view.
-writeFileSync('dist/404.html', template);
+writeFileSync('dist/404.html', withCsp(template.replace('</head>', `    ${fontPreloads.join('\n    ')}\n  </head>`), csp));
 writeFileSync('dist/.nojekyll', '');
 
 const ogItems = [];

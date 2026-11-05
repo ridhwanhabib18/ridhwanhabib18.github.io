@@ -35,3 +35,12 @@ export const resumeVariants: ResumeVariant[] = [
     pdf: 'resume/ridhwan-habib-resume-analyst.pdf',
   },
 ];
+
+/** The variant offered by the one-click download buttons (the resume source marks "senior" as the recommended one). */
+export const primaryResumeKey: ResumeKey = 'senior';
+
+/** Public URL of a variant's PDF, or null when it has none. */
+export function resumeHref(key: ResumeKey): string | null {
+  const v = resumeVariants.find((x) => x.key === key);
+  return v?.pdf ? `${import.meta.env.BASE_URL}${v.pdf}` : null;
+}

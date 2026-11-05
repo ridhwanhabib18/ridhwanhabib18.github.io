@@ -1,11 +1,29 @@
 @import 'tailwindcss';
 @import 'tw-animate-css';
 
+/* Fallback faces sized like the web fonts, so the swap does not move the layout (CLS). */
+@font-face {
+  font-family: 'Inter Fallback';
+  src: local('Arial');
+  size-adjust: 107.64%;
+  ascent-override: 90.49%;
+  descent-override: 22.56%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: 'JetBrains Fallback';
+  src: local('Courier New');
+  size-adjust: 100%;
+  ascent-override: 102%;
+  descent-override: 30%;
+  line-gap-override: 0%;
+}
+
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
-  --font-sans: 'Inter Variable', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
-  --font-mono: 'JetBrains Mono Variable', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --font-sans: 'Inter Variable', 'Inter Fallback', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono Variable', 'JetBrains Fallback', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -114,23 +132,29 @@
   }
 }
 
-/* Scroll reveal. Content is visible in the pre-rendered HTML and without JavaScript;
-   it is only hidden once the head script has marked the page as "js". */
-.reveal {
-  transition:
-    opacity 500ms ease-out,
-    transform 500ms ease-out;
-}
-html.js .reveal:not(.is-shown) {
-  opacity: 0;
-  transform: translateY(0.75rem);
-}
-
-@media (prefers-reduced-motion: reduce) {
-  html.js .reveal:not(.is-shown) {
+/* Scroll reveal as a scroll-driven animation: no JavaScript, so nothing is hidden before the page is interactive.
+   Elements already in view are simply shown. Unsupported browsers and reduced-motion visitors see plain content. */
+@keyframes reveal-in {
+  from {
+    opacity: 0;
+    transform: translateY(0.75rem);
+  }
+  to {
     opacity: 1;
     transform: none;
   }
+}
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .reveal {
+      animation: reveal-in linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 35%;
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
   html:focus-within {
     scroll-behavior: auto;
   }
@@ -139,5 +163,49 @@ html.js .reveal:not(.is-shown) {
   *::after {
     animation: none !important;
     transition-duration: 0.01ms !important;
+  }
+}
+
+/* Printing (and "Save as PDF"): light, ink-friendly, without navigation, and without clipped animations. */
+@media print {
+  :root,
+  .dark {
+    --background: #fff;
+    --foreground: #111;
+    --card: #fff;
+    --card-foreground: #111;
+    --muted: #f2f2f2;
+    --muted-foreground: #444;
+    --secondary: #f2f2f2;
+    --secondary-foreground: #111;
+    --accent: #eee;
+    --border: #cfcfcf;
+    --primary: #26428b;
+    --success: #14532d;
+    --warning: #7c4a03;
+  }
+  html,
+  body {
+    background: #fff !important;
+    color: #111 !important;
+  }
+  header,
+  footer,
+  nav {
+    display: none !important;
+  }
+  .reveal {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  * {
+    animation: none !important;
+    box-shadow: none !important;
+  }
+  article,
+  section,
+  li,
+  figure {
+    break-inside: avoid;
   }
 }
