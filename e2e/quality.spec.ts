@@ -180,3 +180,22 @@ test.describe('the headline results count up', () => {
     await expect(first(page)).toHaveText('about 86% faster');
   });
 });
+
+test.describe('the Experience timeline', () => {
+  const animationOf = (page: Page, selector: string, pseudo?: string) =>
+    page.evaluate(([sel, ps]) => getComputedStyle(document.querySelector(sel as string)!, (ps as string) || null).animationName, [selector, pseudo ?? '']);
+
+  test('grows a progress line and lights up the dots while scrolling', async ({ page }) => {
+    await page.goto('/experience/');
+    await page.waitForLoadState('networkidle');
+    expect(await animationOf(page, 'ol.timeline-progress', '::after')).toBe('timeline-grow');
+    expect(await animationOf(page, '.timeline-dot')).toBe('timeline-dot-on');
+  });
+
+  test('stays plain for visitors who prefer reduced motion', async ({ page }) => {
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    await page.goto('/experience/');
+    expect(await animationOf(page, 'ol.timeline-progress', '::after')).toBe('none');
+    expect(await animationOf(page, '.timeline-dot')).toBe('none');
+  });
+});

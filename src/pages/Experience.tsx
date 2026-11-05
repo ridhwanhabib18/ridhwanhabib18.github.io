@@ -16,7 +16,7 @@ import { capitalize, cn } from '@/lib/utils';
 
 function Dot({ current }: { current?: boolean }) {
   return (
-    <span className="absolute top-6 -left-6 flex size-4 sm:-left-8 items-center justify-center rounded-full border-2 border-primary bg-background" aria-hidden="true">
+    <span className="timeline-dot absolute top-6 -left-6 flex size-4 sm:-left-8 items-center justify-center rounded-full border-2 border-primary bg-background" aria-hidden="true">
       {current && <span className="size-1.5 animate-pulse-soft rounded-full bg-primary" />}
     </span>
   );
@@ -38,7 +38,7 @@ export default function Experience() {
           <p className="mt-3 max-w-2xl text-lg text-muted-foreground">{t('exp.lead')}</p>
         </header>
 
-        <ol className="relative max-w-3xl space-y-5 pl-6 sm:pl-8 before:absolute before:top-2 before:bottom-2 before:left-[7px] before:w-px before:bg-border">
+        <ol className="timeline-progress relative max-w-3xl space-y-5 pl-6 sm:pl-8 before:absolute before:top-2 before:bottom-2 before:left-[7px] before:w-px before:bg-border">
           {roles.map((r, i) => {
             const current = r.end === null;
             const projs = r.projectSlugs.map((s) => getProject(s)).filter((p): p is NonNullable<typeof p> => !!p);
