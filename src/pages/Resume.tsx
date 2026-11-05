@@ -20,7 +20,7 @@ export default function Resume() {
         <p className="mt-3 mb-8 text-lg text-muted-foreground">{t('resume.lead')}</p>
 
         <Tabs defaultValue="lead">
-          <TabsList aria-label={t('resume.title')}>
+          <TabsList aria-label={t('resume.title')} className="w-full justify-start sm:w-fit">
             {resumeVariants.map((v) => (
               <TabsTrigger key={v.key} value={v.key}>
                 {l(v.label)}

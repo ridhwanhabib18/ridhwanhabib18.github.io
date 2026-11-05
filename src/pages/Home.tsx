@@ -32,7 +32,7 @@ export default function Home() {
       <section className="relative overflow-hidden border-b bg-[radial-gradient(60rem_26rem_at_50%_-8%,color-mix(in_oklab,var(--primary)_16%,transparent),transparent_70%)]">
         <div className={cn(container, 'flex flex-col items-center py-20 text-center sm:py-28')}>
           {profile.available && (
-            <Badge variant="outline" className={cn(rise, 'gap-2 px-3 py-1 text-sm font-normal text-muted-foreground')}>
+            <Badge variant="outline" className={cn(rise, 'max-w-full gap-2 rounded-2xl px-3 py-1 text-center text-sm font-normal whitespace-normal text-muted-foreground sm:rounded-full')}>
               <span className="size-2 rounded-full bg-success" aria-hidden="true" />
               {l(profile.availability)}
             </Badge>

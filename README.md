@@ -20,6 +20,7 @@ Cepat (Bahasa Indonesia): jalankan `npm install`, lalu `npm run dev`, dan buka h
 | `npm test` | Content, guardrail, demo and render tests |
 | `npm run build` | Guardrail lint, typecheck, client build, SSR build, pre-render of every page, sitemap and 404 page |
 | `npm run preview` | Serve `dist/` locally |
+| `npm run test:e2e` | Layout tests in a real browser at phone and desktop widths (run `npm run build` first) |
 | `npm run extract` | Regenerate `src/content/resume.generated.json` from `resume/resume_us.typ` (also runs before `dev` and `build`) |
 | `npm run resume` | Compile the three resume PDFs (PDF 2.0) into `public/resume/` (needs Typst 0.14 or newer) |
 
@@ -49,6 +50,19 @@ Notes:
 | The server does not start when the folder opens | Automatic tasks are not approved. Run **Tasks: Manage Automatic Tasks in Folder**, choose **Allow**, and reopen the folder. |
 | `Port 5180 is already in use` | Another process owns the port. Close it, or change the port in `vite.config.ts` and `.vscode/launch.json`. |
 | F5 asks that the task is already active | The automatic task is already running. Use the "server already running" launch configuration instead. |
+
+## Layout tests (phone and desktop)
+
+`e2e/responsive.spec.ts` uses Playwright with the browser already installed on the machine (Edge on Windows, Chrome elsewhere; override with `PW_CHANNEL`). No browser download is needed.
+
+```bash
+npm run build
+npm run test:e2e
+```
+
+At 360 and 390 px wide (touch emulation) it checks every main page, in English and Indonesian, for content that sticks out of the screen or is clipped, that the Resume tabs stay inside their container, that the menu opens, navigates and closes, that header buttons are at least 40 px, and that the architecture diagram is a readable list instead of a sideways-scrolling picture. At 1280 px it checks that the diagram is drawn as a picture. CI runs these tests before deploying.
+
+To look at a phone layout yourself: run `npm run dev -- --host` and open the printed network address on your phone (same Wi-Fi), or use the device toolbar in the browser's developer tools.
 
 ## UI
 

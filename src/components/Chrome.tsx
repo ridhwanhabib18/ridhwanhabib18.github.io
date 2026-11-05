@@ -24,7 +24,7 @@ function ThemeToggle() {
     setDark(next);
   };
   return (
-    <Button type="button" variant="outline" size="icon" onClick={toggle} aria-label={t('theme.toggle')} title={t('theme.toggle')}>
+    <Button type="button" variant="outline" size="icon" className="size-10 sm:size-9" onClick={toggle} aria-label={t('theme.toggle')} title={t('theme.toggle')}>
       {dark ? <Sun /> : <Moon />}
     </Button>
   );
@@ -33,7 +33,7 @@ function ThemeToggle() {
 function LangToggle() {
   const { t, switchPath, otherLang } = useI18n();
   return (
-    <Button asChild variant="outline" size="icon" className="text-xs font-bold">
+    <Button asChild variant="outline" size="icon" className="size-10 text-xs font-bold sm:size-9">
       <Link to={switchPath} hrefLang={otherLang} lang={otherLang} aria-label={t('lang.switchLabel')} title={t('lang.switchLabel')}>
         {otherLang.toUpperCase()}
       </Link>
@@ -94,7 +94,7 @@ export function Layout() {
             <ThemeToggle />
             <Sheet>
               <SheetTrigger asChild>
-                <Button type="button" variant="outline" size="icon" className="md:hidden" aria-label={t('nav.menu')}>
+                <Button type="button" variant="outline" size="icon" className="size-10 sm:size-9 md:hidden" aria-label={t('nav.menu')}>
                   <Menu />
                 </Button>
               </SheetTrigger>

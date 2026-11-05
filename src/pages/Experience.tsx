@@ -16,7 +16,7 @@ import { capitalize, cn } from '@/lib/utils';
 
 function Dot({ current }: { current?: boolean }) {
   return (
-    <span className="absolute top-6 -left-8 flex size-4 items-center justify-center rounded-full border-2 border-primary bg-background" aria-hidden="true">
+    <span className="absolute top-6 -left-6 flex size-4 sm:-left-8 items-center justify-center rounded-full border-2 border-primary bg-background" aria-hidden="true">
       {current && <span className="size-1.5 animate-pulse-soft rounded-full bg-primary" />}
     </span>
   );
@@ -38,7 +38,7 @@ export default function Experience() {
           <p className="mt-3 max-w-2xl text-lg text-muted-foreground">{t('exp.lead')}</p>
         </header>
 
-        <ol className="relative max-w-3xl space-y-5 pl-8 before:absolute before:top-2 before:bottom-2 before:left-[7px] before:w-px before:bg-border">
+        <ol className="relative max-w-3xl space-y-5 pl-6 sm:pl-8 before:absolute before:top-2 before:bottom-2 before:left-[7px] before:w-px before:bg-border">
           {roles.map((r, i) => {
             const current = r.end === null;
             const projs = r.projectSlugs.map((s) => getProject(s)).filter((p): p is NonNullable<typeof p> => !!p);
@@ -46,7 +46,7 @@ export default function Experience() {
               <Reveal as="li" key={r.id} delay={i * 0.08} className="relative">
                 <Dot current={current} />
                 <Card className="gap-3">
-                  <CardContent>
+                  <CardContent className="px-4 sm:px-5">
                     <div className="flex flex-wrap items-start justify-between gap-3">
                       <div>
                         <h2 className="flex flex-wrap items-center gap-2 text-xl font-bold">
@@ -55,7 +55,7 @@ export default function Experience() {
                         </h2>
                         <p className="mt-1 font-medium text-primary">{l(r.title)}</p>
                       </div>
-                      <p className="text-right text-sm text-muted-foreground">
+                      <p className="text-left text-sm text-muted-foreground sm:text-right">
                         {r.start} – {r.end ?? t('exp.present')}
                         <br />
                         {r.location}

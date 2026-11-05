@@ -49,7 +49,7 @@ export function StackChips({ items, className }: { items: string[]; className?: 
     <ul className={cn('flex flex-wrap gap-1.5', className)}>
       {items.map((s) => (
         <li key={s}>
-          <Badge variant="secondary" className="font-mono text-[0.7rem] font-normal">
+          <Badge variant="secondary" className="font-mono text-[0.7rem] font-normal whitespace-normal text-left">
             {s}
           </Badge>
         </li>
@@ -105,6 +105,38 @@ const nodeKind = {
   service: 'fill-secondary stroke-border',
 } as const;
 
+const chipKind = {
+  client: 'border-primary/60 bg-primary/10',
+  data: 'border-success/60 bg-success/10',
+  external: 'border-warning/60 bg-warning/10',
+  service: 'border-border bg-secondary',
+} as const;
+
+/** Phone-sized view of the diagram: a list of connections instead of a sideways-scrolling picture. Kept for screen readers on larger screens. */
+function DiagramList({ def, title }: { def: DiagramDef; title: string }) {
+  const node = (id: string) => def.nodes.find((n) => n.id === id)!;
+  const chip = (id: string) => {
+    const n = node(id);
+    return <span className={cn('rounded-md border px-2 py-0.5 text-xs font-medium break-words', chipKind[n.kind ?? 'service'])}>{n.label}</span>;
+  };
+  return (
+    <div className="sm:sr-only">
+      <ul aria-label={title} className="space-y-2.5 rounded-xl border bg-card p-4">
+        {def.edges.map((e, i) => (
+          <li key={i} className="flex flex-wrap items-center gap-x-2 gap-y-1 text-sm">
+            {chip(e.from)}
+            <span aria-hidden="true" className="text-muted-foreground">
+              →
+            </span>
+            {chip(e.to)}
+            {e.label && <span className="font-mono text-xs text-muted-foreground">({e.label})</span>}
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
 /** Themable, generic architecture diagram drawn from data. */
 export function Diagram({ def, title }: { def: DiagramDef; title: string }) {
   const maxCol = Math.max(...def.nodes.map((n) => n.col));
@@ -116,7 +148,9 @@ export function Diagram({ def, title }: { def: DiagramDef; title: string }) {
     return { x: n.col * COL_W + (COL_W - BOX_W) / 2, y: n.row * ROW_H + 8 };
   };
   return (
-    <figure className="overflow-x-auto rounded-xl border bg-card p-4">
+    <>
+      <DiagramList def={def} title={title} />
+      <figure className="hidden overflow-x-auto rounded-xl border bg-card p-4 sm:block">
       <svg viewBox={`0 0 ${width} ${height}`} role="img" aria-label={title} width="100%" className="h-auto min-w-[34rem]">
         <defs>
           <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
@@ -161,6 +195,7 @@ export function Diagram({ def, title }: { def: DiagramDef; title: string }) {
           );
         })}
       </svg>
-    </figure>
+      </figure>
+    </>
   );
 }

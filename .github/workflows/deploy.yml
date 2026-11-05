@@ -44,6 +44,8 @@ jobs:
         run: npm run resume
       - run: npm test
       - run: npm run build
+      - name: Layout tests (phone and desktop widths)
+        run: npm run test:e2e
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist
