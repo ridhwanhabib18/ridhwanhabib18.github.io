@@ -79,7 +79,7 @@ Everything in a public repository, including its history, is readable. Review co
 ## Resume PDFs
 
 The resume source is `resume/main.typ` (Typst). One file produces three variants, chosen with `--input role=lead|senior|analyst`.
-PDFs are exported as **PDF 2.0** (`--pdf-standard 2.0`, Typst 0.14+), and the build fails if a file does not start with `%PDF-2.0`. Modern viewers (Acrobat, Chrome, Edge, Firefox, Preview) open PDF 2.0; some older viewers or applicant-tracking parsers may not. To use the widest-compatibility version instead, set `PDF_VERSION` to `'1.7'` in `scripts/build-resume.mjs`.
+PDFs are exported as **PDF 2.0** (`--pdf-standard 2.0`, Typst 0.14+), and the build fails if a file does not start with `%PDF-2.0`. Modern viewers (Acrobat, Chrome, Edge, Firefox, Preview) open PDF 2.0; some older viewers or applicant-tracking parsers may not. To use the widest-compatibility version instead, set `PDF_VERSION` to `'1.7'` in `scripts/build-resume.mjs`. See [`docs/resume-pdf-version.md`](docs/resume-pdf-version.md) for the reasoning and the trade-off.
 
 - **CI:** `.github/workflows/deploy.yml` installs Typst, runs `npm run resume`, then builds the site, so `public/resume/ridhwan-habib-resume-<role>.pdf` is generated on every push and the Resume page links to it. The PDFs are build output and are not committed.
 - **Locally:** install Typst 0.14 or newer (`winget install Typst.Typst`) and run `npm run resume`; the download buttons then work in `npm run dev` and `npm run preview`. Without the files, the download link returns 404 locally only.
