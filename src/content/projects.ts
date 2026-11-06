@@ -316,6 +316,7 @@ export const projects: Project[] = [
     tags: ['realtime', 'data', 'integration'],
     stack: ['WinForms', 'ClickOnce', 'SignalR', 'Quartz.NET'],
     metrics: [
+      { label: { en: 'Engineering time on manual data handling', id: 'Waktu engineering untuk penanganan data manual' }, value: { en: 'about 86% less', id: 'sekitar 86% lebih sedikit' }, type: 'actual' },
       { label: { en: 'Production progress and adjustment rate', id: 'Progres produksi dan adjustment rate' }, value: { en: 'visible live on dashboards', id: 'terlihat langsung di dashboard' }, type: 'actual' },
     ],
     sections: {
@@ -340,8 +341,14 @@ export const projects: Project[] = [
         ],
       },
       result: {
-        en: ['Live production progress and adjustment-rate dashboards fed by automatic data collection.'],
-        id: ['Dashboard progres produksi dan adjustment rate secara langsung, dari pengumpulan data otomatis.'],
+        en: [
+          'Live production progress and adjustment-rate dashboards fed by automatic data collection.',
+          'Engineering time on manual inspection data handling (collecting, cleaning and reporting the data) about 86% less, measured after go-live.',
+        ],
+        id: [
+          'Dashboard progres produksi dan adjustment rate secara langsung, dari pengumpulan data otomatis.',
+          'Waktu engineering untuk penanganan data inspeksi manual (mengumpulkan, membersihkan, dan melaporkan data) sekitar 86% lebih sedikit, diukur setelah go-live.',
+        ],
       },
     },
     diagram: {

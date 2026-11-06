@@ -31,7 +31,7 @@
         },
         {
           "title": "Process Inspection Data System",
-          "text": "automated inspection data collection from line PCs (WinForms/ClickOnce) with live production progress dashboards (SignalR, Quartz.NET)"
+          "text": "automated inspection data collection from line PCs (WinForms/ClickOnce) with live production progress dashboards (SignalR, Quartz.NET). Cut engineering time on manual inspection data handling by about 86%"
         },
         {
           "title": "Production Planning & Scheduling System",

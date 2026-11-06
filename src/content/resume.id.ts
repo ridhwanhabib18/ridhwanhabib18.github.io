@@ -22,8 +22,8 @@ export const idTranslations: Record<string, string> = {
     "mengganti distribusi file program lini lewat flash disk dengan manajemen terpusat, instalasi otomatis, dan monitoring kecocokan file secara real-time (ASP.NET Core, React, SignalR, klien WinForms), diluncurkan ke beberapa pabrik. Memangkas pemulihan lini setelah perubahan program sekitar 90% (jam menjadi menit) dan menghilangkan instalasi manual oleh 2 orang",
   "Process Inspection Data System":
     "Sistem Data Inspeksi Proses",
-  "automated inspection data collection from line PCs (WinForms/ClickOnce) with live production progress dashboards (SignalR, Quartz.NET)":
-    "mengotomatiskan pengumpulan data inspeksi dari PC lini (WinForms/ClickOnce) dengan dashboard progres produksi secara langsung (SignalR, Quartz.NET)",
+  "automated inspection data collection from line PCs (WinForms/ClickOnce) with live production progress dashboards (SignalR, Quartz.NET). Cut engineering time on manual inspection data handling by about 86%":
+    "mengotomatiskan pengumpulan data inspeksi dari PC lini (WinForms/ClickOnce) dengan dashboard progres produksi secara langsung (SignalR, Quartz.NET). Memangkas waktu engineering untuk penanganan data inspeksi manual sekitar 86%",
   "Production Planning & Scheduling System":
     "Sistem Perencanaan & Penjadwalan Produksi",
   "replaced manual Excel planning with automated hourly planning, simulation and approval workflow on .NET 10, EF Core, React and a clustered Quartz.NET service. Target: about 48% less planner workload":
