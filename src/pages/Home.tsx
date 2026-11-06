@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link } from '@/components/TransitionLink';
 import { ArrowRight, Download } from 'lucide-react';
 import { CertCard } from '@/components/CertCard';
 import { CountUp } from '@/components/CountUp';

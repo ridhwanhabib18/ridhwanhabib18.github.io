@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link } from '@/components/TransitionLink';
 import { ChevronDown } from 'lucide-react';
 import { Seo } from '@/components/Seo';
 import { Reveal } from '@/components/Reveal';

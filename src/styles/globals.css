@@ -290,6 +290,24 @@
   }
 }
 
+/* Page transitions (View Transitions API, started from TransitionLink.tsx): a short cross-fade of the page while the
+   header stays where it is. Browsers without the API simply change page as before. */
+.site-header {
+  view-transition-name: site-header;
+}
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 0.2s;
+  animation-timing-function: ease-out;
+}
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html:focus-within {
     scroll-behavior: auto;

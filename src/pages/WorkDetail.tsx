@@ -1,4 +1,5 @@
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
+import { Link } from '@/components/TransitionLink';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { Seo } from '@/components/Seo';
 import { breadcrumbLd, graph } from '@/lib/jsonld';

@@ -277,3 +277,50 @@ test.describe('cards lift on hover and the certification badge glints once', () 
     expect(await card.evaluate((el) => getComputedStyle(el).transform)).toBe('none');
   });
 });
+
+test.describe('page transitions', () => {
+  const countTransitions = `
+    window.__vt = 0;
+    if (document.startViewTransition) {
+      const original = document.startViewTransition.bind(document);
+      document.startViewTransition = (cb) => { window.__vt++; return original(cb); };
+    }`;
+
+  test('navigating with a link uses a view transition, lands on the new page and scrolls to the top', async ({ page }) => {
+    await page.addInitScript(countTransitions);
+    await page.goto('/');
+    await page.waitForLoadState('networkidle');
+    await page.evaluate(() => window.scrollTo(0, 400));
+    await page.getByRole('banner').getByRole('link', { name: 'Work', exact: true }).click();
+    await expect(page).toHaveURL(/\/work\/?$/);
+    await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
+    expect(await page.evaluate(() => window.scrollY)).toBe(0);
+    expect(await page.evaluate(() => (window as unknown as { __vt: number }).__vt)).toBe(1);
+  });
+
+  test('a modified click (new tab) is left to the browser', async ({ page, context }) => {
+    await page.addInitScript(countTransitions);
+    await page.goto('/');
+    const [popup] = await Promise.all([context.waitForEvent('page'), page.getByRole('banner').getByRole('link', { name: 'Work', exact: true }).click({ modifiers: ['Control'] })]);
+    await popup.waitForLoadState();
+    expect(popup.url()).toMatch(/\/work\/?$/);
+    expect(await page.evaluate(() => (window as unknown as { __vt: number }).__vt)).toBe(0);
+  });
+
+  test('no transition is started for visitors who prefer reduced motion, and navigation still works', async ({ page }) => {
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    await page.addInitScript(countTransitions);
+    await page.goto('/');
+    await page.getByRole('banner').getByRole('link', { name: 'About', exact: true }).click();
+    await expect(page).toHaveURL(/\/about\/?$/);
+    expect(await page.evaluate(() => (window as unknown as { __vt: number }).__vt)).toBe(0);
+  });
+
+  test('browsers without the API navigate as before', async ({ page }) => {
+    await page.addInitScript('delete Document.prototype.startViewTransition;');
+    await page.goto('/');
+    expect(await page.evaluate(() => 'startViewTransition' in document)).toBe(false);
+    await page.getByRole('banner').getByRole('link', { name: 'Contact', exact: true }).click();
+    await expect(page).toHaveURL(/\/contact\/?$/);
+  });
+});

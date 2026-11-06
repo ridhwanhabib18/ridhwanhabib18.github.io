@@ -1,5 +1,5 @@
 import type { CSSProperties } from 'react';
-import { Link } from 'react-router-dom';
+import { Link } from '@/components/TransitionLink';
 import { ArrowRight } from 'lucide-react';
 import { useI18n } from '@/i18n';
 import type { DiagramDef, Metric, Project } from '@/content/types';

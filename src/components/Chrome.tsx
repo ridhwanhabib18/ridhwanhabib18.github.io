@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
-import { Link, NavLink, Outlet, useLocation } from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router-dom';
+import { Link, NavLink } from '@/components/TransitionLink';
 import { Menu, Moon, Sun } from 'lucide-react';
 import { BrandMark } from '@/components/BrandMark';
 import { useI18n } from '@/i18n';
@@ -53,7 +54,9 @@ export function Layout() {
   const { pathname } = useLocation();
 
   useEffect(() => {
-    window.scrollTo(0, 0);
+    // a new page starts at the top at once; smooth scrolling (html:focus-within in globals.css) would leave the page
+    // transition capturing the old scroll position
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
     trackPage(pathname);
   }, [pathname]);
   useEffect(() => {
@@ -80,7 +83,7 @@ export function Layout() {
       >
         {t('nav.skip')}
       </a>
-      <header className={cn('sticky top-0 z-40 w-full border-b transition-colors duration-300', scrolled ? 'border-border bg-background/80 backdrop-blur-md' : 'border-transparent')}>
+      <header className={cn('site-header sticky top-0 z-40 w-full border-b transition-colors duration-300', scrolled ? 'border-border bg-background/80 backdrop-blur-md' : 'border-transparent')}>
         <div className={cn(container, 'flex h-16 items-center justify-between gap-4')}>
           <Link to={path('/')} className="flex items-center gap-2 font-bold" aria-label={profile.name}>
             <BrandMark className="h-6 w-auto text-primary" />
