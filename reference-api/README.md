@@ -1,12 +1,12 @@
 # Reference API (ASP.NET Core)
 
-A small, real back end that mirrors what the browser demo on the portfolio site simulates. GitHub Pages can only host static files, so the site's live demo runs in the browser; this folder shows the same ideas running on the actual stack: ASP.NET Core minimal APIs, SignalR, and automated tests. It is **not deployed**; run it locally.
+A small, real back end: an approval workflow and a live production-line feed on ASP.NET Core minimal APIs, SignalR, and automated tests. GitHub Pages can only host static files, so the portfolio site cannot run it; this folder shows the same ideas on the actual stack. (It was first modelled on a live demo that ran in the browser; that demo was removed from the site on 2026-11-06.) It is **not deployed**; run it locally.
 
-| What the site demo does in the browser | What this API does on a server |
+| What | How |
 |---|---|
-| Approval workflow in `src/demo/workflow.ts` (state machine, validation, IndexedDB) | `POST /api/requests`, `POST /api/requests/{id}/{review\|approve\|reject}`; same rules in `Workflow.cs`; 400, 404 and 409 answers |
-| Simulated production line pushed by a Web Worker | SignalR hub at `/hubs/line` pushing an `update` message every second (`Line.cs`) |
-| All data is synthetic | All data is synthetic; nothing here comes from a real system |
+| Approval workflow | `POST /api/requests`, `POST /api/requests/{id}/{review\|approve\|reject}`; state machine and validation in `Workflow.cs`; 400, 404 and 409 answers |
+| Simulated production line | SignalR hub at `/hubs/line` pushing an `update` message every second (`Line.cs`) |
+| Data | All data is synthetic; nothing here comes from a real system |
 
 ## Run it
 

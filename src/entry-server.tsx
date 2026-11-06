@@ -20,7 +20,7 @@ export function render(url: string): { html: string; head: HeadData | undefined 
 export { ogExtras } from './og';
 export { translationRows } from './translations';
 
-const pages = ['/', '/work', '/experience', '/demo', '/about', '/resume', '/contact', ...projects.map((p) => `/work/${p.slug}`)];
+const pages = ['/', '/work', '/experience', '/about', '/resume', '/contact', ...projects.map((p) => `/work/${p.slug}`)];
 
 /** Every route to pre-render, in both languages. */
 export const routes: string[] = pages.flatMap((p) => [p, p === '/' ? '/id' : `/id${p}`]);

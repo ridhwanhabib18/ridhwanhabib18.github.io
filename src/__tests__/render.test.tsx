@@ -11,7 +11,7 @@ const render = (url: string) =>
     </MemoryRouter>,
   );
 
-const routes = ['/', '/work', '/experience', '/demo', '/about', '/resume', '/contact', ...projects.map((p) => `/work/${p.slug}`)];
+const routes = ['/', '/work', '/experience', '/about', '/resume', '/contact', ...projects.map((p) => `/work/${p.slug}`)];
 
 describe('static render of every route', () => {
   for (const prefix of ['', '/id']) {

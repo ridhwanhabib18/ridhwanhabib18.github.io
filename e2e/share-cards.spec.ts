@@ -12,7 +12,7 @@ async function sitemapPaths(request: import('@playwright/test').APIRequestContex
 
 test('every page has an og:image that exists and is a 1200x630 PNG', async ({ request }) => {
   const paths = await sitemapPaths(request);
-  expect(paths.length).toBeGreaterThanOrEqual(30);
+  expect(paths.length).toBeGreaterThanOrEqual(20); // every page in both languages; a sanity floor, not an exact count
 
   const seen = new Set<string>();
   for (const path of paths) {

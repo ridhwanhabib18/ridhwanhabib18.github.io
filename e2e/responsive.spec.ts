@@ -12,7 +12,6 @@ const ROUTES = [
   '/work/production-planning-scheduling/',
   '/work/paperless-invoice-approval/',
   '/experience/',
-  '/demo/',
   '/about/',
   '/resume/',
   '/contact/',

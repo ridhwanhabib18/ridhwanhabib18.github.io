@@ -11,7 +11,7 @@ public sealed record LineState(int Produced, int Target, int Adjustments, int Ti
 
 public sealed record LineUpdate(int Produced, int Target, int Adjustments, int Tick, int AdjustRate);
 
-/// <summary>One step of the simulation: the same rules as the browser demo (src/demo/simulation.ts).</summary>
+/// <summary>One step of the production-line simulation.</summary>
 public static class LineSimulation
 {
     public static (LineState State, LineUpdate Update) Step(LineState previous, Random random)

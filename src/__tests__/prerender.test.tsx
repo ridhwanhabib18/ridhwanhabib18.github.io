@@ -4,7 +4,7 @@ import { projects } from '../content/projects';
 
 describe('pre-render entry', () => {
   it('lists every page in both languages', () => {
-    const pageCount = 7 + projects.length;
+    const pageCount = 6 + projects.length;
     expect(routes).toHaveLength(pageCount * 2);
     expect(routes).toContain('/');
     expect(routes).toContain('/id');
@@ -34,9 +34,4 @@ describe('pre-render entry', () => {
     expect(id.alternates.en).toBe(en.canonical);
   });
 
-  it('renders the demo page shell with its heading even though the panels load on the client', () => {
-    const { html } = render('/demo');
-    expect(html).toContain('Live demo');
-    expect(html).toContain('aria-busy="true"');
-  });
 });

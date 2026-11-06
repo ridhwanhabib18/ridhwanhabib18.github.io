@@ -9,7 +9,6 @@ export default defineConfig({
   base: process.env.VITE_BASE ?? '/',
   plugins: [react(), tailwindcss()],
   resolve: { alias: { '@': path.resolve(import.meta.dirname, 'src') } },
-  worker: { format: 'es' },
   // Fixed port so the VS Code launch configurations can always find the site.
   server: { port: 5180, strictPort: true },
   test: { environment: 'node', include: ['src/**/*.test.{ts,tsx}'] },

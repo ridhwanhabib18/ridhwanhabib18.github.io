@@ -17,7 +17,7 @@ Cepat (Bahasa Indonesia): jalankan `npm install`, lalu `npm run dev`, dan buka h
 | Command | What it does |
 |---|---|
 | `npm run dev` | Dev server with hot reload on port 5180 (fixed, `strictPort`) |
-| `npm test` | Content, guardrail, demo and render tests |
+| `npm test` | Content, guardrail and render tests |
 | `npm run build` | Guardrail lint, typecheck, client build, SSR build, pre-render of every page, sitemap and 404 page |
 | `npm run preview` | Serve `dist/` locally |
 | `npm run lighthouse` | Lighthouse scores for 9 pages on phone and desktop (run `npm run build` first; fails below `LH_MIN`, default 90) |
@@ -108,7 +108,7 @@ Everything is organised under four principles, **POUR**: Perceivable, Operable, 
 | **Reduced motion** (2.3.3 and good practice) | Animations stop for people who ask the system for less motion | Animations are switched off for `prefers-reduced-motion` |
 
 **How this repository checks it.**
-1. **axe** (an open-source accessibility engine, the same one Lighthouse uses) runs in `e2e/quality.spec.ts` on 19 pages, in the dark and the light theme, against the WCAG 2.0, 2.1 and 2.2 level A and AA rules. A violation fails the test and therefore the deploy.
+1. **axe** (an open-source accessibility engine, the same one Lighthouse uses) runs in `e2e/quality.spec.ts` on 17 pages, in the dark and the light theme, against the WCAG 2.0, 2.1 and 2.2 level A and AA rules. A violation fails the test and therefore the deploy.
 2. **Lighthouse** gives an Accessibility score (the same engine, a smaller rule set).
 3. **By hand**, now and then: press Tab through every page without a mouse, zoom to 200%, and listen to one page with a screen reader (NVDA on Windows is free).
 
@@ -134,7 +134,7 @@ Measured with `LH_RUNS=3 npm run lighthouse` (median of 3) on the built site aft
 
 - **Layout shift (CLS) is 0** on every page; **LCP** is 0.8 to 0.9 s on most pages (2.3 s on Experience).
 - Mobile Performance moves a few points between runs. Single runs of `/resume/` (85) and `/about/` (90) came out low while the machine was busy; measured again three times each they scored 98 to 100 and 97 to 100. Use `LH_RUNS=3 npm run lighthouse` for steadier numbers.
-- The Accessibility score of 100 and the axe tests (WCAG 2.2 A and AA, dark and light theme, 19 pages) agree. As explained above, that is a strong sign but not a certificate.
+- The Accessibility score of 100 and the axe tests (WCAG 2.2 A and AA, dark and light theme, 17 pages) agree. As explained above, that is a strong sign but not a certificate.
 
 What was fixed because of these measurements: the home and Experience pages hid their top content until JavaScript had run (LCP 2.5 s), text jumped when the web font arrived (CLS 0.085 on Work), the About page used an invalid definition list, the Demo page skipped a heading level, and the language button's accessible name did not contain its visible text "ID".
 
@@ -150,7 +150,7 @@ npm run test:e2e
 | File | What it checks |
 |---|---|
 | `e2e/responsive.spec.ts` | At 360 and 390 px (touch emulation), every main page in English and Indonesian: nothing sticks out of the screen or is clipped, the Resume tabs stay inside their container, the menu opens, navigates and closes, header buttons are at least 40 px, the architecture diagram is a readable list. At 1280 px the diagram is a picture. |
-| `e2e/quality.spec.ts` | **WCAG 2.2 AA with axe** on 19 pages in the dark and the light theme; the **Content Security Policy** blocks nothing the site needs (including the demo's Web Worker); **structured data** is valid; icons, manifest and font preloads are served; the one-click resume buttons and the copy-email button work; the **print layout** hides navigation and shows every role |
+| `e2e/quality.spec.ts` | **WCAG 2.2 AA with axe** on 17 pages in the dark and the light theme; the **Content Security Policy** blocks nothing the site needs; **structured data** is valid; icons, manifest and font preloads are served; the one-click resume buttons and the copy-email button work; the **print layout** hides navigation and shows every role |
 | `e2e/share-cards.spec.ts` | Every page points at an existing 1200x630 PNG share image; the profile photo loads |
 
 To look at a phone layout yourself: run `npm run dev -- --host` and open the printed network address on your phone (same Wi-Fi), or use the device toolbar in the browser's developer tools. CI runs all of these before it deploys.
@@ -170,7 +170,7 @@ To look at a phone layout yourself: run `npm run dev -- --host` and open the pri
 
 ## Security: Content Security Policy
 
-GitHub Pages cannot send HTTP headers, so the build puts a Content Security Policy in a `<meta>` tag at the top of every page (`scripts/csp-lib.mjs`, applied by `scripts/prerender.mjs`). It allows only the site's own files, the hash of its one inline script (the theme switch, computed at build time), inline styles, `data:` images and `data:` fonts, and forbids plugins (`object-src 'none'`). Anything else the browser is asked to load is blocked, which limits what an injected script could do. A test loads every page and the demo and fails on any blocked request. The policy is not applied in `npm run dev`.
+GitHub Pages cannot send HTTP headers, so the build puts a Content Security Policy in a `<meta>` tag at the top of every page (`scripts/csp-lib.mjs`, applied by `scripts/prerender.mjs`). It allows only the site's own files, the hash of its one inline script (the theme switch, computed at build time), inline styles, `data:` images and `data:` fonts, and forbids plugins (`object-src 'none'`). Anything else the browser is asked to load is blocked, which limits what an injected script could do. A test loads every page and fails on any blocked request. The policy is not applied in `npm run dev`.
 
 ## Structured data (JSON-LD)
 
@@ -266,7 +266,7 @@ The Indonesian text was written without a native reviewer. `npm run translations
 
 ## Reference API (ASP.NET Core)
 
-`reference-api/` is a small real back end that mirrors the browser demo: minimal APIs, a SignalR hub, an approval workflow with the same rules, and 25 xUnit tests (unit and end-to-end with `WebApplicationFactory`). It is not deployed; see `reference-api/README.md`. CI runs `dotnet test` and the site is only deployed when it passes.
+`reference-api/` is a small real back end (the live demo that used to run in the browser was removed on 2026-11-06, so this is now where the full stack depth is shown): minimal APIs, a SignalR hub, an approval workflow, and 25 xUnit tests (unit and end-to-end with `WebApplicationFactory`). It is not deployed; see `reference-api/README.md`. CI runs `dotnet test` and the site is only deployed when it passes.
 
 ## Dependency and CI upkeep
 
@@ -301,7 +301,7 @@ The list below came from a review of the site, ordered by impact on the goal (a 
 
 | Improvement | Why | Status |
 |---|---|---|
-| `reference-api/` (ASP.NET Core) | Shows real back-end skill; the browser demo only simulates it. | Done (25 tests, not deployed) |
+| `reference-api/` (ASP.NET Core) | Shows real back-end skill (ASP.NET Core, SignalR, tests); the site itself is static. | Done (25 tests, not deployed) |
 | Custom domain | Already planned. | Needs owner (see below) |
 | Content Security Policy via `<meta>` | Needs care because of the inline theme script in `index.html`. | Done (script is allowed by hash) |
 | Visual regression tests (screenshots compared automatically) | Catches unintended layout changes. | Not done |
@@ -324,12 +324,11 @@ The components were written by hand. To add more from the shadcn registry, run `
 
 ## Pre-rendering
 
-`npm run build` renders every route in both languages (30 pages) to static HTML, so each page answers HTTP 200, carries its own `<title>`, description, canonical URL, `hreflang` and Open Graph tags, and shows content before JavaScript loads. The browser then hydrates the page.
+`npm run build` renders every route in both languages (28 pages) to static HTML, so each page answers HTTP 200, carries its own `<title>`, description, canonical URL, `hreflang` and Open Graph tags, and shows content before JavaScript loads. The browser then hydrates the page.
 
 - `src/entry-server.tsx` renders one route; `scripts/prerender.mjs` writes `dist/<route>/index.html`, `404.html` (an empty shell that the client router fills), `sitemap.xml` and `robots.txt`.
 - `src/components/Seo.tsx` collects head data during the server render and keeps it in sync on client navigation.
 - Scroll-reveal content stays visible in the HTML and without JavaScript; it is only hidden after the head script adds the `js` class to `<html>`.
-- The demo's interactive panels need a Web Worker and IndexedDB, so they load on the client only; the page shell and its heading are pre-rendered.
 - To add a page, add its route in `src/App.tsx` and its path in `src/entry-server.tsx` (`pages`). A test fails if a route does not provide metadata.
 
 ## Deploy

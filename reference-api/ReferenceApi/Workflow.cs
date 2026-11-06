@@ -8,7 +8,7 @@ public sealed record ChangeRequest(string Id, string Title, RequestState State, 
 
 /// <summary>
 /// The approval rules, kept free of HTTP so they can be tested on their own.
-/// They are the same rules as the browser demo on the portfolio site (src/demo/workflow.ts).
+/// They are the rules of the approval workflow.
 /// </summary>
 public static class WorkflowRules
 {

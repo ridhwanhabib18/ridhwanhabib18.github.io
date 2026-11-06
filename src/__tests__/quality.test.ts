@@ -230,10 +230,9 @@ describe('home page flow (issue 7)', () => {
     expect([...ids].sort((a, b) => a - b)).toEqual(ids);
   });
 
-  it('does not invite visitors to the live demo from the home page', () => {
-    const main = home().slice(home().indexOf('<main'), home().indexOf('</main>')); // the site-wide navigation does link to the demo
-    expect(main.length).toBeGreaterThan(1000);
-    expect(main).not.toMatch(/href="\/demo/);
+  it('has no live demo: no link anywhere (menu included) and no page', () => {
+    for (const route of ['/', '/id/', '/about/', '/work/']) expect(render(route).html, route).not.toMatch(/href="(\/id)?\/demo/);
+    expect(existsSync('src/pages/Demo.tsx')).toBe(false);
   });
 
   it('is complete in Indonesian too', () => {

@@ -14,7 +14,6 @@ const ROUTES = [
   '/work/paperless-invoice-approval/',
   '/work/part-approval-certification/',
   '/experience/',
-  '/demo/',
   '/about/',
   '/resume/',
   '/contact/',
@@ -22,7 +21,6 @@ const ROUTES = [
   '/id/work/',
   '/id/work/production-file-distribution/',
   '/id/experience/',
-  '/id/demo/',
   '/id/about/',
   '/id/resume/',
   '/id/contact/',
@@ -73,15 +71,6 @@ test('the Content Security Policy blocks nothing the site needs', async ({ page 
     await page.goto(route);
     await page.waitForLoadState('networkidle');
   }
-
-  // the interactive demo uses a Web Worker and IndexedDB: exercise both
-  await page.goto('/demo/');
-  await page.getByRole('button', { name: 'Connect' }).click();
-  await expect(page.getByText('Connected (simulated)')).toBeVisible();
-  await page.getByLabel('Request title').fill('Update line 3 program');
-  await page.getByRole('button', { name: 'Submit' }).click();
-  await expect(page.getByText('Update line 3 program')).toBeVisible();
-  await page.getByRole('button', { name: 'Toggle theme' }).click();
 
   expect(problems).toEqual([]);
 });

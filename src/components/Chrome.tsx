@@ -69,7 +69,6 @@ export function Layout() {
   const links: [string, string][] = [
     ['/work', t('nav.work')],
     ['/experience', t('nav.experience')],
-    ['/demo', t('nav.demo')],
     ['/about', t('nav.about')],
     ['/resume', t('nav.resume')],
     ['/contact', t('nav.contact')],

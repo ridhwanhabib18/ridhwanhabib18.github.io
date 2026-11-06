@@ -10,7 +10,6 @@ import About from './pages/About';
 import Resume from './pages/Resume';
 import Contact from './pages/Contact';
 import NotFound from './pages/NotFound';
-import Demo from './pages/Demo';
 
 function Shell({ lang }: { lang: Lang }) {
   return (
@@ -26,7 +25,6 @@ const pages = (
     <Route path="work" element={<Work />} />
     <Route path="work/:slug" element={<WorkDetail />} />
     <Route path="experience" element={<Experience />} />
-    <Route path="demo" element={<Demo />} />
     <Route path="about" element={<About />} />
     <Route path="resume" element={<Resume />} />
     <Route path="contact" element={<Contact />} />

@@ -11,7 +11,7 @@ const LIGHTHOUSE = 'lighthouse@13.6.0';
 const PORT = 4184;
 const MIN = Number(process.env.LH_MIN ?? 90);
 const RUNS = Math.max(1, Number(process.env.LH_RUNS ?? 1)); // use LH_RUNS=3 for a steadier result (slower)
-const PAGES = ['/', '/work/', '/work/production-file-distribution/', '/experience/', '/demo/', '/about/', '/resume/', '/contact/', '/id/'];
+const PAGES = ['/', '/work/', '/work/production-file-distribution/', '/experience/', '/about/', '/resume/', '/contact/', '/id/'];
 const FORM_FACTORS = [['mobile', []], ['desktop', ['--preset=desktop']]];
 
 const chromePath = process.env.CHROME_PATH ?? (process.platform === 'win32' ? 'C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe' : undefined);
