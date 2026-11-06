@@ -242,3 +242,36 @@ describe('home page flow (issue 7)', () => {
     expect(html).toContain('Peran:');
   });
 });
+
+describe('the education card on About opens the thesis', () => {
+  it('links to the university repository in a new tab from its link text, on About only', () => {
+    expect(profile.education.thesisUrl).toMatch(/^https:\/\/etd\.repository\.ugm\.ac\.id\/home\/detail_pencarian\/\d+$/);
+    for (const [route, label] of [['/about', 'Read my undergraduate thesis'], ['/id/about', 'Baca abstrak skripsi saya']]) {
+      const html = render(route).html;
+      expect(html, route).toMatch(new RegExp(`<a href="${profile.education.thesisUrl.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}" target="_blank" rel="noopener noreferrer"[^>]*>${label}`));
+    }
+    expect(render('/experience').html, 'the Experience entry stays a plain, compact block').not.toContain(profile.education.thesisUrl);
+  });
+});
+
+describe('education entry with the university emblem', () => {
+  it('ships the emblem as a small, square PNG', () => {
+    const b = readFileSync(`public/${profile.education.logo}`);
+    expect(b.subarray(1, 4).toString('latin1')).toBe('PNG');
+    expect([b.readUInt32BE(16), b.readUInt32BE(20)]).toEqual([120, 120]);
+    expect(b.length, 'keep the emblem light').toBeLessThan(30_000);
+  });
+
+  it('is shown on About and Experience in both languages, as a decoration, with the credit in the footer', () => {
+    for (const [route, gpa] of [['/about', 'GPA'], ['/id/about', 'IPK'], ['/experience', 'GPA'], ['/id/experience', 'IPK']]) {
+      const html = render(route).html;
+      expect(html, route).toContain(profile.education.school);
+      expect(html, route).toMatch(new RegExp(`<img src="[^"]*${profile.education.logo}" alt=""`));
+      expect(html, route).toContain(profile.education.gpa);
+      expect(html, route).toContain(route.endsWith('about') ? `<dt class="text-muted-foreground">${gpa}</dt>` : `${gpa} ${profile.education.gpa}`); // About: a card with a details list; Experience: one line
+      expect(html, route).toContain('Universitas Gadjah Mada');
+      expect(html, route).toContain('https://brand.ugm.ac.id/');
+      expect(html, route).toContain('https://creativecommons.org/licenses/by/4.0/');
+    }
+  });
+});

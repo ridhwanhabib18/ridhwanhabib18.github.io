@@ -1,7 +1,8 @@
 import type { CSSProperties } from 'react';
 import { Link } from '@/components/TransitionLink';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, ExternalLink } from 'lucide-react';
 import { useI18n } from '@/i18n';
+import { profile } from '@/content/profile';
 import type { DiagramDef, Metric, Project } from '@/content/types';
 import type { PersonalProject } from '@/content/personal-projects';
 import { Badge } from '@/components/ui/badge';
@@ -235,5 +236,61 @@ export function PersonalProjectCard({ p }: { p: PersonalProject }) {
         </span>
       </CardContent>
     </Card>
+  );
+}
+
+/**
+ * The education entry, with the university emblem on a light tile (the emblem is dark blue, so it needs one on the dark theme).
+ * `compact` is one short block for the Experience timeline; `card` matches the certification cards on About.
+ */
+export function EducationEntry({ variant = 'compact', className }: { variant?: 'compact' | 'card'; className?: string }) {
+  const { l, t } = useI18n();
+  const e = profile.education;
+  const logo = (box: string, img: string, px: number) => (
+    <span className={cn('flex shrink-0 items-center justify-center rounded-lg bg-white ring-1 ring-border', box)}>
+      <img src={`${import.meta.env.BASE_URL}${e.logo}`} alt="" width={px} height={px} loading="lazy" decoding="async" className={img} />
+    </span>
+  );
+
+  if (variant === 'card') {
+    return (
+      <Card className={cn('lift', className)}>
+        <CardContent className="flex flex-col gap-4 sm:flex-row sm:items-start">
+          <span className="self-center sm:self-start">{logo('size-28 p-2', 'size-24', 96)}</span>
+          <div className="flex min-w-0 flex-1 flex-col items-start gap-2">
+            <h3 className="text-lg leading-snug font-semibold">{e.school}</h3>
+            <p className="font-medium text-primary">{l(e.degree)}</p>
+            <dl className="grid grid-cols-[auto_1fr] gap-x-3 gap-y-1 text-sm">
+              <dt className="text-muted-foreground">{t('edu.period')}</dt>
+              <dd>{e.period}</dd>
+              <dt className="text-muted-foreground">{t('edu.location')}</dt>
+              <dd>{e.location}</dd>
+              <dt className="text-muted-foreground">{t('edu.gpa')}</dt>
+              <dd>{e.gpa}</dd>
+            </dl>
+            <a
+              href={e.thesisUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1 text-sm font-medium text-primary hover:underline"
+            >
+              {t('edu.thesis')}
+              <ExternalLink className="size-3.5" aria-hidden="true" />
+            </a>
+          </div>
+        </CardContent>
+      </Card>
+    );
+  }
+
+  return (
+    <div className={cn('flex items-center gap-3', className)}>
+      {logo('size-12 p-1', 'size-10', 40)}
+      <div className="min-w-0">
+        <h3 className="leading-snug font-semibold">{e.school}</h3>
+        <p className="text-sm font-medium text-primary">{l(e.degree)}</p>
+        <p className="text-xs text-muted-foreground">{`${e.period} · ${e.location} · ${t('edu.gpa')} ${e.gpa}`}</p>
+      </div>
+    </div>
   );
 }

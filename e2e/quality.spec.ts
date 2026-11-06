@@ -438,3 +438,34 @@ test.describe('a personal project has its own page', () => {
     }
   });
 });
+
+test('the education card on About opens the thesis in the university repository, in a new tab', async ({ page }) => {
+  await page.goto('/about/');
+  const link = page.getByRole('link', { name: 'Read my undergraduate thesis' });
+  await expect(link).toHaveAttribute('href', 'https://etd.repository.ugm.ac.id/home/detail_pencarian/217482');
+  await expect(link).toHaveAttribute('target', '_blank');
+  expect(await link.getAttribute('rel')).toContain('noopener');
+  // like the certification cards, only the link text opens it: the rest of the card is not a link
+  const card = page.locator('[data-slot="card"]', { has: link });
+  await card.scrollIntoViewIfNeeded();
+  const box = (await card.boundingBox())!;
+  const hit = await page.evaluate(([x, y]) => (document.elementFromPoint(x, y) as HTMLElement | null)?.closest('a')?.getAttribute('href') ?? null, [box.x + 12, box.y + 12]);
+  expect(hit, 'the card corner is not part of the link').toBeNull();
+  await page.goto('/experience/');
+  await expect(page.getByRole('link', { name: 'Read my undergraduate thesis' })).toHaveCount(0);
+});
+
+test('the university emblem loads next to the education entry on About and Experience', async ({ page }) => {
+  for (const route of ['/about/', '/experience/']) {
+    await page.goto(route);
+    const img = page.locator('img[src*="ugm-emblem"]');
+    await img.scrollIntoViewIfNeeded();
+    await expect.poll(() => img.evaluate((el: HTMLImageElement) => el.complete && el.naturalWidth > 0), { message: `${route} emblem` }).toBe(true);
+    expect(await img.getAttribute('alt')).toBe('');
+    // Experience keeps the entry compact (one short block); About shows it as a card like the certifications
+    const entry = page.locator('h3', { hasText: 'Universitas Gadjah Mada' }).locator(route === '/about/' ? 'xpath=ancestor::*[@data-slot="card"][1]' : 'xpath=ancestor::div[contains(@class,"items-center")][1]');
+    const height = (await entry.boundingBox())!.height;
+    if (route === '/experience/') expect(height).toBeLessThan(90);
+    else await expect(entry).toHaveClass(/lift/);
+  }
+});

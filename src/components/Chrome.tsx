@@ -134,6 +134,17 @@ export function Layout() {
           <div>
             <p className="font-semibold">{profile.name}</p>
             <p className="text-sm text-muted-foreground">{t('footer.built')}</p>
+            <p className="text-xs text-muted-foreground">
+              {t('footer.logo')}{' '}
+              <a className="underline underline-offset-2 hover:text-foreground" href="https://brand.ugm.ac.id/" target="_blank" rel="noopener noreferrer">
+                brand.ugm.ac.id
+              </a>
+              ,{' '}
+              <a className="underline underline-offset-2 hover:text-foreground" href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer">
+                {t('footer.license')}
+              </a>
+              .
+            </p>
             {analyticsEnabled && <p className="text-sm text-muted-foreground">{t('footer.analytics')}</p>}
           </div>
           <div className="flex gap-5 text-sm">

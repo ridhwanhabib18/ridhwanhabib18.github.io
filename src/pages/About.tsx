@@ -1,7 +1,7 @@
 import { CertCard } from '@/components/CertCard';
 import { Seo } from '@/components/Seo';
 import { graph, personLd } from '@/lib/jsonld';
-import { StackChips } from '@/components/Parts';
+import { EducationEntry, StackChips } from '@/components/Parts';
 import { Card } from '@/components/ui/card';
 import { useI18n } from '@/i18n';
 import { profile } from '@/content/profile';
@@ -61,13 +61,7 @@ export default function About() {
         </ul>
 
         <h2 className={cn(h2, 'mt-12 mb-4')}>{t('about.education')}</h2>
-        <p>
-          <strong>{profile.education.school}</strong>
-          <br />
-          <span className="text-muted-foreground">
-            {l(profile.education.degree)} · {profile.education.period} · GPA {profile.education.gpa}
-          </span>
-        </p>
+        <EducationEntry variant="card" />
       </div>
     </>
   );

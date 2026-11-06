@@ -3,7 +3,7 @@ import { Link } from '@/components/TransitionLink';
 import { ChevronDown } from 'lucide-react';
 import { Seo } from '@/components/Seo';
 import { Reveal } from '@/components/Reveal';
-import { StackChips } from '@/components/Parts';
+import { EducationEntry, StackChips } from '@/components/Parts';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
@@ -103,13 +103,9 @@ export default function Experience() {
           })}
           <Reveal as="li" delay={0.2} className="relative">
             <Dot />
-            <Card>
-              <CardContent>
-                <h2 className="text-xl font-bold">{profile.education.school}</h2>
-                <p className="mt-1 font-medium text-primary">{l(profile.education.degree)}</p>
-                <p className="mt-1 text-sm text-muted-foreground">
-                  {profile.education.period} · {profile.education.location} · GPA {profile.education.gpa}
-                </p>
+            <Card className="py-3">
+              <CardContent className="px-4">
+                <EducationEntry />
               </CardContent>
             </Card>
           </Reveal>
