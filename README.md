@@ -108,7 +108,7 @@ Everything is organised under four principles, **POUR**: Perceivable, Operable, 
 | **Reduced motion** (2.3.3 and good practice) | Animations stop for people who ask the system for less motion | Animations are switched off for `prefers-reduced-motion` |
 
 **How this repository checks it.**
-1. **axe** (an open-source accessibility engine, the same one Lighthouse uses) runs in `e2e/quality.spec.ts` on 17 pages, in the dark and the light theme, against the WCAG 2.0, 2.1 and 2.2 level A and AA rules. A violation fails the test and therefore the deploy.
+1. **axe** (an open-source accessibility engine, the same one Lighthouse uses) runs in `e2e/quality.spec.ts` on 19 pages, in the dark and the light theme, against the WCAG 2.0, 2.1 and 2.2 level A and AA rules. A violation fails the test and therefore the deploy.
 2. **Lighthouse** gives an Accessibility score (the same engine, a smaller rule set).
 3. **By hand**, now and then: press Tab through every page without a mouse, zoom to 200%, and listen to one page with a screen reader (NVDA on Windows is free).
 
@@ -134,7 +134,7 @@ Measured with `LH_RUNS=3 npm run lighthouse` (median of 3) on the built site aft
 
 - **Layout shift (CLS) is 0** on every page; **LCP** is 0.8 to 0.9 s on most pages (2.3 s on Experience).
 - Mobile Performance moves a few points between runs. Single runs of `/resume/` (85) and `/about/` (90) came out low while the machine was busy; measured again three times each they scored 98 to 100 and 97 to 100. Use `LH_RUNS=3 npm run lighthouse` for steadier numbers.
-- The Accessibility score of 100 and the axe tests (WCAG 2.2 A and AA, dark and light theme, 17 pages) agree. As explained above, that is a strong sign but not a certificate.
+- The Accessibility score of 100 and the axe tests (WCAG 2.2 A and AA, dark and light theme, 19 pages) agree. As explained above, that is a strong sign but not a certificate.
 
 What was fixed because of these measurements: the home and Experience pages hid their top content until JavaScript had run (LCP 2.5 s), text jumped when the web font arrived (CLS 0.085 on Work), the About page used an invalid definition list, the Demo page skipped a heading level, and the language button's accessible name did not contain its visible text "ID".
 
@@ -150,7 +150,7 @@ npm run test:e2e
 | File | What it checks |
 |---|---|
 | `e2e/responsive.spec.ts` | At 360 and 390 px (touch emulation), every main page in English and Indonesian: nothing sticks out of the screen or is clipped, the Resume tabs stay inside their container, the menu opens, navigates and closes, header buttons are at least 40 px, the architecture diagram is a readable list. At 1280 px the diagram is a picture. |
-| `e2e/quality.spec.ts` | **WCAG 2.2 AA with axe** on 17 pages in the dark and the light theme; the **Content Security Policy** blocks nothing the site needs; **structured data** is valid; icons, manifest and font preloads are served; the one-click resume buttons and the copy-email button work; the **print layout** hides navigation and shows every role |
+| `e2e/quality.spec.ts` | **WCAG 2.2 AA with axe** on 19 pages in the dark and the light theme; the **Content Security Policy** blocks nothing the site needs; **structured data** is valid; icons, manifest and font preloads are served; the one-click resume buttons and the copy-email button work; the **print layout** hides navigation and shows every role |
 | `e2e/share-cards.spec.ts` | Every page points at an existing 1200x630 PNG share image; the profile photo loads |
 
 To look at a phone layout yourself: run `npm run dev -- --host` and open the printed network address on your phone (same Wi-Fi), or use the device toolbar in the browser's developer tools. CI runs all of these before it deploys.
@@ -324,7 +324,7 @@ The components were written by hand. To add more from the shadcn registry, run `
 
 ## Pre-rendering
 
-`npm run build` renders every route in both languages (28 pages) to static HTML, so each page answers HTTP 200, carries its own `<title>`, description, canonical URL, `hreflang` and Open Graph tags, and shows content before JavaScript loads. The browser then hydrates the page.
+`npm run build` renders every route in both languages (30 pages) to static HTML, so each page answers HTTP 200, carries its own `<title>`, description, canonical URL, `hreflang` and Open Graph tags, and shows content before JavaScript loads. The browser then hydrates the page.
 
 - `src/entry-server.tsx` renders one route; `scripts/prerender.mjs` writes `dist/<route>/index.html`, `404.html` (an empty shell that the client router fills), `sitemap.xml` and `robots.txt`.
 - `src/components/Seo.tsx` collects head data during the server render and keeps it in sync on client navigation.
@@ -391,7 +391,9 @@ All content is typed data in `src/content/` with `{ en, id }` for every user-fac
 - **Professional** (`src/content/projects.ts`): the case studies from the resume. They keep every guardrail: percentages only, Actual or Target labels, and tests that tie each one to its resume bullet.
 - **Personal projects** (`src/content/personal-projects.ts`): projects built outside an employer, with public code. They are not resume case studies, so the resume tests do not apply, but they have their own tests (`personal-projects.test.ts`): everything in English and Indonesian, one entry per technology, links only to public GitHub pages of the owner, and no employer, currency or phone-like text. Say only what the project's own README and documentation say. The role of SchoMans is worded as "System Architect, System Design and Author, assisted by Claude" (the owner's choice), here and in the resumes. The first one is SchoMans, with its whole documented stack by layer.
 
-To add a personal project: add an entry to `personalProjects` (title, summary, status, role, year, tags, `stackGroups`, highlights, links, each in both languages) and run `npm test`. The card, the filters and the Indonesian page need no other change. There is no detail page per personal project; the card links to the repository and its documentation.
+Each personal project has a **state** (`done` when every planned phase is built and tested, or `in-progress`), shown as a badge on its card and its page, and its **own page** at `/work/<slug>` (pre-rendered in both languages, with its own share image), in the style of the README of its repository but fuller: overview and highlights, who uses it, features, system architecture (two diagrams drawn from data), system design (quality goals, security, real-time and jobs, file storage), key decisions (ADRs), the whole tech stack by layer, build phases, documentation links, how to start, and a gallery of flows and screens.
+
+To add a personal project: add an entry to `personalProjects` in `src/content/personal-projects.ts` (every field, each text in both languages; the fields are described in the interface at the top of that file), copy the pictures you want into `public/projects/<slug>/` (the tests check that each exists and has the width and height written in the data), and run `npm test` and `npm run build`. The card, the page, the filters, the sitemap, the Indonesian page and the share image need no other change. Keep to what the project's README and documentation say, link only to its public pages, and never put sign-in details (even for local demo accounts) on the page; a test fails on passwords and API keys. When a project's state changes (for example it is deployed), update `state`, `status` and `phases`.
 
 **Skills instead of a separate page:** the grouped skills are a section ("Skills") on About, with the first items of each group on Home, both read from the resume source (`## Skills` in `resume_us.typ`). The whole SchoMans stack from its PRD was added there and to all three resumes (US, AU, CA), which also have a Personal Projects section. Check the page count with Typst after adding to them (all three are 2 pages for every role); Typst is installed under the winget packages folder but not on the PATH.
 

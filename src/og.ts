@@ -1,4 +1,5 @@
 import { profile } from './content/profile';
+import { getPersonalProject } from './content/personal-projects';
 import { getProject, proofSlugs } from './content/projects';
 import type { Lang, Metric } from './content/types';
 import { dictionaries } from './i18n/strings';
@@ -52,6 +53,20 @@ export function ogExtras(route: string): OgExtras {
   }
 
   const m = bare.match(/^\/work\/([^/]+)$/);
+  const personal = m ? getPersonalProject(m[1]) : undefined;
+  if (personal) {
+    return {
+      kind: 'case',
+      lang,
+      name: profile.name,
+      role: profile.headline[lang],
+      kicker: `${t('badge.personal')} · ${t(`state.${personal.state}`)}`,
+      title: personal.title[lang],
+      description: personal.summary[lang],
+      metrics: [],
+      chips: personal.cardStack.slice(0, 5),
+    };
+  }
   const project = m ? getProject(m[1]) : undefined;
   if (project) {
     return {

@@ -1,14 +1,13 @@
 import type { CSSProperties } from 'react';
 import { Link } from '@/components/TransitionLink';
-import { ArrowRight, ExternalLink } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { useI18n } from '@/i18n';
 import type { DiagramDef, Metric, Project } from '@/content/types';
 import type { PersonalProject } from '@/content/personal-projects';
 import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
-import { bullets, container, eyebrow, h2 } from '@/lib/ui';
+import { container, h2 } from '@/lib/ui';
 import type { ReactNode } from 'react';
 
 export function Section({ id, title, lead, action, children, className }: { id: string; title: string; lead?: string; action?: ReactNode; children: ReactNode; className?: string }) {
@@ -208,53 +207,32 @@ export function Diagram({ def, title }: { def: DiagramDef; title: string }) {
   );
 }
 
-/** A personal project: what it is, where it stands, its highlights, the whole documented stack by layer, and public links. */
+/** A personal project on the Projects page: a summary that opens the project's own page, like a professional case study. */
 export function PersonalProjectCard({ p }: { p: PersonalProject }) {
-  const { t, l } = useI18n();
+  const { t, l, path } = useI18n();
   return (
-    <Card className="lift h-full gap-4">
-      <CardHeader className="flex-row items-center justify-between">
-        <Badge variant="outline">{t('badge.personal')}</Badge>
+    <Card className="lift group relative h-full gap-3">
+      <CardHeader className="flex-row flex-wrap items-center justify-between gap-2">
+        <div className="flex flex-wrap items-center gap-2">
+          <Badge variant="outline">{t('badge.personal')}</Badge>
+          <Badge variant={p.state === 'done' ? 'success' : 'warning'}>{t(`state.${p.state}`)}</Badge>
+        </div>
         <span className="text-xs text-muted-foreground">{p.year}</span>
       </CardHeader>
-      <CardContent className="flex flex-1 flex-col gap-5">
-        <div>
-          <h3 className="text-xl leading-snug font-semibold">{l(p.title)}</h3>
-          <p className="mt-2 text-muted-foreground">{l(p.summary)}</p>
-        </div>
-        <p className="text-sm">{`${t('personal.status')}: ${l(p.status)}`}</p>
+      <CardContent className="flex flex-1 flex-col gap-3">
+        <h3 className="text-lg leading-snug font-semibold">
+          <Link to={path(`/work/${p.slug}`)} className="after:absolute after:inset-0 after:rounded-xl focus-visible:outline-none focus-visible:after:ring-[3px] focus-visible:after:ring-ring/60">
+            {l(p.title)}
+          </Link>
+        </h3>
+        <p className="text-sm text-muted-foreground">{l(p.summary)}</p>
+        <p className="text-sm">{l(p.status)}</p>
         <p className="text-xs font-medium text-muted-foreground">{`${t('card.role')}: ${l(p.role)}`}</p>
-        <div>
-          <h4 className={cn(eyebrow, 'mb-2')}>{t('personal.highlights')}</h4>
-          <ul className={cn(bullets, 'text-sm')}>
-            {l(p.highlights).map((h) => (
-              <li key={h}>{h}</li>
-            ))}
-          </ul>
-        </div>
-        <div>
-          <h4 className={cn(eyebrow, 'mb-3')}>{t('personal.stack')}</h4>
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {p.stackGroups.map((g) => (
-              <div key={g.group.en}>
-                <h5 className="mb-1.5 text-sm font-medium">{l(g.group)}</h5>
-                <StackChips items={g.items} />
-              </div>
-            ))}
-          </div>
-        </div>
-        <ul aria-label={t('personal.links')} className="mt-auto flex flex-wrap gap-2 pt-1">
-          {p.links.map((x) => (
-            <li key={x.href}>
-              <Button asChild variant="outline" size="sm">
-                <a href={x.href} target="_blank" rel="noopener noreferrer">
-                  {l(x.label)}
-                  <ExternalLink aria-hidden="true" />
-                </a>
-              </Button>
-            </li>
-          ))}
-        </ul>
+        <StackChips items={p.cardStack} className="mt-auto pt-1" />
+        <span className="inline-flex items-center gap-1 text-sm font-medium text-primary" aria-hidden="true">
+          {t('cta.readProject')}
+          <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" />
+        </span>
       </CardContent>
     </Card>
   );

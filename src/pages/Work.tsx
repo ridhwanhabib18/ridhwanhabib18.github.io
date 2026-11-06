@@ -89,7 +89,7 @@ export default function Work() {
               {t('work.personal')}
             </h2>
             <p className="mt-2 max-w-2xl text-muted-foreground">{t('work.personalLead')}</p>
-            <div className="mt-6 grid gap-5">
+            <div className="mt-6 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
               {personal.map((p) => (
                 <PersonalProjectCard key={p.slug} p={p} />
               ))}

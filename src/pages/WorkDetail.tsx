@@ -8,11 +8,13 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { useI18n } from '@/i18n';
+import { getPersonalProject } from '@/content/personal-projects';
 import { getProject, projects } from '@/content/projects';
 import { bullets, h2, narrow } from '@/lib/ui';
 import { cn } from '@/lib/utils';
 import type { ReactNode } from 'react';
 import NotFound from './NotFound';
+import PersonalDetail from './PersonalDetail';
 
 function Block({ title, children }: { title: string; children: ReactNode }) {
   return (
@@ -25,6 +27,11 @@ function Block({ title, children }: { title: string; children: ReactNode }) {
 
 export default function WorkDetail() {
   const { slug = '' } = useParams();
+  const personal = getPersonalProject(slug);
+  return personal ? <PersonalDetail p={personal} /> : <CaseStudy slug={slug} />;
+}
+
+function CaseStudy({ slug }: { slug: string }) {
   const { t, l, path } = useI18n();
   const p = getProject(slug);
   if (!p) return <NotFound />;

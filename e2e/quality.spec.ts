@@ -10,6 +10,7 @@ const ROUTES = [
   '/',
   '/work/',
   '/work/production-file-distribution/',
+  '/work/schomans/',
   '/work/production-planning-scheduling/',
   '/work/paperless-invoice-approval/',
   '/work/part-approval-certification/',
@@ -20,6 +21,7 @@ const ROUTES = [
   '/id/',
   '/id/work/',
   '/id/work/production-file-distribution/',
+  '/id/work/schomans/',
   '/id/experience/',
   '/id/about/',
   '/id/resume/',
@@ -384,18 +386,55 @@ test.describe('the Projects page', () => {
     await expect(page.getByRole('heading', { level: 3, name: 'Delivered end to end' })).toBeVisible();
   });
 
-  test('the SchoMans card links out safely to the public repository', async ({ page }) => {
-    await page.goto('/work/');
+  test('the SchoMans page links out safely to the public repository and lists the stack by layer', async ({ page }) => {
+    await page.goto('/work/schomans/');
     const repo = page.getByRole('link', { name: /Source code on GitHub/ });
     await expect(repo).toHaveAttribute('href', 'https://github.com/ridhwanhabib18/schomans');
     await expect(repo).toHaveAttribute('target', '_blank');
     expect(await repo.getAttribute('rel')).toContain('noopener');
-    await expect(page.getByRole('heading', { level: 5, name: 'Testing' })).toBeVisible();
+    await expect(page.getByRole('heading', { level: 3, name: 'Testing' })).toBeVisible();
   });
 
   test('the menu says Projects in both languages and no longer has a demo', async ({ page }) => {
     await page.goto('/id/');
     await expect(page.getByRole('banner').getByRole('link', { name: 'Proyek', exact: true })).toBeVisible();
     await expect(page.getByRole('banner').getByRole('link', { name: /demo/i })).toHaveCount(0);
+  });
+});
+
+test.describe('a personal project has its own page', () => {
+  test('the card opens it; it shows the state, architecture, design and pictures that load', async ({ page }) => {
+    await page.goto('/work/');
+    await expect(page.getByRole('link', { name: 'SchoMans: School Management System' })).toBeVisible();
+    await expect(page.locator('li, div', { hasText: 'Personal' }).getByText('Done').first()).toBeVisible();
+    await page.getByRole('link', { name: 'SchoMans: School Management System' }).click();
+    await expect(page).toHaveURL(/\/work\/schomans\/?$/);
+    await expect(page.getByRole('heading', { level: 1, name: /SchoMans/ })).toBeVisible();
+    await expect(page.getByText('Done', { exact: true }).first()).toBeVisible();
+    for (const h of ['Overview', 'Features', 'System architecture', 'System design', 'Key decisions (ADRs)', 'Tech stack', 'Build phases', 'Documentation', 'Getting started', 'Screenshots and flows']) {
+      await expect(page.getByRole('heading', { level: 2, name: h })).toBeVisible();
+    }
+    // the architecture is drawn as pictures on a wide screen
+    await expect(page.getByRole('img', { name: 'Containers and deployment' })).toBeVisible();
+
+    // pictures load (they are lazy, so scroll to them)
+    for (const alt of [/QR attendance: the teacher shows the code/, /Teacher: grade book/]) {
+      const img = page.getByRole('img', { name: alt });
+      await img.scrollIntoViewIfNeeded();
+      await expect.poll(() => img.evaluate((el: HTMLImageElement) => el.complete && el.naturalWidth > 0)).toBe(true);
+    }
+    // external links are safe, and the way back works
+    const repo = page.getByRole('link', { name: /Source code on GitHub/ });
+    expect(await repo.getAttribute('rel')).toContain('noopener');
+    await page.getByRole('link', { name: 'Back to projects' }).click();
+    await expect(page).toHaveURL(/\/work\/?$/);
+  });
+
+  test('the Indonesian page says Selesai and keeps the same sections', async ({ page }) => {
+    await page.goto('/id/work/schomans/');
+    await expect(page.getByText('Selesai', { exact: true }).first()).toBeVisible();
+    for (const h of ['Ringkasan', 'Arsitektur sistem', 'Desain sistem', 'Keputusan penting (ADR)', 'Fase pengerjaan']) {
+      await expect(page.getByRole('heading', { level: 2, name: h })).toBeVisible();
+    }
   });
 });

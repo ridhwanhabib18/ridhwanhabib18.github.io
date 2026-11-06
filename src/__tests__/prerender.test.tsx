@@ -1,10 +1,11 @@
 import { describe, expect, it } from 'vitest';
 import { render, routes } from '../entry-server';
+import { personalProjects } from '../content/personal-projects';
 import { projects } from '../content/projects';
 
 describe('pre-render entry', () => {
   it('lists every page in both languages', () => {
-    const pageCount = 6 + projects.length;
+    const pageCount = 6 + projects.length + personalProjects.length;
     expect(routes).toHaveLength(pageCount * 2);
     expect(routes).toContain('/');
     expect(routes).toContain('/id');
