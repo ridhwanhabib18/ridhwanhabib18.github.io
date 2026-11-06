@@ -63,7 +63,7 @@ export function ProjectCard({ p }: { p: Project }) {
   const { t, l, path } = useI18n();
   const lead = p.metrics[0];
   return (
-    <Card className="group relative h-full gap-3 transition-all duration-300 hover:-translate-y-0.5 hover:border-primary/60 motion-reduce:hover:translate-y-0">
+    <Card className="lift group relative h-full gap-3">
       <CardHeader className="flex-row items-center justify-between">
         <Badge variant={p.kind === 'delivered' ? 'default' : 'outline'}>{t(`badge.${p.kind}`)}</Badge>
         {p.year && <span className="text-xs text-muted-foreground">{p.year}</span>}

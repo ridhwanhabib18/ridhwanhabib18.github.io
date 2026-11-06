@@ -1,3 +1,4 @@
+import type { CSSProperties } from 'react';
 import { ExternalLink } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
@@ -15,18 +16,12 @@ function formatDate(iso: string, lang: string) {
 export function CertCard({ cert }: { cert: Cert }) {
   const { t, l, lang } = useI18n();
   return (
-    <Card className="h-full">
+    <Card className="lift h-full">
       <CardContent className="flex h-full flex-col gap-4 sm:flex-row sm:items-start">
         {cert.image && (
-          <img
-            src={`${import.meta.env.BASE_URL}${cert.image}`}
-            alt={`${t('cert.badgeOf')} ${cert.name}`}
-            width={112}
-            height={112}
-            loading="lazy"
-            decoding="async"
-            className="size-28 shrink-0 self-center sm:self-start"
-          />
+          <span className="cert-badge block size-28 shrink-0 self-center sm:self-start" style={{ '--badge': `url(${import.meta.env.BASE_URL}${cert.image})` } as CSSProperties}>
+            <img src={`${import.meta.env.BASE_URL}${cert.image}`} alt={`${t('cert.badgeOf')} ${cert.name}`} width={112} height={112} loading="lazy" decoding="async" className="size-28" />
+          </span>
         )}
         <div className="flex min-w-0 flex-1 flex-col items-start gap-2">
           {cert.level && <Badge variant="secondary">{l(cert.level)}</Badge>}

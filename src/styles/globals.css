@@ -243,6 +243,53 @@
   }
 }
 
+/* Cards that lift a little on hover and keyboard focus (project and certification cards), and a one-time glint across a
+   certification badge, clipped to the badge shape with a mask. Pointer devices only, so touch screens never get a stuck
+   hover; reduced motion and print keep the cards still. */
+@keyframes badge-glint {
+  from {
+    opacity: 1;
+    background-position: 160% 0;
+  }
+  to {
+    opacity: 1;
+    background-position: -60% 0;
+  }
+}
+.lift {
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    border-color 0.25s ease;
+}
+.cert-badge {
+  position: relative;
+}
+.cert-badge::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  pointer-events: none;
+  background: linear-gradient(105deg, transparent 38%, rgb(255 255 255 / 0.6) 50%, transparent 62%) no-repeat;
+  background-size: 250% 100%;
+  background-position: 160% 0;
+  -webkit-mask: var(--badge) center / contain no-repeat;
+  mask: var(--badge) center / contain no-repeat;
+}
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .lift:hover,
+  .lift:focus-within {
+    transform: translateY(-3px);
+    border-color: color-mix(in oklab, var(--primary) 60%, var(--border));
+    box-shadow: 0 12px 28px -14px color-mix(in oklab, var(--primary) 55%, transparent);
+  }
+  .lift:hover .cert-badge::after,
+  .lift:focus-within .cert-badge::after {
+    animation: badge-glint 0.9s ease-out 1;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html:focus-within {
     scroll-behavior: auto;

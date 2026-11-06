@@ -234,3 +234,46 @@ test.describe('the architecture diagram is drawn as it scrolls into view', () =>
     expect((await info(page)).line).toBe('none');
   });
 });
+
+test.describe('cards lift on hover and the certification badge glints once', () => {
+  const state = (page: Page, selector: string) =>
+    page.evaluate((sel) => {
+      const el = document.querySelector(sel)!;
+      const cs = getComputedStyle(el);
+      return { transform: cs.transform, shadow: cs.boxShadow, glint: getComputedStyle(el.querySelector('.cert-badge') ?? el, '::after').animationName };
+    }, selector);
+
+  test('a certification card lifts and its badge glints when hovered', async ({ page }) => {
+    await page.goto('/');
+    await page.waitForLoadState('networkidle');
+    const card = page.locator('.lift', { has: page.locator('.cert-badge') }).first();
+    await card.scrollIntoViewIfNeeded();
+    const still = await state(page, '.lift:has(.cert-badge)');
+    expect(still.transform).toBe('none');
+    await card.hover();
+    await page.waitForTimeout(500);
+    const hovered = await state(page, '.lift:has(.cert-badge)');
+    expect(hovered.transform).not.toBe('none');
+    expect(hovered.shadow).not.toBe(still.shadow);
+    expect(hovered.glint).toBe('badge-glint');
+  });
+
+  test('a project card lifts when hovered', async ({ page }) => {
+    await page.goto('/work/');
+    await page.waitForLoadState('networkidle');
+    const card = page.locator('.lift').first();
+    await card.hover();
+    await page.waitForTimeout(500);
+    expect(await card.evaluate((el) => getComputedStyle(el).transform)).not.toBe('none');
+  });
+
+  test('cards stay still for visitors who prefer reduced motion', async ({ page }) => {
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    await page.goto('/');
+    const card = page.locator('.lift', { has: page.locator('.cert-badge') }).first();
+    await card.scrollIntoViewIfNeeded();
+    await card.hover();
+    await page.waitForTimeout(500);
+    expect(await card.evaluate((el) => getComputedStyle(el).transform)).toBe('none');
+  });
+});
