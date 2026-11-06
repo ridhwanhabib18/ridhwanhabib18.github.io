@@ -324,3 +324,27 @@ test.describe('page transitions', () => {
     await expect(page).toHaveURL(/\/contact\/?$/);
   });
 });
+
+test.describe('the hero headline is typed in', () => {
+  test('the whole headline is in the page from the start and the effect only uncovers it', async ({ page, request }) => {
+    const html = await (await request.get('/')).text();
+    expect(html).toContain('<span class="type-in">Full Stack .NET Engineer</span>');
+    await page.goto('/');
+    await expect(page.getByText('Full Stack .NET Engineer', { exact: true })).toHaveCount(1);
+    expect(await page.evaluate(() => getComputedStyle(document.querySelector('.type-in')!).animationName)).toBe('type-in');
+    // it must not move the layout: the headline box is the same size before and after the effect
+    const box = async () => page.locator('.type-in').evaluate((el) => { const r = el.getBoundingClientRect(); return [Math.round(r.width), Math.round(r.height)]; });
+    const during = await box();
+    await page.waitForTimeout(2200);
+    expect(await box()).toEqual(during);
+    // finished: the whole text is uncovered (the clip is at least as wide as the text)
+    expect(await page.evaluate(() => getComputedStyle(document.querySelector('.type-in')!).clipPath)).toMatch(/inset\(/);
+  });
+
+  test('shows the finished text with reduced motion', async ({ page }) => {
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    await page.goto('/');
+    expect(await page.evaluate(() => getComputedStyle(document.querySelector('.type-in')!).animationName)).toBe('none');
+    expect(await page.evaluate(() => getComputedStyle(document.querySelector('.type-in')!, '::after').animationName)).toBe('none');
+  });
+});

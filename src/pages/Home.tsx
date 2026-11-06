@@ -52,7 +52,7 @@ export default function Home() {
             {profile.name}
           </h1>
           <p className={cn(rise, 'mt-4 text-xl font-semibold text-primary sm:text-2xl')} style={{ animationDelay: '120ms' }}>
-            {l(profile.headline)}
+            <span className="type-in">{l(profile.headline)}</span>
           </p>
           <p className={cn(rise, 'mt-4 max-w-2xl text-lg text-muted-foreground')} style={{ animationDelay: '180ms' }}>
             {l(profile.positioning)}
