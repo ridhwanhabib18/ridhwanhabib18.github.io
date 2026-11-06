@@ -3,6 +3,7 @@ import { ArrowRight, Download, Mail } from 'lucide-react';
 import { GithubIcon, LinkedinIcon } from '@/components/BrandIcons';
 import { CertCard } from '@/components/CertCard';
 import { CopyButton } from '@/components/CopyButton';
+import { AppIcon, IconTile } from '@/components/icons';
 import { CountUp } from '@/components/CountUp';
 import { Seo } from '@/components/Seo';
 import { Reveal } from '@/components/Reveal';
@@ -120,7 +121,8 @@ export default function Home() {
 
       <section aria-labelledby="cert-h" className="border-b py-6">
         <div className={container}>
-          <h2 id="cert-h" className={cn(eyebrow, 'mb-3')}>
+          <h2 id="cert-h" className={cn(eyebrow, 'mb-3 flex items-center gap-2')}>
+            <AppIcon name="award" />
             {t('home.certs')}
           </h2>
           <ul className="grid gap-3 md:grid-cols-2">
@@ -178,9 +180,12 @@ export default function Home() {
       <Section id="how-h" title={t('about.how')}>
         <ul className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {profile.howIWork.map((h) => (
-            <li key={h.title.en} className="border-l-2 border-primary/40 pl-4">
-              <h3 className="font-semibold">{l(h.title)}</h3>
-              <p className="mt-1 text-sm text-muted-foreground">{l(h.body)}</p>
+            <li key={h.title.en} className="flex gap-3">
+              <IconTile name={h.icon} />
+              <div>
+                <h3 className="font-semibold">{l(h.title)}</h3>
+                <p className="mt-1 text-sm text-muted-foreground">{l(h.body)}</p>
+              </div>
             </li>
           ))}
         </ul>

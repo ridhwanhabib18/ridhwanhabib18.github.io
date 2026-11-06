@@ -180,6 +180,18 @@ Search engines read schema.org data from each page (`src/lib/jsonld.ts`): the ho
 
 The mark is the initials written like a code tag, `<RH/>`, drawn from strokes (`scripts/brand-mark.mjs`) so it looks identical in the header, the favicon, the home-screen icons and the share cards. To switch to `<R/>`, change `MARK` in that file and run `npm run icons`; `docs/brand-preview.png` shows both at real sizes. A test fails if the favicon no longer matches the header mark.
 
+### The icon system in the pages
+
+All icons come from one place, `src/components/icons.tsx` (lucide, plus the GitHub and LinkedIn marks in `BrandIcons.tsx`), and follow a few rules so that the site looks like one piece:
+
+- **One line weight** for every lucide icon (`svg.lucide { stroke-width: 1.75 }` in `globals.css`), instead of each icon's default.
+- **Sizes:** 16 px inside text, buttons and badges (`AppIcon`); 14 px for dates, places and the "opens elsewhere" mark; and an **icon tile** (`IconTile`, a soft tinted square of 36 or 40 px) for cards that describe a thing: How I work, contact ways, the roles, features, quality goals, design topics and decisions of a personal project.
+- **Badges carry an icon** (Actual, Target, Delivered, Contributed, Personal, Done, In progress); so do the scope and topic filters on Projects and the date and place lines on Experience.
+- **Icons are decorations.** They are hidden from assistive technology (`aria-hidden`) and never carry meaning alone; the text beside them always says it. Diagrams are content, with a label of their own.
+- Colour is the primary colour (tiles use a 10% tint with a thin ring), so a theme change recolours them all.
+
+To give something an icon, add the lucide icon to the `icons` list under a short name, then refer to that name; for the personal project pages, icons are looked up by what they decorate (`personalIcons`), and `src/__tests__/icons.test.ts` fails when a feature, role, goal, topic, stack group or How I work item has none, or when an icon is not hidden from assistive technology.
+
 ## Resume buttons and copy email
 
 The home page and the footer offer a one-click download of the recommended resume PDF (`primaryResumeKey` in `src/content/resume.ts`); the Contact page has a Copy email button that also announces the result to screen readers.

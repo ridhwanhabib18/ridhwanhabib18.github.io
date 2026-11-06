@@ -85,6 +85,7 @@ export const profile = {
   } as L10n<string[]>,
   howIWork: [
     {
+      icon: 'workflow' as const,
       title: { en: 'System design', id: 'Desain sistem' } as L10n,
       body: {
         en: 'Layered architecture, PRDs, system designs, ERDs and ADRs, so knowledge does not live in one person’s head.',
@@ -92,6 +93,7 @@ export const profile = {
       } as L10n,
     },
     {
+      icon: 'shield' as const,
       title: { en: 'Quality', id: 'Kualitas' } as L10n,
       body: {
         en: 'GitHub Actions CI/CD, tests on every pull request, API and database integration tests, and code reviews.',
@@ -99,6 +101,7 @@ export const profile = {
       } as L10n,
     },
     {
+      icon: 'plug' as const,
       title: { en: 'Integration', id: 'Integrasi' } as L10n,
       body: {
         en: 'Keycloak SSO, AWS, background jobs (Quartz.NET, Hangfire) and real-time dashboards (SignalR).',
@@ -106,6 +109,7 @@ export const profile = {
       } as L10n,
     },
     {
+      icon: 'users' as const,
       title: { en: 'People', id: 'Kolaborasi' } as L10n,
       body: {
         en: 'I turn requirements from production, engineering, purchasing and management into proposals, present them at design reviews and mentor a junior developer.',

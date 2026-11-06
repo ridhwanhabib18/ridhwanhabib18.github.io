@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link } from '@/components/TransitionLink';
 import { ChevronDown } from 'lucide-react';
 import { Seo } from '@/components/Seo';
+import { AppIcon } from '@/components/icons';
 import { Reveal } from '@/components/Reveal';
 import { EducationEntry, StackChips } from '@/components/Parts';
 import { Badge } from '@/components/ui/badge';
@@ -55,10 +56,15 @@ export default function Experience() {
                         </h2>
                         <p className="mt-1 font-medium text-primary">{l(r.title)}</p>
                       </div>
-                      <p className="text-left text-sm text-muted-foreground sm:text-right">
-                        {r.start} – {r.end ?? t('exp.present')}
-                        <br />
-                        {r.location}
+                      <p className="space-y-1 text-left text-sm text-muted-foreground sm:text-right">
+                        <span className="flex items-center gap-1.5 sm:justify-end">
+                          <AppIcon name="calendar" className="size-3.5" />
+                          {r.start} – {r.end ?? t('exp.present')}
+                        </span>
+                        <span className="flex items-center gap-1.5 sm:justify-end">
+                          <AppIcon name="pin" className="size-3.5" />
+                          {r.location}
+                        </span>
                       </p>
                     </div>
 

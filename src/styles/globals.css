@@ -122,6 +122,10 @@
   body {
     @apply bg-background text-foreground font-sans antialiased;
   }
+  /* one line weight for every icon (lucide draws at 2 by default) */
+  svg.lucide {
+    stroke-width: 1.75;
+  }
   html:focus-within {
     scroll-behavior: smooth;
   }

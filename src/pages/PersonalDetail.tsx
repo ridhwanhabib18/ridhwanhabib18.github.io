@@ -2,6 +2,7 @@ import { ArrowLeft, Check, ExternalLink } from 'lucide-react';
 import type { ReactNode } from 'react';
 import { Link } from '@/components/TransitionLink';
 import { Seo } from '@/components/Seo';
+import { AppIcon, IconTile, personalIcons } from '@/components/icons';
 import { Diagram, StackChips } from '@/components/Parts';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -63,9 +64,18 @@ export default function PersonalDetail({ p }: { p: PersonalProject }) {
 
         <header className="mt-4 max-w-3xl">
           <div className="flex flex-wrap items-center gap-2">
-            <Badge variant="outline">{t('badge.personal')}</Badge>
-            <Badge variant={p.state === 'done' ? 'success' : 'warning'}>{t(`state.${p.state}`)}</Badge>
-            <span className="text-sm text-muted-foreground">{p.year}</span>
+            <Badge variant="outline">
+              <AppIcon name="user" />
+              {t('badge.personal')}
+            </Badge>
+            <Badge variant={p.state === 'done' ? 'success' : 'warning'}>
+              <AppIcon name={p.state === 'done' ? 'check' : 'progress'} />
+              {t(`state.${p.state}`)}
+            </Badge>
+            <span className="inline-flex items-center gap-1 text-sm text-muted-foreground">
+              <AppIcon name="calendar" className="size-3.5" />
+              {p.year}
+            </span>
           </div>
           <h1 className="mt-3 text-4xl font-extrabold text-balance sm:text-5xl">{l(p.title)}</h1>
           <p className="mt-4 text-lg text-muted-foreground">{l(p.summary)}</p>
@@ -95,9 +105,12 @@ export default function PersonalDetail({ p }: { p: PersonalProject }) {
           <h3 className={cn(eyebrow, 'mt-8 mb-3')}>{t('personal.roles')}</h3>
           <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {p.roles.map((r) => (
-              <li key={r.name.en} className="rounded-lg border bg-card p-4">
-                <strong>{l(r.name)}</strong>
-                <p className="mt-1 text-sm text-muted-foreground">{l(r.needs)}</p>
+              <li key={r.name.en} className="flex gap-3 rounded-lg border bg-card p-4">
+                <IconTile name={personalIcons.roles[r.name.en as keyof typeof personalIcons.roles]} size="sm" />
+                <div>
+                  <strong>{l(r.name)}</strong>
+                  <p className="mt-1 text-sm text-muted-foreground">{l(r.needs)}</p>
+                </div>
               </li>
             ))}
           </ul>
@@ -106,17 +119,21 @@ export default function PersonalDetail({ p }: { p: PersonalProject }) {
         <Block id="p-features" title={t('personal.features')}>
           <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {p.features.map((f) => (
-              <li key={f.id} className="rounded-lg border bg-card p-4">
-                <span className="font-mono text-xs text-muted-foreground">{f.id}</span>
-                <strong className="block">{l(f.title)}</strong>
-                <p className="mt-1 text-sm text-muted-foreground">{l(f.note)}</p>
+              <li key={f.id} className="flex gap-3 rounded-lg border bg-card p-4">
+                <IconTile name={personalIcons.features[f.id as keyof typeof personalIcons.features]} size="sm" />
+                <div>
+                  <span className="font-mono text-xs text-muted-foreground">{f.id}</span>
+                  <strong className="block">{l(f.title)}</strong>
+                  <p className="mt-1 text-sm text-muted-foreground">{l(f.note)}</p>
+                </div>
               </li>
             ))}
           </ul>
           <h3 className={cn(eyebrow, 'mt-8 mb-3')}>{t('personal.ai')}</h3>
           <ul className="grid gap-2 sm:grid-cols-2">
             {p.aiFeatures.map((a) => (
-              <li key={a.id} className="flex items-baseline gap-3 text-sm">
+              <li key={a.id} className="flex items-center gap-2 text-sm">
+                <AppIcon name="sparkles" className="size-4 text-primary" />
                 <span className="font-mono text-xs text-muted-foreground">{a.id}</span>
                 {l(a.title)}
               </li>
@@ -150,16 +167,22 @@ export default function PersonalDetail({ p }: { p: PersonalProject }) {
           <h3 className={cn(eyebrow, 'mb-3')}>{t('personal.quality')}</h3>
           <ul className="grid gap-3 md:grid-cols-2">
             {p.qualityGoals.map((q) => (
-              <li key={q.goal.en} className="rounded-lg border bg-card p-4 text-sm">
-                <strong className="text-base">{l(q.goal)}</strong>
-                <p className="mt-1">{`${t('personal.target')}: ${l(q.target)}`}</p>
-                <p className="mt-1 text-muted-foreground">{`${t('personal.response')}: ${l(q.response)}`}</p>
+              <li key={q.goal.en} className="flex gap-3 rounded-lg border bg-card p-4 text-sm">
+                <IconTile name={personalIcons.quality[q.goal.en as keyof typeof personalIcons.quality]} size="sm" />
+                <div>
+                  <strong className="text-base">{l(q.goal)}</strong>
+                  <p className="mt-1">{`${t('personal.target')}: ${l(q.target)}`}</p>
+                  <p className="mt-1 text-muted-foreground">{`${t('personal.response')}: ${l(q.response)}`}</p>
+                </div>
               </li>
             ))}
           </ul>
           {p.design.map((d) => (
             <div key={d.title.en} className="mt-8 max-w-3xl">
-              <h3 className="mb-2 text-lg font-semibold">{l(d.title)}</h3>
+              <h3 className="mb-2 flex items-center gap-3 text-lg font-semibold">
+                <IconTile name={personalIcons.design[d.title.en as keyof typeof personalIcons.design]} size="sm" />
+                {l(d.title)}
+              </h3>
               <div className="space-y-3">
                 {l(d.body).map((para) => (
                   <p key={para}>{para}</p>
@@ -174,14 +197,17 @@ export default function PersonalDetail({ p }: { p: PersonalProject }) {
         <Block id="p-decisions" title={t('personal.decisions')}>
           <ul className="grid gap-3 md:grid-cols-2">
             {p.decisions.map((d) => (
-              <li key={d.id} className="rounded-lg border bg-card p-4">
-                <span className="font-mono text-xs text-muted-foreground">{d.id}</span>
-                <strong className="block">{l(d.title)}</strong>
-                <p className="mt-1 text-sm text-muted-foreground">{l(d.summary)}</p>
-                <a href={d.href} target="_blank" rel="noopener noreferrer" className="mt-2 inline-flex items-center gap-1 text-sm font-medium text-primary hover:underline">
-                  {t('personal.readAdr')}
-                  <ExternalLink className="size-3.5" aria-hidden="true" />
-                </a>
+              <li key={d.id} className="flex gap-3 rounded-lg border bg-card p-4">
+                <IconTile name="scale" size="sm" />
+                <div>
+                  <span className="font-mono text-xs text-muted-foreground">{d.id}</span>
+                  <strong className="block">{l(d.title)}</strong>
+                  <p className="mt-1 text-sm text-muted-foreground">{l(d.summary)}</p>
+                  <a href={d.href} target="_blank" rel="noopener noreferrer" className="mt-2 inline-flex items-center gap-1 text-sm font-medium text-primary hover:underline">
+                    {t('personal.readAdr')}
+                    <ExternalLink className="size-3.5" aria-hidden="true" />
+                  </a>
+                </div>
               </li>
             ))}
           </ul>
@@ -191,7 +217,10 @@ export default function PersonalDetail({ p }: { p: PersonalProject }) {
           <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {p.stackGroups.map((g) => (
               <div key={g.group.en}>
-                <h3 className="mb-2 text-sm font-medium">{l(g.group)}</h3>
+                <h3 className="mb-2 flex items-center gap-2 text-sm font-medium">
+                  <AppIcon name={personalIcons.stack[g.group.en as keyof typeof personalIcons.stack]} className="text-primary" />
+                  {l(g.group)}
+                </h3>
                 <StackChips items={g.items} />
               </div>
             ))}
@@ -218,7 +247,8 @@ export default function PersonalDetail({ p }: { p: PersonalProject }) {
           <ul className="grid gap-x-8 gap-y-2 sm:grid-cols-2">
             {p.docs.map((d) => (
               <li key={d.href}>
-                <a href={d.href} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 font-medium text-primary hover:underline">
+                <a href={d.href} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 font-medium text-primary hover:underline">
+                  <AppIcon name="file" className="text-muted-foreground" />
                   {l(d.label)}
                   <ExternalLink className="size-3.5" aria-hidden="true" />
                 </a>
@@ -228,13 +258,20 @@ export default function PersonalDetail({ p }: { p: PersonalProject }) {
         </Block>
 
         <Block id="p-start" title={t('personal.start')} lead={`${t('personal.requirements')}: ${l(p.gettingStarted.requirements)}`}>
+          <div className="mb-3 flex items-center gap-2 text-sm text-muted-foreground">
+            <AppIcon name="terminal" className="text-primary" />
+            {t('personal.start')}
+          </div>
           <pre tabIndex={0} aria-label={t('personal.start')} className="max-w-3xl overflow-x-auto rounded-lg border bg-card p-4 font-mono text-sm">
             <code>{p.gettingStarted.commands.join('\n')}</code>
           </pre>
         </Block>
 
         <Block id="p-gallery" title={t('personal.gallery')} lead={t('personal.galleryNote')}>
-          <h3 className={cn(eyebrow, 'mb-3')}>{t('personal.flows')}</h3>
+          <h3 className={cn(eyebrow, 'mb-3 flex items-center gap-2')}>
+            <AppIcon name="play" />
+            {t('personal.flows')}
+          </h3>
           <ul className="grid gap-5 md:grid-cols-2">
             {flows.map((g) => (
               <li key={g.file}>
@@ -248,7 +285,10 @@ export default function PersonalDetail({ p }: { p: PersonalProject }) {
               </li>
             ))}
           </ul>
-          <h3 className={cn(eyebrow, 'mt-10 mb-3')}>{t('personal.screens')}</h3>
+          <h3 className={cn(eyebrow, 'mt-10 mb-3 flex items-center gap-2')}>
+            <AppIcon name="image" />
+            {t('personal.screens')}
+          </h3>
           <ul className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {shots.map((g) => (
               <li key={g.file}>

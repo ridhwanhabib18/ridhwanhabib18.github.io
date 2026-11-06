@@ -3,6 +3,7 @@ import { Link } from '@/components/TransitionLink';
 import { ArrowRight, ExternalLink } from 'lucide-react';
 import { useI18n } from '@/i18n';
 import { profile } from '@/content/profile';
+import { AppIcon } from '@/components/icons';
 import type { DiagramDef, Metric, Project } from '@/content/types';
 import type { PersonalProject } from '@/content/personal-projects';
 import { Badge } from '@/components/ui/badge';
@@ -32,7 +33,12 @@ export function Section({ id, title, lead, action, children, className }: { id: 
 
 export function MetricBadge({ type }: { type: Metric['type'] }) {
   const { t } = useI18n();
-  return <Badge variant={type === 'actual' ? 'success' : 'warning'}>{t(`badge.${type}`)}</Badge>;
+  return (
+    <Badge variant={type === 'actual' ? 'success' : 'warning'}>
+      <AppIcon name={type === 'actual' ? 'check' : 'target'} />
+      {t(`badge.${type}`)}
+    </Badge>
+  );
 }
 
 export function MetricRow({ m }: { m: Metric }) {
@@ -67,8 +73,16 @@ export function ProjectCard({ p }: { p: Project }) {
   return (
     <Card className="lift group relative h-full gap-3">
       <CardHeader className="flex-row items-center justify-between">
-        <Badge variant={p.kind === 'delivered' ? 'default' : 'outline'}>{t(`badge.${p.kind}`)}</Badge>
-        {p.year && <span className="text-xs text-muted-foreground">{p.year}</span>}
+        <Badge variant={p.kind === 'delivered' ? 'default' : 'outline'}>
+          <AppIcon name={p.kind === 'delivered' ? 'delivered' : 'contributed'} />
+          {t(`badge.${p.kind}`)}
+        </Badge>
+        {p.year && (
+          <span className="inline-flex items-center gap-1 text-xs text-muted-foreground">
+            <AppIcon name="calendar" className="size-3.5" />
+            {p.year}
+          </span>
+        )}
       </CardHeader>
       <CardContent className="flex flex-1 flex-col gap-3">
         <h3 className="text-lg leading-snug font-semibold">
@@ -215,10 +229,19 @@ export function PersonalProjectCard({ p }: { p: PersonalProject }) {
     <Card className="lift group relative h-full gap-3">
       <CardHeader className="flex-row flex-wrap items-center justify-between gap-2">
         <div className="flex flex-wrap items-center gap-2">
-          <Badge variant="outline">{t('badge.personal')}</Badge>
-          <Badge variant={p.state === 'done' ? 'success' : 'warning'}>{t(`state.${p.state}`)}</Badge>
+          <Badge variant="outline">
+            <AppIcon name="user" />
+            {t('badge.personal')}
+          </Badge>
+          <Badge variant={p.state === 'done' ? 'success' : 'warning'}>
+            <AppIcon name={p.state === 'done' ? 'check' : 'progress'} />
+            {t(`state.${p.state}`)}
+          </Badge>
         </div>
-        <span className="text-xs text-muted-foreground">{p.year}</span>
+        <span className="inline-flex items-center gap-1 text-xs text-muted-foreground">
+          <AppIcon name="calendar" className="size-3.5" />
+          {p.year}
+        </span>
       </CardHeader>
       <CardContent className="flex flex-1 flex-col gap-3">
         <h3 className="text-lg leading-snug font-semibold">

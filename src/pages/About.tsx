@@ -1,4 +1,5 @@
 import { CertCard } from '@/components/CertCard';
+import { IconTile } from '@/components/icons';
 import { Seo } from '@/components/Seo';
 import { graph, personLd } from '@/lib/jsonld';
 import { EducationEntry, StackChips } from '@/components/Parts';
@@ -32,14 +33,19 @@ export default function About() {
         </div>
 
         <h2 className={cn(h2, 'mt-12 mb-4')}>{t('about.how')}</h2>
-        <dl className="grid gap-4 sm:grid-cols-2">
+        <ul className="grid gap-4 sm:grid-cols-2">
           {profile.howIWork.map((h) => (
-            <Card key={h.title.en} className="gap-1 px-5">
-              <dt className="font-semibold">{l(h.title)}</dt>
-              <dd className="text-sm text-muted-foreground">{l(h.body)}</dd>
-            </Card>
+            <li key={h.title.en}>
+              <Card className="h-full flex-row gap-3 px-5">
+                <IconTile name={h.icon} />
+                <div>
+                  <h3 className="font-semibold">{l(h.title)}</h3>
+                  <p className="text-sm text-muted-foreground">{l(h.body)}</p>
+                </div>
+              </Card>
+            </li>
           ))}
-        </dl>
+        </ul>
 
         <h2 className={cn(h2, 'mt-12 mb-4')}>{t('about.stack')}</h2>
         <div className="grid gap-6 sm:grid-cols-2">

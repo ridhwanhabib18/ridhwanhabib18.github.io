@@ -14,7 +14,7 @@ function Item({ icon, label, children }: { icon: ReactNode; label: string; child
   return (
     <Card className="h-full gap-1">
       <CardContent className="flex items-start gap-3">
-        <span className="mt-0.5 text-primary" aria-hidden="true">
+        <span className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary ring-1 ring-primary/20" aria-hidden="true">
           {icon}
         </span>
         <div className="min-w-0">

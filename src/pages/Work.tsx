@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Seo } from '@/components/Seo';
+import { AppIcon, tagIcons, type IconName } from '@/components/icons';
 import { PersonalProjectCard, ProjectCard } from '@/components/Parts';
 import { Button } from '@/components/ui/button';
 import { useI18n } from '@/i18n';
@@ -38,10 +39,10 @@ export default function Work() {
   const showProfessional = scope !== 'personal' && projects.some((p) => !tag || p.tags.includes(tag));
   const showPersonal = scope !== 'professional' && personal.length > 0;
 
-  const scopes: [Scope, string][] = [
-    ['all', t('work.all')],
-    ['professional', t('work.scopeProfessional')],
-    ['personal', t('work.scopePersonal')],
+  const scopes: [Scope, string, IconName][] = [
+    ['all', t('work.all'), 'grid'],
+    ['professional', t('work.scopeProfessional'), 'briefcase'],
+    ['personal', t('work.scopePersonal'), 'user'],
   ];
 
   return (
@@ -54,8 +55,9 @@ export default function Work() {
         </header>
         <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
           <div className="flex flex-wrap gap-2" role="group" aria-label={t('work.scope')}>
-            {scopes.map(([key, label]) => (
+            {scopes.map(([key, label, icon]) => (
               <Button key={key} type="button" size="sm" variant={scope === key ? 'default' : 'outline'} aria-pressed={scope === key} onClick={() => setScope(key)}>
+                <AppIcon name={icon} />
                 {label}
               </Button>
             ))}
@@ -66,6 +68,7 @@ export default function Work() {
             </Button>
             {TAGS.map((x) => (
               <Button key={x} type="button" size="sm" variant={tag === x ? 'secondary' : 'ghost'} aria-pressed={tag === x} onClick={() => setTag(x)}>
+                <AppIcon name={tagIcons[x as keyof typeof tagIcons]} />
                 {t(`tag.${x}`)}
               </Button>
             ))}
