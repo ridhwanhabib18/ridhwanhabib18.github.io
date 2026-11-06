@@ -1,6 +1,6 @@
 # Portfolio site
 
-Portfolio of Muhammad Ridhwan Habib Abdillah, Full Stack .NET Engineer.
+Portfolio of Muhammad Ridhwan Habib Abdillah, Full Stack Software Engineer (.NET).
 React + TypeScript + Vite static site hosted on GitHub Pages at <https://ridhwanhabib18.github.io>. English by default, with an Indonesian version under `/id`. Dark theme by default.
 
 ## Quick start

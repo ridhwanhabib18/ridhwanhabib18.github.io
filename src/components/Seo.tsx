@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useI18n } from '@/i18n';
+import { profile } from '@/content/profile';
 import { absoluteUrl, ogImageUrl } from '@/lib/site';
 import type { Lang } from '@/content/types';
 
@@ -48,7 +49,7 @@ export function Seo({ title, description, jsonLd }: { title?: string; descriptio
   const { pathname } = useLocation();
   const collector = useContext(HeadCtx);
 
-  const full = title ? `${title} | ${SITE_NAME}` : `${SITE_NAME} | Full Stack .NET Engineer`;
+  const full = title ? `${title} | ${SITE_NAME}` : `${SITE_NAME} | ${profile.headline.en}`;
   const urls = { [lang]: absoluteUrl(pathname), [otherLang]: absoluteUrl(switchPath) } as Record<Lang, string>;
 
   const image = ogImageUrl(pathname);

@@ -53,7 +53,7 @@ export default function Home() {
           <h1 className={cn(rise, 'mt-6 max-w-4xl text-4xl font-extrabold text-balance sm:text-5xl lg:text-6xl')} style={{ animationDelay: '60ms' }}>
             {profile.name}
           </h1>
-          <p className={cn(rise, 'mt-4 text-xl font-semibold text-primary sm:text-2xl')} style={{ animationDelay: '120ms' }}>
+          <p className={cn(rise, 'mt-4 text-xl font-semibold text-balance text-primary sm:text-2xl')} style={{ animationDelay: '120ms' }}>
             {l(profile.headline)}
           </p>
           <p className={cn(rise, 'mt-3 font-mono text-sm text-muted-foreground')} style={{ animationDelay: '150ms' }}>
