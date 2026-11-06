@@ -82,10 +82,18 @@
         "ASP.NET Core (MVC, Web API, Minimal API)",
         "ASP.NET MVC 5",
         ".NET Framework",
+        ".NET 10",
         "Entity Framework Core",
         "Dapper",
         "T-SQL",
-        "SQL Server"
+        "SQL Server",
+        "FluentValidation",
+        "OpenAPI",
+        "QuestPDF",
+        "ClosedXML",
+        "PdfPig",
+        "Serilog",
+        "Seq"
       ]
     },
     {
@@ -95,6 +103,16 @@
         "TypeScript",
         "JavaScript",
         "Vite",
+        "React Router",
+        "TanStack Query",
+        "Zustand",
+        "Tailwind CSS",
+        "shadcn/ui",
+        "Recharts",
+        "react-i18next",
+        "oidc-client-ts",
+        "Axios",
+        "orval",
         "Razor",
         "HTML",
         "CSS",
@@ -107,11 +125,15 @@
       "group": "Cloud & Integration",
       "items": [
         "AWS (S3, EC2, RDS, ECS, Lambda, Bedrock, Textract)",
-        "Keycloak (OIDC/JWT)",
+        "Keycloak (OIDC/JWT, PKCE)",
         "MinIO",
+        "SeaweedFS",
+        "Cloudflare R2",
         "SignalR",
         "Quartz.NET",
-        "Hangfire"
+        "Hangfire",
+        "Claude API",
+        "Ollama"
       ]
     },
     {
@@ -140,7 +162,13 @@
         "GitVersion",
         "IIS",
         "Docker",
+        "Docker Compose",
+        "Caddy",
         "Linux",
+        "xUnit",
+        "Testcontainers",
+        "Vitest",
+        "Playwright",
         "integration testing",
         "code review"
       ]

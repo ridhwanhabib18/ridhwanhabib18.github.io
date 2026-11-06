@@ -77,6 +77,10 @@
 )
 - Implemented and tested RS-232 and RS-485 communication modules on embedded boards using Arduino, C and C++
 
+== Personal Projects
+
+- *SchoMans, School Management System (2026):* system architect, system designer and author (assisted by Claude) of an end-to-end school platform for 6 roles: real-time QR attendance (SignalR), grading, assignments, admissions, announcements, approval workflows, PDF report cards and AI features with human review (.NET 10, Clean Architecture, SQL Server, Keycloak, Hangfire, React 19, TypeScript). Unit, integration and Playwright end-to-end tests with test evidence for each phase; code and documentation are public at #link("https://github.com/ridhwanhabib18/schomans")[github.com/ridhwanhabib18/schomans]
+
 == Education
 
 #edu(
@@ -88,11 +92,11 @@
 
 == Skills
 
-- *Programming & Backend:* C\#, Python, ASP.NET Core (MVC, Web API, Minimal API), ASP.NET MVC 5, .NET Framework, Entity Framework Core, Dapper, T-SQL, SQL Server
-- *Frontend:* React, TypeScript, JavaScript, Vite, Razor, HTML, CSS, Bootstrap, jQuery, AJAX
-- *Cloud & Integration:* AWS (S3, EC2, RDS, ECS, Lambda, Bedrock, Textract), Keycloak (OIDC/JWT), MinIO, SignalR, Quartz.NET, Hangfire
+- *Programming & Backend:* C\#, Python, ASP.NET Core (MVC, Web API, Minimal API), ASP.NET MVC 5, .NET Framework, .NET 10, Entity Framework Core, Dapper, T-SQL, SQL Server, FluentValidation, OpenAPI, QuestPDF, ClosedXML, PdfPig, Serilog, Seq
+- *Frontend:* React, TypeScript, JavaScript, Vite, React Router, TanStack Query, Zustand, Tailwind CSS, shadcn/ui, Recharts, react-i18next, oidc-client-ts, Axios, orval, Razor, HTML, CSS, Bootstrap, jQuery, AJAX
+- *Cloud & Integration:* AWS (S3, EC2, RDS, ECS, Lambda, Bedrock, Textract), Keycloak (OIDC/JWT, PKCE), MinIO, SeaweedFS, Cloudflare R2, SignalR, Quartz.NET, Hangfire, Claude API, Ollama
 - *Architecture & Delivery:* System design, N-layered Architecture, Clean Architecture, Vertical Slice Architecture, REST APIs, SDLC, Agile, Waterfall, Requirements Gathering, Business Case and ROI, PRDs, ADRs, UAT
-- *DevOps & Quality:* Git, GitHub Actions (CI/CD), GitVersion, IIS, Docker, Linux, integration testing, code review
+- *DevOps & Quality:* Git, GitHub Actions (CI/CD), GitVersion, IIS, Docker, Docker Compose, Caddy, Linux, xUnit, Testcontainers, Vitest, Playwright, integration testing, code review
 - *Desktop, Reporting & Automation:* WinForms, ClickOnce, Telerik Reporting, SQL Server Reporting Services, WPF, Robotic Process Automation (RPA)
 - *Additional Technologies:* Vue.js, PHP, Laravel, Arduino, C/C++
 

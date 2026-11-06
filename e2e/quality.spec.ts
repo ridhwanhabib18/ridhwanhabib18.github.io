@@ -280,7 +280,7 @@ test.describe('page transitions', () => {
     await page.goto('/');
     await page.waitForLoadState('networkidle');
     await page.evaluate(() => window.scrollTo(0, 400));
-    await page.getByRole('banner').getByRole('link', { name: 'Work', exact: true }).click();
+    await page.getByRole('banner').getByRole('link', { name: 'Projects', exact: true }).click();
     await expect(page).toHaveURL(/\/work\/?$/);
     await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
     expect(await page.evaluate(() => window.scrollY)).toBe(0);
@@ -290,7 +290,7 @@ test.describe('page transitions', () => {
   test('a modified click (new tab) is left to the browser', async ({ page, context }) => {
     await page.addInitScript(countTransitions);
     await page.goto('/');
-    const [popup] = await Promise.all([context.waitForEvent('page'), page.getByRole('banner').getByRole('link', { name: 'Work', exact: true }).click({ modifiers: ['Control'] })]);
+    const [popup] = await Promise.all([context.waitForEvent('page'), page.getByRole('banner').getByRole('link', { name: 'Projects', exact: true }).click({ modifiers: ['Control'] })]);
     await popup.waitForLoadState();
     expect(popup.url()).toMatch(/\/work\/?$/);
     expect(await page.evaluate(() => (window as unknown as { __vt: number }).__vt)).toBe(0);
@@ -366,4 +366,36 @@ test('the largest contentful paint stays the hero heading, even for a visitor wh
   const last = entries[entries.length - 1];
   expect(last.tag, JSON.stringify(entries)).toBe('H1');
   expect(last.t, JSON.stringify(entries)).toBeLessThan(3000);
+});
+
+test.describe('the Projects page', () => {
+  test('shows professional work and personal projects, and the scope buttons filter them', async ({ page }) => {
+    await page.goto('/work/');
+    await expect(page.getByRole('heading', { level: 1, name: 'Projects' })).toBeVisible();
+    await expect(page.getByRole('heading', { level: 2, name: 'Professional' })).toBeVisible();
+    await expect(page.getByRole('heading', { level: 2, name: 'Personal projects' })).toBeVisible();
+
+    await page.getByRole('group', { name: 'Show' }).getByRole('button', { name: 'Personal' }).click();
+    await expect(page.getByRole('heading', { level: 2, name: 'Professional' })).toHaveCount(0);
+    await expect(page.getByRole('heading', { level: 3, name: /SchoMans/ })).toBeVisible();
+
+    await page.getByRole('group', { name: 'Show' }).getByRole('button', { name: 'Professional' }).click();
+    await expect(page.getByRole('heading', { level: 2, name: 'Personal projects' })).toHaveCount(0);
+    await expect(page.getByRole('heading', { level: 3, name: 'Delivered end to end' })).toBeVisible();
+  });
+
+  test('the SchoMans card links out safely to the public repository', async ({ page }) => {
+    await page.goto('/work/');
+    const repo = page.getByRole('link', { name: /Source code on GitHub/ });
+    await expect(repo).toHaveAttribute('href', 'https://github.com/ridhwanhabib18/schomans');
+    await expect(repo).toHaveAttribute('target', '_blank');
+    expect(await repo.getAttribute('rel')).toContain('noopener');
+    await expect(page.getByRole('heading', { level: 5, name: 'Testing' })).toBeVisible();
+  });
+
+  test('the menu says Projects in both languages and no longer has a demo', async ({ page }) => {
+    await page.goto('/id/');
+    await expect(page.getByRole('banner').getByRole('link', { name: 'Proyek', exact: true })).toBeVisible();
+    await expect(page.getByRole('banner').getByRole('link', { name: /demo/i })).toHaveCount(0);
+  });
 });

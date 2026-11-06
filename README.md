@@ -376,12 +376,24 @@ All content is typed data in `src/content/` with `{ en, id }` for every user-fac
 | To change | Edit |
 |---|---|
 | Name, links, about, stack, certifications | `src/content/profile.ts` |
-| Case studies, metrics, diagrams | `src/content/projects.ts` |
+| Professional case studies, metrics, diagrams | `src/content/projects.ts` |
+| Personal projects (shown on the Projects page) | `src/content/personal-projects.ts` |
 | Experience timeline | `src/content/experience.ts` |
 | Resume text (summaries, experience bullets, skills, education, certifications, contact links) | `resume/resume_us.typ`, then run `npm run extract` |
 | Indonesian translation of that text | `src/content/resume.id.ts` (keyed by the exact English source string) |
 | Resume variant labels on the site and PDF links | `src/content/resume.ts` |
 | Availability badge | `available` in `src/content/profile.ts` |
+
+## The Projects page: professional work and personal projects
+
+`/work` is one page called **Projects** (the address is kept so shared links still work). It has two groups, with buttons to show all, only the professional work, or only the personal projects, and a topic filter that applies to both:
+
+- **Professional** (`src/content/projects.ts`): the case studies from the resume. They keep every guardrail: percentages only, Actual or Target labels, and tests that tie each one to its resume bullet.
+- **Personal projects** (`src/content/personal-projects.ts`): projects built outside an employer, with public code. They are not resume case studies, so the resume tests do not apply, but they have their own tests (`personal-projects.test.ts`): everything in English and Indonesian, one entry per technology, links only to public GitHub pages of the owner, and no employer, currency or phone-like text. Say only what the project's own README and documentation say. The role of SchoMans is worded as "System Architect, System Design and Author, assisted by Claude" (the owner's choice), here and in the resumes. The first one is SchoMans, with its whole documented stack by layer.
+
+To add a personal project: add an entry to `personalProjects` (title, summary, status, role, year, tags, `stackGroups`, highlights, links, each in both languages) and run `npm test`. The card, the filters and the Indonesian page need no other change. There is no detail page per personal project; the card links to the repository and its documentation.
+
+**Skills instead of a separate page:** the grouped skills are a section ("Skills") on About, with the first items of each group on Home, both read from the resume source (`## Skills` in `resume_us.typ`). The whole SchoMans stack from its PRD was added there and to all three resumes (US, AU, CA), which also have a Personal Projects section. Check the page count with Typst after adding to them (all three are 2 pages for every role); Typst is installed under the winget packages folder but not on the PATH.
 
 ## Not done yet
 
