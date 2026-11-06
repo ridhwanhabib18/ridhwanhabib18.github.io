@@ -90,7 +90,7 @@
 
 - *Programming & Backend:* C\#, Python, ASP.NET Core (MVC, Web API, Minimal API), ASP.NET MVC 5, .NET Framework, Entity Framework Core, Dapper, T-SQL, SQL Server
 - *Frontend:* React, TypeScript, JavaScript, Vite, Razor, HTML, CSS, Bootstrap, jQuery, AJAX
-- *Cloud & Integration:* AWS (S3, EC2, RDS, ECS, Lambda, Bedrock, Textract), Keycloak (OIDC/JWT), MinIO, SignalR, Quartz.NET, Hangfire, Elsa Workflows
+- *Cloud & Integration:* AWS (S3, EC2, RDS, ECS, Lambda, Bedrock, Textract), Keycloak (OIDC/JWT), MinIO, SignalR, Quartz.NET, Hangfire
 - *Architecture & Delivery:* System design, N-layered Architecture, Clean Architecture, Vertical Slice Architecture, REST APIs, SDLC, Agile, Waterfall, Requirements Gathering, Business Case and ROI, PRDs, ADRs, UAT
 - *DevOps & Quality:* Git, GitHub Actions (CI/CD), GitVersion, IIS, Docker, Linux, integration testing, code review
 - *Desktop, Reporting & Automation:* WinForms, ClickOnce, Telerik Reporting, SQL Server Reporting Services, WPF, Robotic Process Automation (RPA)

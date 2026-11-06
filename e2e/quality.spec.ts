@@ -359,3 +359,22 @@ test.describe('the rotating role word under the hero headline', () => {
     await expect(page.locator('.sr-only', { hasText: /^Also: / })).toHaveCount(1);
   });
 });
+
+test('the largest contentful paint stays the hero heading, even for a visitor who does nothing while the roles rotate', async ({ page }) => {
+  // The rotating role word changes its text a few seconds after load. A text change is a new paint, so if no larger element
+  // were already the LCP candidate, the late change would become the LCP (4 to 5 s). The heading must not fade in from
+  // opacity 0 (elements that start invisible are not counted), so that it is the large early candidate.
+  await page.addInitScript(() => {
+    (window as unknown as { __lcp: { t: number; tag: string }[] }).__lcp = [];
+    new PerformanceObserver((list) => {
+      for (const e of list.getEntries()) (window as unknown as { __lcp: { t: number; tag: string }[] }).__lcp.push({ t: Math.round(e.startTime), tag: (e as unknown as { element?: Element }).element?.tagName ?? '?' });
+    }).observe({ type: 'largest-contentful-paint', buffered: true });
+  });
+  await page.goto('/');
+  await page.waitForTimeout(7000); // long enough for the first word change, with no scroll or click
+  const entries = await page.evaluate(() => (window as unknown as { __lcp: { t: number; tag: string }[] }).__lcp);
+  expect(entries.length).toBeGreaterThan(0);
+  const last = entries[entries.length - 1];
+  expect(last.tag, JSON.stringify(entries)).toBe('H1');
+  expect(last.t, JSON.stringify(entries)).toBeLessThan(3000);
+});

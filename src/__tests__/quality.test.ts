@@ -146,7 +146,11 @@ describe('certifications', () => {
     const home = render('/').html;
     expect(home.indexOf('Credly badge:')).toBeGreaterThan(-1);
     expect(home.indexOf('Credly badge:')).toBeLessThan(home.indexOf('Results at a glance'));
-    expect(render('/id/').html).toContain('Berlaku hingga');
+    // the home page shows the short form (validity range on one line); the full dates are on About
+    expect(home).toContain('Valid Oct 2026');
+    expect(render('/id/').html).toContain('Berlaku Okt 2026');
+    expect(render('/about/').html).toContain('Valid until');
+    expect(render('/id/about/').html).toContain('Berlaku hingga');
   });
 });
 
@@ -201,5 +205,41 @@ describe('rotating role word under the hero headline', () => {
   it('is never wider than the room the hero gives it', () => {
     // the line reserves the width of the longest word; keep that within a phone's text width (about 30 monospace characters)
     for (const words of [profile.alsoRoles.en, profile.alsoRoles.id]) expect(Math.max(...words.map((w) => w.length))).toBeLessThanOrEqual(30);
+  });
+});
+
+describe('home page flow (issue 7)', () => {
+  const home = () => render('/').html;
+  const at = (html: string, text: string) => {
+    const i = html.indexOf(text);
+    expect(i, `"${text}" is on the page`).toBeGreaterThan(-1);
+    return i;
+  };
+
+  it('offers email, LinkedIn and GitHub links in the hero, and a contact call to action at the bottom', () => {
+    const html = home();
+    for (const href of [`mailto:${profile.email}`, profile.linkedin, profile.github]) expect(html).toContain(`href="${href.split('?')[0]}`);
+    expect(at(html, 'aria-label="Contact links"')).toBeLessThan(at(html, 'id="cert-h"'));
+    expect(at(html, "Let&#x27;s talk")).toBeGreaterThan(at(html, 'id="stack-h"'));
+    expect(html).toContain('data-event="email-click"');
+  });
+
+  it('keeps the order: certifications, results, featured work, how I work, stack, contact', () => {
+    const html = home();
+    const ids = ['cert-h', 'proof-h', 'feat-h', 'how-h', 'stack-h', 'cta-h'].map((id) => at(html, `id="${id}"`));
+    expect([...ids].sort((a, b) => a - b)).toEqual(ids);
+  });
+
+  it('does not invite visitors to the live demo from the home page', () => {
+    const main = home().slice(home().indexOf('<main'), home().indexOf('</main>')); // the site-wide navigation does link to the demo
+    expect(main.length).toBeGreaterThan(1000);
+    expect(main).not.toMatch(/href="\/demo/);
+  });
+
+  it('is complete in Indonesian too', () => {
+    const html = render('/id/').html;
+    expect(html).toContain('Mari berdiskusi');
+    expect(html).toContain('Cara saya bekerja');
+    expect(html).toContain('Peran:');
   });
 });

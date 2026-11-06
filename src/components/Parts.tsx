@@ -75,6 +75,7 @@ export function ProjectCard({ p }: { p: Project }) {
           </Link>
         </h3>
         <p className="text-sm text-muted-foreground">{l(p.summary)}</p>
+        <p className="text-xs font-medium text-muted-foreground">{`${t('card.role')}: ${l(p.role)}`}</p>
         {lead ? (
           <p className="flex flex-wrap items-center gap-x-2 gap-y-1 text-sm">
             <MetricBadge type={lead.type} />

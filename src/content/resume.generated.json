@@ -111,8 +111,7 @@
         "MinIO",
         "SignalR",
         "Quartz.NET",
-        "Hangfire",
-        "Elsa Workflows"
+        "Hangfire"
       ]
     },
     {
