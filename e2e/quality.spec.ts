@@ -199,3 +199,38 @@ test.describe('the Experience timeline', () => {
     expect(await animationOf(page, '.timeline-dot')).toBe('none');
   });
 });
+
+test.describe('the architecture diagram is drawn as it scrolls into view', () => {
+  const page_ = '/work/production-file-distribution/';
+  const info = (page: Page) =>
+    page.evaluate(() => {
+      const line = document.querySelector('.diagram-edge line')!;
+      const node = document.querySelector('.diagram-node')!;
+      return { line: getComputedStyle(line).animationName, node: getComputedStyle(node).animationName, edges: document.querySelectorAll('.diagram-edge').length };
+    });
+
+  test('connections draw one after another and finish fully drawn', async ({ page }) => {
+    await page.setViewportSize({ width: 1280, height: 800 });
+    await page.goto(page_);
+    await page.waitForLoadState('networkidle');
+    const before = await info(page);
+    expect(before.line).toBe('diagram-draw');
+    expect(before.node).toBe('diagram-fade');
+    expect(before.edges).toBeGreaterThan(2);
+    // scroll until the whole figure is on screen: every line must be completely drawn
+    await page.locator('figure.diagram-figure').scrollIntoViewIfNeeded();
+    await page.evaluate(() => window.scrollBy(0, 300));
+    await page.waitForTimeout(500);
+    const offsets = await page.evaluate(() => [...document.querySelectorAll('.diagram-edge line')].map((l) => getComputedStyle(l).strokeDashoffset));
+    expect(offsets.every((o) => parseFloat(o) === 0), offsets.join(',')).toBe(true);
+  });
+
+  test('stays a finished picture with reduced motion and in print', async ({ page }) => {
+    await page.setViewportSize({ width: 1280, height: 800 });
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    await page.goto(page_);
+    expect((await info(page)).line).toBe('none');
+    await page.emulateMedia({ reducedMotion: 'no-preference', media: 'print' });
+    expect((await info(page)).line).toBe('none');
+  });
+});

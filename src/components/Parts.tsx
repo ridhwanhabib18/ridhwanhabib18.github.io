@@ -1,3 +1,4 @@
+import type { CSSProperties } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import { useI18n } from '@/i18n';
@@ -150,13 +151,8 @@ export function Diagram({ def, title }: { def: DiagramDef; title: string }) {
   return (
     <>
       <DiagramList def={def} title={title} />
-      <figure className="hidden overflow-x-auto rounded-xl border bg-card p-4 sm:block">
+      <figure className="diagram-figure hidden overflow-x-auto rounded-xl border bg-card p-4 sm:block">
       <svg viewBox={`0 0 ${width} ${height}`} role="img" aria-label={title} width="100%" className="h-auto min-w-[34rem]">
-        <defs>
-          <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-            <path d="M0 0 10 5 0 10z" className="fill-muted-foreground" />
-          </marker>
-        </defs>
         {def.edges.map((e, i) => {
           const a = pos(e.from);
           const b = pos(e.to);
@@ -171,9 +167,18 @@ export function Diagram({ def, title }: { def: DiagramDef; title: string }) {
           const sy = horizontal ? ay : ay + Math.sign(dy) * (BOX_H / 2);
           const ex = horizontal ? bx - Math.sign(dx) * (BOX_W / 2) : bx;
           const ey = horizontal ? by : by - Math.sign(dy) * (BOX_H / 2);
+          // arrow head as a plain triangle (not an SVG marker) so it can appear after its line has been drawn
+          const len = Math.hypot(ex - sx, ey - sy) || 1;
+          const ux = (ex - sx) / len;
+          const uy = (ey - sy) / len;
+          const tip = `${ex},${ey} ${ex - ux * 9 - uy * 4.5},${ey - uy * 9 + ux * 4.5} ${ex - ux * 9 + uy * 4.5},${ey - uy * 9 - ux * 4.5}`;
+          // each connection is drawn in turn as the figure scrolls into view (see .diagram-edge in globals.css)
+          const start = (i * 30) / def.edges.length;
+          const edgeTiming = { '--s': `${start}%`, '--e': `${start + 15}%` } as CSSProperties;
           return (
-            <g key={i}>
-              <line x1={sx} y1={sy} x2={ex} y2={ey} className="stroke-muted-foreground/70" strokeWidth="1.5" markerEnd="url(#arrow)" />
+            <g key={i} className="diagram-edge" style={edgeTiming}>
+              <line x1={sx} y1={sy} x2={ex} y2={ey} pathLength={1} className="stroke-muted-foreground/70" strokeWidth="1.5" />
+              <polygon points={tip} className="diagram-tip fill-muted-foreground/70" />
               {e.label && (
                 <text x={(sx + ex) / 2} y={(sy + ey) / 2 - 5} textAnchor="middle" className="fill-muted-foreground stroke-card font-mono text-[10px] [paint-order:stroke]" strokeWidth="5" strokeLinejoin="round">
                   {e.label}
@@ -185,7 +190,7 @@ export function Diagram({ def, title }: { def: DiagramDef; title: string }) {
         {def.nodes.map((n) => {
           const p = pos(n.id);
           return (
-            <g key={n.id}>
+            <g key={n.id} className="diagram-node">
               <rect x={p.x} y={p.y} width={BOX_W} height={BOX_H} rx="8" strokeWidth="1.5" className={nodeKind[n.kind ?? 'service']} />
               <text x={p.x + BOX_W / 2} y={p.y + BOX_H / 2 + 4} textAnchor="middle" className="fill-foreground text-xs font-semibold">
                 {n.label.length > 30 ? `${n.label.slice(0, 29)}…` : n.label}

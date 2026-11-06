@@ -198,6 +198,51 @@
   }
 }
 
+/* Architecture diagrams: boxes fade in, then each connection is drawn in turn (the line first, then its arrow head and
+   label) while the figure travels from the bottom edge to the middle of the screen. The figure defines the timeline; --s and --e (set per connection in
+   Parts.tsx) place each connection inside it. Unsupported browsers, reduced motion and print show the finished diagram. */
+@keyframes diagram-draw {
+  from {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+  }
+  to {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 0;
+  }
+}
+@keyframes diagram-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .diagram-figure {
+      view-timeline: --diagram block;
+    }
+    .diagram-node {
+      animation: diagram-fade linear both;
+      animation-timeline: --diagram;
+      animation-range: entry 0% entry 30%;
+    }
+    .diagram-edge line {
+      animation: diagram-draw linear both;
+      animation-timeline: --diagram;
+      animation-range: cover var(--s) cover var(--e);
+    }
+    .diagram-edge .diagram-tip,
+    .diagram-edge text {
+      animation: diagram-fade linear both;
+      animation-timeline: --diagram;
+      animation-range: cover calc(var(--e) - 5%) cover var(--e);
+    }
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html:focus-within {
     scroll-behavior: auto;
