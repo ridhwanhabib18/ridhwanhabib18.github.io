@@ -308,6 +308,27 @@
   }
 }
 
+/* Caret after the rotating role word under the hero headline (RotatingWord.tsx). Hidden when motion is reduced, because
+   nothing is typed then. */
+@keyframes typed-caret-blink {
+  50% {
+    opacity: 0;
+  }
+}
+.typed-caret {
+  display: inline-block;
+  width: 2px;
+  height: 1.1em;
+  margin-left: 2px;
+  background: currentColor;
+  animation: typed-caret-blink 1s steps(1) infinite;
+}
+@media (prefers-reduced-motion: reduce), print {
+  .typed-caret {
+    display: none;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html:focus-within {
     scroll-behavior: auto;

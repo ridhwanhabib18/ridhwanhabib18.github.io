@@ -182,3 +182,14 @@ describe('count-up numbers', () => {
     expect(html).toContain('about 96% faster');
   });
 });
+
+describe('rotating role word under the hero headline', () => {
+  it('has the first role in the pre-rendered HTML and the full list as text for screen readers', () => {
+    const html = render('/').html;
+    expect(html).toContain('<span>Tech Lead</span>');
+    expect(html).toContain('Also: Tech Lead, System Analyst, Code Reviewer, Mentor');
+    expect(render('/id/').html).toContain('Juga: Tech Lead, System Analyst, Code Reviewer, Mentor');
+    // the animated part is hidden from assistive technology so it is not read letter by letter
+    expect(html).toMatch(/aria-hidden="true"[^>]*class="inline-flex items-center gap-2"|class="inline-flex items-center gap-2"[^>]*aria-hidden="true"/);
+  });
+});

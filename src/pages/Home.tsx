@@ -4,6 +4,7 @@ import { CertCard } from '@/components/CertCard';
 import { CountUp } from '@/components/CountUp';
 import { Seo } from '@/components/Seo';
 import { Reveal } from '@/components/Reveal';
+import { RotatingWord } from '@/components/RotatingWord';
 import { MetricBadge, ProjectCard, Section, StackChips } from '@/components/Parts';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -27,6 +28,7 @@ const proofItems = () =>
 export default function Home() {
   const { t, l, path } = useI18n();
   const proof = proofItems();
+  const alsoRoles = l(profile.alsoRoles);
   const feat = featured.map((s) => projects.find((p) => p.slug === s)!).filter(Boolean);
 
   return (
@@ -53,6 +55,15 @@ export default function Home() {
           </h1>
           <p className={cn(rise, 'mt-4 text-xl font-semibold text-primary sm:text-2xl')} style={{ animationDelay: '120ms' }}>
             {l(profile.headline)}
+          </p>
+          <p className={cn(rise, 'mt-3 font-mono text-sm text-muted-foreground')} style={{ animationDelay: '150ms' }}>
+            <span className="sr-only">{`${t('home.also')}: ${alsoRoles.join(', ')}`}</span>
+            <span aria-hidden="true" className="inline-flex items-center gap-2">
+              <span className="text-primary">&gt;</span>
+              <span className="inline-flex h-5 items-center text-left" style={{ minWidth: `${Math.max(...alsoRoles.map((w) => w.length)) + 1}ch` }}>
+                <RotatingWord words={alsoRoles} />
+              </span>
+            </span>
           </p>
           <p className={cn(rise, 'mt-4 max-w-2xl text-lg text-muted-foreground')} style={{ animationDelay: '180ms' }}>
             {l(profile.positioning)}

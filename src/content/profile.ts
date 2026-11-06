@@ -64,6 +64,11 @@ export const profile = {
     en: 'I turn manufacturing requirements into reliable production software—from business case and system design to deployment and production support.',
     id: 'Saya menerjemahkan kebutuhan manufaktur menjadi perangkat lunak produksi yang andal—dari business case dan desain sistem hingga deployment dan dukungan produksi.',
   } as L10n,
+  /** Roles shown one at a time (typed) under the headline; the first is the one in the pre-rendered HTML. */
+  alsoRoles: {
+    en: ['Tech Lead', 'System Analyst', 'Code Reviewer', 'Mentor'],
+    id: ['Tech Lead', 'System Analyst', 'Code Reviewer', 'Mentor'],
+  } as L10n<string[]>,
   availability: {
     en: 'Open to Tech Lead, Senior Software Engineer (.NET), Full Stack Developer, and System Analyst roles',
     id: 'Terbuka untuk peran Tech Lead, Senior Software Engineer (.NET), Full Stack Developer, dan System Analyst',
