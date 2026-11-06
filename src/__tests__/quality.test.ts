@@ -184,12 +184,22 @@ describe('count-up numbers', () => {
 });
 
 describe('rotating role word under the hero headline', () => {
+  const plain = (html: string) => html.replace(/<!-- -->/g, '').replace(/&amp;/g, '&');
+
   it('has the first role in the pre-rendered HTML and the full list as text for screen readers', () => {
-    const html = render('/').html;
-    expect(html).toContain('<span>Tech Lead</span>');
-    expect(html).toContain('Also: Tech Lead, System Analyst, Code Reviewer, Mentor');
-    expect(render('/id/').html).toContain('Juga: Tech Lead, System Analyst, Code Reviewer, Mentor');
+    const roles = profile.alsoRoles;
+    expect(roles.en.length).toBeGreaterThan(1);
+    expect(roles.id.length).toBe(roles.en.length);
+    const html = plain(render('/').html);
+    expect(html).toContain(`<span>${roles.en[0]}</span>`);
+    expect(html).toContain(`Also: ${roles.en.join(', ')}`);
+    expect(plain(render('/id/').html)).toContain(`Juga: ${roles.id.join(', ')}`);
     // the animated part is hidden from assistive technology so it is not read letter by letter
     expect(html).toMatch(/aria-hidden="true"[^>]*class="inline-flex items-center gap-2"|class="inline-flex items-center gap-2"[^>]*aria-hidden="true"/);
+  });
+
+  it('is never wider than the room the hero gives it', () => {
+    // the line reserves the width of the longest word; keep that within a phone's text width (about 30 monospace characters)
+    for (const words of [profile.alsoRoles.en, profile.alsoRoles.id]) expect(Math.max(...words.map((w) => w.length))).toBeLessThanOrEqual(30);
   });
 });

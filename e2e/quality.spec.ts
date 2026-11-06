@@ -332,27 +332,30 @@ test.describe('the rotating role word under the hero headline', () => {
     await page.goto('/');
     await page.waitForLoadState('networkidle');
     await page.evaluate(() => document.fonts.ready); // the width is measured in the monospace font, so wait until it has arrived
-    await expect(word(page)).toHaveText('Tech Lead');
-    // the headline itself is plain static text
-    await expect(page.getByText('Full Stack .NET Engineer', { exact: true })).toHaveCount(1);
+    const first = (await word(page).textContent()) ?? '';
+    expect(first).not.toBe('');
+    // the headline above it is plain static text, with no animation of its own
+    const headline = page.locator('h1 + p');
+    expect(await headline.evaluate((el) => getComputedStyle(el.querySelector('span') ?? el).animationName)).not.toMatch(/type/);
     const holder = page.locator('span[aria-hidden="true"] > span.inline-flex').first();
     const size = async () => holder.evaluate((el) => { const r = el.getBoundingClientRect(); return [Math.round(r.left), Math.round(r.top), Math.round(r.width), Math.round(r.height)]; });
     const before = await size();
     const seen = new Set<string>();
-    await expect.poll(async () => { seen.add((await word(page).textContent()) ?? ''); return [...seen].some((w) => w !== 'Tech Lead' && w !== ''); }, { timeout: 15000, intervals: [150] }).toBe(true);
+    await expect.poll(async () => { seen.add((await word(page).textContent()) ?? ''); return [...seen].some((w) => w !== first && w !== ''); }, { timeout: 15000, intervals: [150] }).toBe(true);
     expect(await size()).toEqual(before);
   });
 
   test('stays on the first role for visitors who prefer reduced motion', async ({ page }) => {
     await page.emulateMedia({ reducedMotion: 'reduce' });
     await page.goto('/');
+    const first = (await word(page).textContent()) ?? '';
     await page.waitForTimeout(6500);
-    await expect(word(page)).toHaveText('Tech Lead');
+    await expect(word(page)).toHaveText(first);
     await expect(page.locator('.typed-caret')).toBeHidden();
   });
 
   test('tells screen readers all the roles once, as plain text', async ({ page }) => {
     await page.goto('/');
-    await expect(page.getByText('Also: Tech Lead, System Analyst, Code Reviewer, Mentor')).toHaveCount(1);
+    await expect(page.locator('.sr-only', { hasText: /^Also: / })).toHaveCount(1);
   });
 });

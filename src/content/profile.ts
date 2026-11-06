@@ -57,8 +57,8 @@ export const profile = {
   /** Flip to false to hide the availability badge. */
   available: true,
   headline: {
-    en: 'Full Stack .NET Engineer',
-    id: 'Full Stack .NET Engineer',
+    en: 'Full Stack Software Engineer (.NET)',
+    id: 'Full Stack Software Engineer (.NET)',
   } as L10n,
   positioning: {
     en: 'I turn manufacturing requirements into reliable production software—from business case and system design to deployment and production support.',
@@ -66,8 +66,8 @@ export const profile = {
   } as L10n,
   /** Roles shown one at a time (typed) under the headline; the first is the one in the pre-rendered HTML. */
   alsoRoles: {
-    en: ['Tech Lead', 'System Analyst', 'Code Reviewer', 'Mentor'],
-    id: ['Tech Lead', 'System Analyst', 'Code Reviewer', 'Mentor'],
+    en: ['System Analyst', 'Full Stack Software Engineer', 'Full Stack .NET Developer', 'Backend & API Integration', 'Web Development', 'Desktop & Mobile Development', 'Internet of Things (IoT)', 'Embedded Systems'],
+    id: ['System Analyst', 'Full Stack Software Engineer', 'Full Stack .NET Developer', 'Backend & API Integration', 'Web Development', 'Desktop & Mobile Development', 'Internet of Things (IoT)', 'Embedded Systems'],
   } as L10n<string[]>,
   availability: {
     en: 'Open to Tech Lead, Senior Software Engineer (.NET), Full Stack Developer, and System Analyst roles',
