@@ -125,14 +125,14 @@ Everything is organised under four principles, **POUR**: Perceivable, Operable, 
 
 ### Latest measurement
 
-Measured with `npm run lighthouse` on the built site (2026-11-05, Edge, simulated mid-range phone for "mobile"):
+Measured with `LH_RUNS=3 npm run lighthouse` (median of 3) on the built site after the animation work (2026-11-06, Edge, simulated mid-range phone for "mobile"):
 
 | | Performance | Accessibility | Best Practices | SEO |
 |---|---|---|---|---|
 | **Desktop**, all 9 pages | 100 | 100 | 100 | 100 |
-| **Mobile**, all 9 pages | 94 to 100 (typical run 96 to 99) | 100 | 100 | 100 |
+| **Mobile**, all 9 pages | 98 to 100 (home page 100) | 100 | 100 | 100 |
 
-- **Layout shift (CLS) is 0** on every page; **LCP** is 0.8 to 1.0 s on most pages (up to 2.5 s on Experience in the slowest runs).
+- **Layout shift (CLS) is 0** on every page; **LCP** is 0.8 to 0.9 s on most pages (2.3 s on Experience).
 - Mobile Performance moves a few points between runs. Single runs of `/resume/` (85) and `/about/` (90) came out low while the machine was busy; measured again three times each they scored 98 to 100 and 97 to 100. Use `LH_RUNS=3 npm run lighthouse` for steadier numbers.
 - The Accessibility score of 100 and the axe tests (WCAG 2.2 A and AA, dark and light theme, 19 pages) agree. As explained above, that is a strong sign but not a certificate.
 
@@ -201,6 +201,26 @@ To add or renew a certification: add the line to the Typst resume, add its entry
 - Percentages only, never USD or absolute hours (see Content guardrails).
 - Every card is labelled Actual (measured after go-live) or Target (from an approved proposal). Never present a target as an actual.
 - Show only results that are confirmed. If a number is not confirmed yet, take it out instead of labelling it Actual.
+
+## Animations
+
+Tracked as GitHub issues #1 to #6 in the public repository. All of them are CSS or a few lines of JavaScript, with no animation library, and all of them respect `prefers-reduced-motion` (the visitor then sees the finished state at once).
+
+| Animation | Where | How | Issue |
+|---|---|---|---|
+| Fade and rise on scroll | most sections | `.reveal`, scroll-driven CSS (`animation-timeline: view()`) | earlier work |
+| Numbers count up | Results at a glance | `CountUp.tsx`: counts the first number once when it scrolls into view; the final text stays in the HTML and the figure keeps its width (`ch` units, tabular digits) | #1 done |
+| Diagram drawn step by step | case-study architecture diagrams | boxes fade in, then each connection is drawn (`stroke-dashoffset`) while the figure scrolls from the bottom edge to the middle of the screen; arrow heads are plain triangles so they can follow their line | #2 done |
+| Card lift and badge glint | project and certification cards | one shared `.lift` style (pointer devices only, also on keyboard focus); the glint is a gradient clipped to the badge shape with a mask | #3 done |
+| Growing timeline | Experience | a primary-coloured line grows with scroll and each dot lights up as its role enters the screen | #4 done |
+| Page transitions | every internal link | `TransitionLink.tsx` starts a View Transition (short cross-fade, header stays) when the browser supports it; modified clicks and unsupported browsers navigate as before; navigation scrolls to the top instantly | #5 done |
+| Typing effect on the hero headline | Home | tried twice and removed | #6 not planned |
+
+Rules for any new animation: respect reduced motion, animate only `transform` and `opacity` where possible, never cause layout shift (CLS stays 0), never hide content if the animation or JavaScript fails, add no animation library, leave print unaffected, and re-measure with `LH_RUNS=3 npm run lighthouse` (also `npm run test:e2e`) before merging.
+
+**Why the typing effect was dropped:** the hero headline is a Largest Contentful Paint candidate. Hiding it for the effect, first with `clip-path` and then with a `transform` curtain, raised the mobile LCP of the home page from about 0.85 s to about 2.8 s (score 99-100 down to 90-96); with the effect disabled it returned to 0.8-0.9 s. A flourish is not worth a page that paints its largest element three times later. Lesson: anything that covers or delays the text of an above-the-fold element can move LCP, so measure the home page before shipping it.
+
+Measuring tip: scores move a few points between runs and a lot when the computer is busy (a busy machine once showed every page, including ones with no animation, dropping by 10 to 30 points). Use the median of 3 runs on a quiet machine, and compare against a control build before blaming a change.
 
 ## Visit statistics (optional, off by default)
 
