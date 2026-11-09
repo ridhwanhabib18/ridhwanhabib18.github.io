@@ -348,7 +348,7 @@ export const personalProjects: PersonalProject[] = [
       en: 'Version 2.0 is built and tested without a roaster (32 unit tests and a firmware simulation). Its first real roast still needs the burner-disconnected checklist; the original version is the thesis system.',
       id: 'Versi 2.0 sudah dibangun dan diuji tanpa mesin sangrai (32 tes unit dan simulasi firmware). Sangrai nyata pertamanya masih membutuhkan daftar periksa dengan pembakar dilepas; versi aslinya adalah sistem skripsi.',
     },
-    role: { en: 'Author of the thesis system (v1.0) and of the v2.0 rewrite, assisted by Claude', id: 'Penulis sistem skripsi (v1.0) dan penulisan ulang v2.0, dibantu Claude' },
+    role: { en: 'Author of the thesis system (v1.0) and of the v2.0 rewrite', id: 'Penulis sistem skripsi (v1.0) dan penulisan ulang v2.0' },
     year: '2026',
     tags: ['embedded', 'desktop'],
     cardStack: ['.NET 10', 'WPF', 'WPF-UI', 'ScottPlot', 'Arduino', 'PID control'],
