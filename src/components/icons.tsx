@@ -46,6 +46,14 @@ import {
   Wrench,
   Zap,
   MapPin,
+  Activity,
+  Cable,
+  Cpu,
+  FileSpreadsheet,
+  Flame,
+  Gauge,
+  ShieldAlert,
+  Thermometer,
   type LucideIcon,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -104,6 +112,14 @@ export const icons = {
   monitor: Monitor,
   rocket: Rocket,
   award: Award,
+  activity: Activity,
+  cable: Cable,
+  cpu: Cpu,
+  sheet: FileSpreadsheet,
+  flame: Flame,
+  gauge: Gauge,
+  alert: ShieldAlert,
+  thermometer: Thermometer,
 } satisfies Record<string, LucideIcon>;
 
 export type IconName = keyof typeof icons;
@@ -124,13 +140,13 @@ export function IconTile({ name, size = 'md', className }: { name: IconName; siz
 }
 
 /** Icons for the topic filters on the Projects page. */
-export const tagIcons = { aspnet: 'server', react: 'atom', realtime: 'radio', integration: 'plug', data: 'database' } as const satisfies Record<string, IconName>;
+export const tagIcons = { aspnet: 'server', react: 'atom', realtime: 'radio', integration: 'plug', data: 'database', embedded: 'cpu', desktop: 'monitor' } as const satisfies Record<string, IconName>;
 
 /** Icons of the personal project pages, by the identifier of what they decorate (a test checks that every one is covered). */
 export const personalIcons = {
-  features: { 'F-01': 'database', 'F-02': 'key', 'F-03': 'qr', 'F-04': 'book', 'F-05': 'file', 'F-06': 'megaphone', 'F-07': 'user-plus', 'F-08': 'clipboard-check', 'F-09': 'chart', 'F-10': 'sparkles', 'F-11': 'scroll' },
-  roles: { Principal: 'school', Teacher: 'presentation', Student: 'graduation', Parent: 'users', 'Admin staff': 'clipboard', Applicant: 'user-plus', Guest: 'globe' },
-  quality: { Responsiveness: 'zap', 'Security and privacy': 'lock', Testability: 'flask', Operability: 'wrench', Cost: 'coins', Evolvability: 'puzzle' },
-  design: { 'Security and authorization': 'shield', 'Real-time events and background jobs': 'radio', 'File storage': 'drive' },
-  stack: { Backend: 'server', 'Data and files': 'database', 'Identity, real time and jobs': 'key', Frontend: 'monitor', Testing: 'flask', Delivery: 'rocket', AI: 'sparkles' },
+  features: { 'F-01': 'database', 'F-02': 'key', 'F-03': 'qr', 'F-04': 'book', 'F-05': 'file', 'F-06': 'megaphone', 'F-07': 'user-plus', 'F-08': 'clipboard-check', 'F-09': 'chart', 'F-10': 'sparkles', 'F-11': 'scroll', 'FR-1': 'cable', 'FR-4': 'chart', 'FR-6': 'zap', 'FR-8': 'flame', 'FR-9': 'gauge', 'FR-14': 'sheet', 'FR-16': 'activity' },
+  roles: { Principal: 'school', Teacher: 'presentation', Student: 'graduation', Parent: 'users', 'Admin staff': 'clipboard', Applicant: 'user-plus', Guest: 'globe', Operator: 'user' },
+  quality: { Responsiveness: 'zap', 'Security and privacy': 'lock', Testability: 'flask', Operability: 'wrench', Cost: 'coins', Evolvability: 'puzzle', Safety: 'alert', 'Control quality': 'gauge', Robustness: 'shield', Simplicity: 'user', Maintainability: 'wrench' },
+  design: { 'Security and authorization': 'shield', 'Real-time events and background jobs': 'radio', 'File storage': 'drive', 'Control loop (PID on the Arduino)': 'gauge', 'Serial protocol and threading': 'cable', 'Temperature measurement': 'thermometer', 'Testing without a roaster': 'flask', 'Known limitations': 'alert' },
+  stack: { Backend: 'server', 'Data and files': 'database', 'Identity, real time and jobs': 'key', Frontend: 'monitor', Testing: 'flask', Delivery: 'rocket', AI: 'sparkles', 'Desktop app': 'monitor', 'Files and Excel': 'sheet', 'Firmware and hardware': 'cpu' },
 } as const satisfies Record<string, Record<string, IconName>>;

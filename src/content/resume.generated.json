@@ -178,9 +178,11 @@
       "items": [
         "WinForms",
         "ClickOnce",
+        "WPF (MVVM, WPF-UI, CommunityToolkit.Mvvm)",
+        "ScottPlot",
+        "ExcelDataReader",
         "Telerik Reporting",
         "SQL Server Reporting Services",
-        "WPF",
         "Robotic Process Automation (RPA)"
       ]
     },
@@ -191,7 +193,11 @@
         "PHP",
         "Laravel",
         "Arduino",
-        "C/C++"
+        "C/C++",
+        "embedded firmware",
+        "PID control",
+        "serial communication (USB, RS-232, RS-485)",
+        "MAX6675"
       ]
     }
   ],

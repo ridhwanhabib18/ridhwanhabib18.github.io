@@ -81,6 +81,8 @@ export default function PersonalDetail({ p }: { p: PersonalProject }) {
           <p className="mt-4 text-lg text-muted-foreground">{l(p.summary)}</p>
           <p className="mt-4 text-sm">{`${t('personal.status')}: ${l(p.status)}`}</p>
           <p className="mt-1 text-sm text-muted-foreground">{`${t('card.role')}: ${l(p.role)}`}</p>
+{p.links.length > 0 && (
+<>
           <ul aria-label={t('personal.links')} className="mt-5 flex flex-wrap gap-2">
             {p.links.map((x) => (
               <li key={x.href}>
@@ -88,6 +90,8 @@ export default function PersonalDetail({ p }: { p: PersonalProject }) {
               </li>
             ))}
           </ul>
+</>
+)}
         </header>
 
         <Block id="p-overview" title={t('personal.overview')}>
@@ -102,6 +106,8 @@ export default function PersonalDetail({ p }: { p: PersonalProject }) {
               <li key={h}>{h}</li>
             ))}
           </ul>
+{p.roles.length > 0 && (
+<>
           <h3 className={cn(eyebrow, 'mt-8 mb-3')}>{t('personal.roles')}</h3>
           <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {p.roles.map((r) => (
@@ -114,6 +120,8 @@ export default function PersonalDetail({ p }: { p: PersonalProject }) {
               </li>
             ))}
           </ul>
+</>
+)}
         </Block>
 
         <Block id="p-features" title={t('personal.features')}>
@@ -129,6 +137,8 @@ export default function PersonalDetail({ p }: { p: PersonalProject }) {
               </li>
             ))}
           </ul>
+{p.aiFeatures.length > 0 && (
+<>
           <h3 className={cn(eyebrow, 'mt-8 mb-3')}>{t('personal.ai')}</h3>
           <ul className="grid gap-2 sm:grid-cols-2">
             {p.aiFeatures.map((a) => (
@@ -139,6 +149,8 @@ export default function PersonalDetail({ p }: { p: PersonalProject }) {
               </li>
             ))}
           </ul>
+</>
+)}
         </Block>
 
         <Block id="p-architecture" title={t('personal.architecture')} lead={l(p.architecture.intro)}>
@@ -190,10 +202,16 @@ export default function PersonalDetail({ p }: { p: PersonalProject }) {
               </div>
             </div>
           ))}
+{p.dataModules.length > 0 && (
+<>
           <h3 className={cn(eyebrow, 'mt-8 mb-3')}>{t('personal.dataModel')}</h3>
           <StackChips items={p.dataModules} />
+</>
+)}
         </Block>
 
+{p.decisions.length > 0 && (
+<>
         <Block id="p-decisions" title={t('personal.decisions')}>
           <ul className="grid gap-3 md:grid-cols-2">
             {p.decisions.map((d) => (
@@ -203,16 +221,20 @@ export default function PersonalDetail({ p }: { p: PersonalProject }) {
                   <span className="font-mono text-xs text-muted-foreground">{d.id}</span>
                   <strong className="block">{l(d.title)}</strong>
                   <p className="mt-1 text-sm text-muted-foreground">{l(d.summary)}</p>
+                  {d.href && (
                   <a href={d.href} target="_blank" rel="noopener noreferrer" className="mt-2 inline-flex items-center gap-1 text-sm font-medium text-primary hover:underline">
                     {t('personal.readAdr')}
                     <ExternalLink className="size-3.5" aria-hidden="true" />
                   </a>
+                  )}
                 </div>
               </li>
             ))}
           </ul>
         </Block>
 
+</>
+)}
         <Block id="p-stack" title={t('personal.stack')}>
           <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {p.stackGroups.map((g) => (
@@ -227,6 +249,8 @@ export default function PersonalDetail({ p }: { p: PersonalProject }) {
           </div>
         </Block>
 
+{p.phases.length > 0 && (
+<>
         <Block id="p-phases" title={t('personal.phases')} lead={`${doneCount} / ${p.phases.length} ${t('personal.phasesDone')}`}>
           <ol className="grid max-w-3xl gap-2">
             {p.phases.map((x) => (
@@ -243,6 +267,10 @@ export default function PersonalDetail({ p }: { p: PersonalProject }) {
           </ol>
         </Block>
 
+</>
+)}
+{p.docs.length > 0 && (
+<>
         <Block id="p-docs" title={t('personal.docs')}>
           <ul className="grid gap-x-8 gap-y-2 sm:grid-cols-2">
             {p.docs.map((d) => (
@@ -257,6 +285,8 @@ export default function PersonalDetail({ p }: { p: PersonalProject }) {
           </ul>
         </Block>
 
+</>
+)}
         <Block id="p-start" title={t('personal.start')} lead={`${t('personal.requirements')}: ${l(p.gettingStarted.requirements)}`}>
           <div className="mb-3 flex items-center gap-2 text-sm text-muted-foreground">
             <AppIcon name="terminal" className="text-primary" />

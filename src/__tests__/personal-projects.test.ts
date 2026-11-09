@@ -58,8 +58,8 @@ describe('personal projects', () => {
 
   it('link only to public GitHub pages of the owner', () => {
     for (const p of personalProjects) {
-      expect(p.links.length, p.slug).toBeGreaterThan(0);
-      const all = [...p.links.map((x) => x.href), ...p.docs.map((x) => x.href), ...p.decisions.map((x) => x.href)];
+      // a project whose repository is private has no links yet (the page leaves those parts out); any link that exists must be public
+      const all = [...p.links.map((x) => x.href), ...p.docs.map((x) => x.href), ...p.decisions.flatMap((x) => (x.href ? [x.href] : []))];
       for (const href of all) expect(href, `${p.slug}: ${href}`).toMatch(/^https:\/\/github\.com\/ridhwanhabib18\/[\w.-]+(\/(blob|tree)\/main\/[\w./-]+)?$/);
     }
   });
@@ -108,6 +108,27 @@ describe('personal projects', () => {
       expect(html.match(/<img /g)?.length ?? 0, `${route} images`).toBeGreaterThanOrEqual(personalProjects[0].gallery.length);
       expect((html.match(/<img [^>]*alt=""/g) ?? []).length, `${route} images without a description`).toBe(0);
       expect(html, route).toContain('projects/schomans/flows/qr-attendance.gif');
+    }
+  });
+
+  it('show the Coffee Roasto page in both languages, without links to a private repository', () => {
+    expect(routes).toContain('/work/coffee-roasto');
+    expect(routes).toContain('/id/work/coffee-roasto');
+    const p = personalProjects.find((x) => x.slug === 'coffee-roasto')!;
+    expect(p.links, 'no public repository yet').toEqual([]);
+    expect(p.docs).toEqual([]);
+    for (const [route, expected, absent] of [
+      ['/work/coffee-roasto', ['Done', 'Overview', 'Features', 'FR-9', 'Control loop (PID on the Arduino)', 'Known limitations', 'Key decisions (ADRs)', 'ADR-006', 'Tech stack', 'WPF-UI 4 (Fluent)', 'Getting started', 'Screenshots and flows'], ['id="p-phases"', 'id="p-docs"']],
+      ['/id/work/coffee-roasto', ['Selesai', 'Ringkasan', 'Fitur', 'FR-9', 'Loop kendali (PID di Arduino)', 'Keterbatasan yang diketahui', 'ADR-006', 'Cara memulai'], ['id="p-phases"']],
+    ] as [string, string[], string[]][]) {
+      const { html, head } = render(route);
+      for (const text of expected) expect(html, `${route}: ${text}`).toContain(text);
+      for (const text of absent) expect(html, `${route} has no ${text}`).not.toContain(text);
+      expect(head?.title, route).toContain('Coffee Roasto');
+      expect(html, route).not.toContain('Read the decision record');
+      expect(html, route).toContain('projects/coffee-roasto/flows/pid-roast.gif');
+      expect((html.match(/<img [^>]*alt=""/g) ?? []).length, `${route} images without a description`).toBe(0);
+      expect(html.match(/<img /g)?.length ?? 0, `${route} images`).toBeGreaterThanOrEqual(p.gallery.length);
     }
   });
 

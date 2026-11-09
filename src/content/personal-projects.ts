@@ -31,7 +31,7 @@ export interface PersonalProject {
   qualityGoals: { goal: L10n; target: L10n; response: L10n }[];
   design: { title: L10n; body: L10n<string[]> }[];
   dataModules: string[];
-  decisions: { id: string; title: L10n; summary: L10n; href: string }[];
+  decisions: { id: string; title: L10n; summary: L10n; href?: string }[];
   /** The whole stack named in the project's documentation (PRD section 6), by layer. */
   stackGroups: { group: L10n; items: string[] }[];
   highlights: L10n<string[]>;
@@ -335,6 +335,232 @@ export const personalProjects: PersonalProject[] = [
       { label: { en: 'System design', id: 'Desain sistem' }, href: `${DOCS}/system-design.md` },
       { label: { en: 'Architecture decisions', id: 'Keputusan arsitektur' }, href: `${REPO}/tree/main/docs/en/adr` },
     ],
+  },
+  {
+    slug: 'coffee-roasto',
+    title: { en: 'Coffee Roasto: Coffee Roaster Monitoring and Control', id: 'Coffee Roasto: Pemantauan dan Kendali Mesin Sangrai Kopi' },
+    summary: {
+      en: 'A Windows app and Arduino firmware that monitor a drum coffee roaster and roast automatically by following a reference temperature profile with a PID controller. It started as my undergraduate thesis and is shown here in its v2.0 rewrite on .NET 10.',
+      id: 'Aplikasi Windows dan firmware Arduino yang memantau mesin sangrai kopi drum dan menyangrai otomatis dengan mengikuti profil suhu acuan memakai pengendali PID. Berawal dari skripsi saya dan ditampilkan di sini dalam versi 2.0 yang ditulis ulang di .NET 10.',
+    },
+    state: 'done',
+    status: {
+      en: 'Version 2.0 is built and tested without a roaster (32 unit tests and a firmware simulation). Its first real roast still needs the burner-disconnected checklist; the original version is the thesis system.',
+      id: 'Versi 2.0 sudah dibangun dan diuji tanpa mesin sangrai (32 tes unit dan simulasi firmware). Sangrai nyata pertamanya masih membutuhkan daftar periksa dengan pembakar dilepas; versi aslinya adalah sistem skripsi.',
+    },
+    role: { en: 'Author of the thesis system (v1.0) and of the v2.0 rewrite, assisted by Claude', id: 'Penulis sistem skripsi (v1.0) dan penulisan ulang v2.0, dibantu Claude' },
+    year: '2026',
+    tags: ['embedded', 'desktop'],
+    cardStack: ['.NET 10', 'WPF', 'WPF-UI', 'ScottPlot', 'Arduino', 'PID control'],
+    overview: {
+      en: [
+        'Roasting by hand depends on the operator’s eye and timing, the temperature is not recorded, and two roasts of the same beans rarely match. The roaster needs temperature measurement, repeatable control and a record of every run.',
+        'Coffee Roasto has two programs joined by one USB serial cable. An Arduino reads two thermocouples and drives the burner, drum motor, blower, cooler and gas valve, and runs the PID loop. The Windows app shows the temperatures live, records them, and sends the reference profile. Version 1.0 was a Windows Forms app on .NET Framework; version 2.0 is a new Fluent-style app on .NET 10 with the logic moved out of the window so it can be tested.',
+      ],
+      id: [
+        'Menyangrai manual bergantung pada mata dan ketepatan waktu operator, suhu tidak tercatat, dan dua sangrai dari biji yang sama jarang hasilnya sama. Mesin membutuhkan pengukuran suhu, kendali yang dapat diulang, dan catatan setiap proses.',
+        'Coffee Roasto terdiri dari dua program yang dihubungkan satu kabel serial USB. Arduino membaca dua termokopel, menggerakkan pembakar, motor drum, blower, pendingin, dan katup gas, serta menjalankan loop PID. Aplikasi Windows menampilkan suhu secara langsung, merekamnya, dan mengirim profil acuan. Versi 1.0 adalah aplikasi Windows Forms di .NET Framework; versi 2.0 adalah aplikasi baru bergaya Fluent di .NET 10 dengan logika dipindah keluar dari jendela agar dapat diuji.',
+      ],
+    },
+    roles: [
+      { name: { en: 'Operator', id: 'Operator' }, needs: { en: 'Connects, controls every output by hand, loads a profile, records a roast and exports it. There is no login.', id: 'Menyambung, mengendalikan setiap keluaran secara manual, memuat profil, merekam sangrai, dan mengekspornya. Tidak ada login.' } },
+    ],
+    features: [
+      { id: 'FR-1', title: { en: 'Connection', id: 'Koneksi' }, note: { en: 'Pick a COM port and connect; every control stays disabled until the port is open.', id: 'Pilih port COM dan sambungkan; semua kontrol nonaktif sampai port terbuka.' } },
+      { id: 'FR-4', title: { en: 'Live monitoring', id: 'Pemantauan langsung' }, note: { en: 'A chart of bean, drum and reference temperature, plus the bean minus reference difference and the rate of rise in °C per minute.', id: 'Grafik suhu biji, drum, dan acuan, ditambah selisih biji terhadap acuan dan laju kenaikan dalam °C per menit.' } },
+      { id: 'FR-6', title: { en: 'Manual control', id: 'Kendali manual' }, note: { en: 'Burner, drum motor, blower, cooler and gas valve, each with a lamp that shows its state.', id: 'Pembakar, motor drum, blower, pendingin, dan katup gas, masing-masing dengan lampu penanda status.' } },
+      { id: 'FR-8', title: { en: 'Heating mode', id: 'Mode pemanasan' }, note: { en: 'Pre-heats the drum to 150 °C for 10 minutes.', id: 'Memanaskan drum hingga 150 °C selama 10 menit.' } },
+      { id: 'FR-9', title: { en: 'Automatic roasting', id: 'Sangrai otomatis' }, note: { en: 'Follows a reference profile loaded from an Excel file, with a safety stop at 250 °C and a toast when the roast is finished.', id: 'Mengikuti profil acuan dari berkas Excel, dengan henti pengaman pada 250 °C dan notifikasi saat sangrai selesai.' } },
+      { id: 'FR-14', title: { en: 'Recording and export', id: 'Perekaman dan ekspor' }, note: { en: 'Record a session and export it to .xlsx; Excel does not have to be installed.', id: 'Rekam sesi dan ekspor ke .xlsx; Excel tidak perlu terpasang.' } },
+      { id: 'FR-16', title: { en: 'Status lamps and themes', id: 'Lampu status dan tema' }, note: { en: 'Lamps for every output and mode, and a light and dark theme that the chart follows.', id: 'Lampu untuk setiap keluaran dan mode, serta tema terang dan gelap yang diikuti grafik.' } },
+    ],
+    aiFeatures: [],
+    architecture: {
+      intro: {
+        en: 'A supervisory GUI plus an embedded controller. The Arduino firmware owns the real-time control loop and the safety rules; the Windows app supervises, plots and records. The app is a screenless Core library, a view model and a thin WPF window, so the logic can be tested without a window.',
+        id: 'GUI pengawas ditambah pengendali tertanam. Firmware Arduino memegang loop kendali real-time dan aturan keselamatan; aplikasi Windows mengawasi, menggambar grafik, dan merekam. Aplikasi terdiri dari pustaka Core tanpa layar, view model, dan jendela WPF yang tipis, sehingga logikanya dapat diuji tanpa jendela.',
+      },
+      diagrams: [
+        {
+          title: { en: 'System context', id: 'Konteks sistem' },
+          def: {
+            nodes: [
+              { id: 'operator', label: 'Operator', col: 0, row: 1, kind: 'client' },
+              { id: 'profile', label: 'Excel profile (in)', col: 1, row: 0, kind: 'data' },
+              { id: 'gui', label: 'Coffee Roasto v2.0: WPF app on .NET 10', col: 1, row: 1, kind: 'service' },
+              { id: 'export', label: 'Excel export (out)', col: 1, row: 2, kind: 'data' },
+              { id: 'fw', label: 'Arduino firmware: sensors, PID, relays', col: 2, row: 1, kind: 'service' },
+              { id: 'roaster', label: 'Roaster: burner, drum, blower, cooler, gas valve', col: 3, row: 1, kind: 'external' },
+            ],
+            edges: [
+              { from: 'operator', to: 'gui' },
+              { from: 'profile', to: 'gui', label: 'reference temperatures' },
+              { from: 'gui', to: 'export', label: '.xlsx' },
+              { from: 'gui', to: 'fw', label: 'USB serial, 9600 baud' },
+              { from: 'fw', to: 'roaster' },
+            ],
+          },
+        },
+        {
+          title: { en: 'Application layers (dependencies point one way)', id: 'Lapisan aplikasi (dependensi satu arah)' },
+          def: {
+            nodes: [
+              { id: 'window', label: 'MainWindow (WPF)', col: 0, row: 1, kind: 'client' },
+              { id: 'vm', label: 'MainViewModel', col: 1, row: 1, kind: 'service' },
+              { id: 'core', label: 'CoffeeRoasto.Core', col: 2, row: 1, kind: 'data' },
+              { id: 'fw', label: 'Arduino firmware', col: 3, row: 1, kind: 'external' },
+            ],
+            edges: [
+              { from: 'window', to: 'vm', label: 'binds' },
+              { from: 'vm', to: 'core' },
+              { from: 'core', to: 'fw', label: 'serial' },
+            ],
+          },
+        },
+      ],
+      layers: [
+        { name: 'CoffeeRoasto.Core', does: { en: 'The logic without a screen: serial link, frame parser, profile reader and transmitter, recording and Excel export.', id: 'Logika tanpa layar: koneksi serial, parser frame, pembaca dan pengirim profil, perekaman, dan ekspor Excel.' }, dependsOn: { en: 'Nothing (no WPF reference)', id: 'Tidak ada (tanpa referensi WPF)' } },
+        { name: 'MainViewModel', does: { en: 'Everything the window shows and every command behind a button; moves serial lines to the UI thread.', id: 'Semua yang ditampilkan jendela dan setiap perintah di balik tombol; memindahkan baris serial ke thread UI.' }, dependsOn: { en: 'Core', id: 'Core' } },
+        { name: 'MainWindow', does: { en: 'The Fluent window: layout, ScottPlot chart, file dialogs, toasts and the theme switch.', id: 'Jendela Fluent: tata letak, grafik ScottPlot, dialog berkas, toast, dan pengalih tema.' }, dependsOn: { en: 'MainViewModel', id: 'MainViewModel' } },
+        { name: 'Arduino firmware', does: { en: 'One tab per job: sensors, PID, actuators, and the manual, heating and PID modes.', id: 'Satu tab per tugas: sensor, PID, aktuator, serta mode manual, pemanasan, dan PID.' }, dependsOn: { en: 'The serial protocol only', id: 'Hanya protokol serial' } },
+      ],
+    },
+    qualityGoals: [
+      { goal: { en: 'Safety', id: 'Keselamatan' }, target: { en: 'The burner never stays on after a stop or an over-temperature', id: 'Pembakar tidak pernah tetap menyala setelah berhenti atau suhu berlebih' }, response: { en: 'Relays idle off, an `s` stop command, and a hard stop at 250 °C in the firmware', id: 'Relai mati saat diam, perintah henti `s`, dan henti keras pada 250 °C di firmware' } },
+      { goal: { en: 'Control quality', id: 'Kualitas kendali' }, target: { en: 'The bean temperature follows the profile', id: 'Suhu biji mengikuti profil' }, response: { en: 'PID on the board, with the set point updated about every 4 s', id: 'PID di board, dengan set point diperbarui sekitar tiap 4 detik' } },
+      { goal: { en: 'Responsiveness', id: 'Responsivitas' }, target: { en: 'A new reading is shown within a second of arriving', id: 'Pembacaan baru tampil dalam satu detik sejak tiba' }, response: { en: 'A serial event, then a hand-over to the UI thread', id: 'Event serial, lalu diserahkan ke thread UI' } },
+      { goal: { en: 'Robustness', id: 'Ketahanan' }, target: { en: 'The app never crashes on a bad frame or an unplugged cable', id: 'Aplikasi tidak pernah crash karena frame rusak atau kabel dicabut' }, response: { en: 'Parsing and serial writes are guarded, and a damaged frame is ignored', id: 'Parsing dan penulisan serial dijaga, dan frame rusak diabaikan' } },
+      { goal: { en: 'Simplicity', id: 'Kesederhanaan' }, target: { en: 'The operator needs no setup beyond the COM port', id: 'Operator tidak perlu pengaturan selain port COM' }, response: { en: 'One window, one button per action, one .exe without an installer', id: 'Satu jendela, satu tombol per aksi, satu .exe tanpa installer' } },
+      { goal: { en: 'Maintainability', id: 'Kemudahan perawatan' }, target: { en: 'Both sides can be read by students', id: 'Kedua sisi dapat dibaca mahasiswa' }, response: { en: 'A single-character protocol, a screenless Core, and one small firmware tab per job', id: 'Protokol satu karakter, Core tanpa layar, dan satu tab firmware kecil per tugas' } },
+    ],
+    design: [
+      {
+        title: { en: 'Control loop (PID on the Arduino)', id: 'Loop kendali (PID di Arduino)' },
+        body: {
+          en: [
+            'The PID runs on the board, not in the app, so a steady 1 s sampling period and the safety rules do not depend on Windows timers or on a PC that may hang (ADR-002). The set point comes from an Excel profile, sent in groups of ten values, one value per averaged reading (about 4 s).',
+            'The output is limited to 0 to 40. It drives the gas-valve servo (angle = 40 − PID) and the burner relay, which switches on at 40 and off at 0 and keeps its state in between, so the relay does not chatter. A bean temperature of 250 °C or more stops the loop by itself.',
+            'The repository is open about the limits of the implemented controller: the integral and derivative terms are not fully active, so in practice it acts as a proportional controller with a narrow band of about 1.8 °C. This follows from reading the code and has not been measured on a real roast with v2.0.',
+          ],
+          id: [
+            'PID berjalan di board, bukan di aplikasi, sehingga periode sampling 1 detik yang stabil dan aturan keselamatan tidak bergantung pada timer Windows atau PC yang bisa hang (ADR-002). Set point berasal dari profil Excel, dikirim dalam kelompok sepuluh nilai, satu nilai per pembacaan rata-rata (sekitar 4 detik).',
+            'Keluarannya dibatasi 0 sampai 40. Keluaran itu menggerakkan servo katup gas (sudut = 40 − PID) dan relai pembakar, yang menyala pada 40 dan mati pada 0 serta mempertahankan statusnya di antaranya, sehingga relai tidak bergetar. Suhu biji 250 °C atau lebih menghentikan loop dengan sendirinya.',
+            'Repositori terbuka soal batas pengendali yang diimplementasikan: suku integral dan derivatif tidak sepenuhnya aktif, sehingga dalam praktik ia bekerja sebagai pengendali proporsional dengan pita sempit sekitar 1,8 °C. Ini berasal dari pembacaan kode dan belum diukur pada sangrai nyata dengan v2.0.',
+          ],
+        },
+      },
+      {
+        title: { en: 'Serial protocol and threading', id: 'Protokol serial dan threading' },
+        body: {
+          en: [
+            'Commands from the app are single ASCII characters; the Arduino answers with a text frame, `@bean A drum B reference C`, about every 4 s, and single-letter events for the burner, the end of heating and the end of a roast (ADR-001). It is trivial to parse on a small board and can be tested by hand from the serial monitor.',
+            'The serial thread only reads lines. The view model moves each line to the UI thread before it parses the values with the invariant culture and updates the screen, so the result does not depend on the regional settings of the PC. Every command goes through one send method that checks the port is open.',
+          ],
+          id: [
+            'Perintah dari aplikasi berupa satu karakter ASCII; Arduino menjawab dengan frame teks, `@bean A drum B reference C`, sekitar tiap 4 detik, serta event satu huruf untuk pembakar, akhir pemanasan, dan akhir sangrai (ADR-001). Mudah diurai di board kecil dan dapat diuji manual dari serial monitor.',
+            'Thread serial hanya membaca baris. View model memindahkan setiap baris ke thread UI sebelum mengurai nilainya dengan invariant culture dan memperbarui layar, sehingga hasilnya tidak bergantung pada pengaturan regional PC. Setiap perintah melewati satu metode kirim yang memeriksa port terbuka.',
+          ],
+        },
+      },
+      {
+        title: { en: 'Temperature measurement', id: 'Pengukuran suhu' },
+        body: {
+          en: [
+            'Two MAX6675 amplifiers with K-type thermocouples measure the drum and the beans. Their readings are 12-bit (0.25 °C steps), noisy and offset, so the firmware takes four samples one second apart, averages them, corrects each channel with a linear regression measured against a reference thermometer, and ignores changes smaller than 0.25 °C (ADR-004).',
+            'The cost is a 4 s update period, which is acceptable for a slow thermal system. Replacing a probe or an amplifier means measuring a new regression.',
+          ],
+          id: [
+            'Dua penguat MAX6675 dengan termokopel tipe K mengukur drum dan biji. Pembacaannya 12-bit (langkah 0,25 °C), berderau, dan bergeser, sehingga firmware mengambil empat sampel berjarak satu detik, merata-ratakannya, mengoreksi tiap kanal dengan regresi linear yang diukur terhadap termometer acuan, dan mengabaikan perubahan di bawah 0,25 °C (ADR-004).',
+            'Harganya adalah periode pembaruan 4 detik, yang dapat diterima untuk sistem termal yang lambat. Mengganti probe atau penguat berarti mengukur regresi baru.',
+          ],
+        },
+      },
+      {
+        title: { en: 'Testing without a roaster', id: 'Pengujian tanpa mesin sangrai' },
+        body: {
+          en: [
+            'There are 32 xUnit tests for the Core library and the view model. The firmware is tested on the PC: the real sketch is compiled together with a small stand-in for the Arduino core and a virtual clock, so a 29-minute roast runs in under a second and gives the same result every time.',
+            'Twelve scripted scenarios are compared with traces recorded from the original firmware. The restructured firmware reproduces all of them, which is the evidence that the refactor did not change behaviour, and a deliberate change to the PID formula was caught. The same tooling drives the real window to make the screenshots below.',
+            'What is not tested is stated: the real roaster (relays, servo, thermocouples, the thermal behaviour) and the serial link itself.',
+          ],
+          id: [
+            'Ada 32 tes xUnit untuk pustaka Core dan view model. Firmware diuji di PC: sketch aslinya dikompilasi bersama pengganti kecil untuk inti Arduino dan jam virtual, sehingga sangrai 29 menit berjalan dalam kurang dari satu detik dan hasilnya selalu sama.',
+            'Dua belas skenario berskrip dibandingkan dengan jejak yang direkam dari firmware asli. Firmware yang disusun ulang mereproduksi semuanya, yang menjadi bukti bahwa refactor tidak mengubah perilaku, dan perubahan sengaja pada rumus PID berhasil terdeteksi. Perangkat yang sama menggerakkan jendela asli untuk membuat tangkapan layar di bawah.',
+            'Yang tidak diuji dinyatakan: mesin sangrai nyata (relai, servo, termokopel, perilaku termal) dan koneksi serial itu sendiri.',
+          ],
+        },
+      },
+      {
+        title: { en: 'Known limitations', id: 'Keterbatasan yang diketahui' },
+        body: {
+          en: [
+            'The project documents where its code and its intent differ, so nobody is surprised: the PID gains from the MATLAB simulation are not fully applied; the app has an auto mode button that the firmware does not handle; a command without a newline arrives after a one-second read timeout; profile sending has no cancel button; and a profile whose length is a multiple of ten does not end by itself. One draft sketch (a servo ramp) does not compile and is not used.',
+          ],
+          id: [
+            'Proyek mendokumentasikan di mana kode dan maksudnya berbeda, agar tidak ada yang terkejut: gain PID dari simulasi MATLAB tidak sepenuhnya diterapkan; aplikasi punya tombol mode otomatis yang tidak ditangani firmware; perintah tanpa baris baru tiba setelah timeout baca satu detik; pengiriman profil tidak punya tombol batal; dan profil yang panjangnya kelipatan sepuluh tidak berakhir sendiri. Satu sketsa draf (rampa servo) tidak dapat dikompilasi dan tidak dipakai.',
+          ],
+        },
+      },
+    ],
+    dataModules: [],
+    decisions: [
+      { id: 'ADR-001', title: { en: 'Single-character serial protocol', id: 'Protokol serial satu karakter' }, summary: { en: 'Commands are single ASCII characters and the board answers with a text frame. Trivial to parse and test by hand, but with no error detection.', id: 'Perintah berupa satu karakter ASCII dan board menjawab dengan frame teks. Mudah diurai dan diuji manual, tetapi tanpa deteksi kesalahan.' } },
+      { id: 'ADR-002', title: { en: 'PID control runs on the Arduino', id: 'Kendali PID berjalan di Arduino' }, summary: { en: 'A steady sampling period and safety that does not depend on the PC; the cost is that tuning means re-flashing the board.', id: 'Periode sampling stabil dan keselamatan yang tidak bergantung pada PC; harganya, penyetelan berarti mem-flash ulang board.' } },
+      { id: 'ADR-003', title: { en: 'Excel files for profiles and exports', id: 'Berkas Excel untuk profil dan ekspor' }, summary: { en: 'Operators already plan roasts in spreadsheets. ExcelDataReader and ClosedXML work without Excel installed.', id: 'Operator sudah merencanakan sangrai di spreadsheet. ExcelDataReader dan ClosedXML bekerja tanpa Excel terpasang.' } },
+      { id: 'ADR-004', title: { en: 'Averaging, regression correction and a dead band', id: 'Perataan, koreksi regresi, dan dead band' }, summary: { en: 'Four samples averaged, each channel corrected against a reference thermometer, and changes below 0.25 °C ignored.', id: 'Empat sampel dirata-ratakan, tiap kanal dikoreksi terhadap termometer acuan, dan perubahan di bawah 0,25 °C diabaikan.' } },
+      { id: 'ADR-005', title: { en: 'Windows Forms on .NET Framework with ClickOnce (v1.0, superseded)', id: 'Windows Forms di .NET Framework dengan ClickOnce (v1.0, digantikan)' }, summary: { en: 'The original choice: everything in the framework and an installer from a folder or a USB stick, but no automated tests because the logic sat in the form.', id: 'Pilihan awal: semua ada di framework dan installer dari folder atau USB, tetapi tanpa tes otomatis karena logikanya ada di form.' } },
+      { id: 'ADR-006', title: { en: 'WPF with WPF-UI on .NET 10, a screenless Core and a single-file exe', id: 'WPF dengan WPF-UI di .NET 10, Core tanpa layar, dan exe satu berkas' }, summary: { en: 'A real Fluent look with a light and dark theme, a modern chart, logic that is covered by tests, correct high-DPI, and one self-contained file for a machine that is often offline.', id: 'Tampilan Fluent sungguhan dengan tema terang dan gelap, grafik modern, logika yang tercakup tes, high-DPI yang benar, dan satu berkas mandiri untuk mesin yang sering offline.' } },
+    ],
+    stackGroups: [
+      { group: { en: 'Desktop app', id: 'Aplikasi desktop' }, items: ['C#', '.NET 10', 'WPF', 'WPF-UI 4 (Fluent)', 'ScottPlot 5', 'CommunityToolkit.Mvvm', 'System.IO.Ports'] },
+      { group: { en: 'Files and Excel', id: 'Berkas dan Excel' }, items: ['ClosedXML', 'ExcelDataReader'] },
+      { group: { en: 'Firmware and hardware', id: 'Firmware dan perangkat keras' }, items: ['Arduino (C++)', 'MAX6675 library', 'Servo library', 'MAX6675 amplifiers', 'K-type thermocouples', 'Relays', 'USB serial, 9600 baud', 'PID control'] },
+      { group: { en: 'Testing', id: 'Pengujian' }, items: ['xUnit', 'Firmware simulation with golden traces', 'arduino-cli', 'Screenshot tool'] },
+      { group: { en: 'Delivery', id: 'Pengiriman' }, items: ['Self-contained single-file exe', 'PowerShell check script'] },
+    ],
+    highlights: {
+      en: [
+        'A Fluent WPF app with a light and dark theme and a live chart of bean, drum and reference temperature, with bean minus reference and the rate of rise on tiles.',
+        'Automatic roasting that follows an Excel profile with a PID loop on the Arduino, so the safety rules hold even if the PC hangs.',
+        'Recording and export to .xlsx without Excel installed.',
+        '32 unit tests and a firmware simulation of 12 scenarios compared with traces of the original firmware, which shows the rewrite did not change behaviour.',
+        'One self-contained .exe of about 74 MB: no installer and no .NET on the roaster PC.',
+        'Documentation in English and Indonesian: requirements written back from the code, system design, six decision records, the serial protocol, a hardware guide and a list of known limitations.',
+      ],
+      id: [
+        'Aplikasi WPF Fluent dengan tema terang dan gelap serta grafik langsung suhu biji, drum, dan acuan, dengan selisih biji terhadap acuan dan laju kenaikan pada ubin.',
+        'Sangrai otomatis yang mengikuti profil Excel dengan loop PID di Arduino, sehingga aturan keselamatan tetap berlaku walau PC hang.',
+        'Perekaman dan ekspor ke .xlsx tanpa Excel terpasang.',
+        '32 tes unit dan simulasi firmware 12 skenario yang dibandingkan dengan jejak firmware asli, yang menunjukkan penulisan ulang tidak mengubah perilaku.',
+        'Satu .exe mandiri sekitar 74 MB: tanpa installer dan tanpa .NET di PC mesin sangrai.',
+        'Dokumentasi dalam bahasa Inggris dan Indonesia: kebutuhan yang ditulis balik dari kode, desain sistem, enam catatan keputusan, protokol serial, panduan perangkat keras, dan daftar keterbatasan yang diketahui.',
+      ],
+    },
+    docs: [],
+    gettingStarted: {
+      requirements: { en: 'Windows 10 (1607) or newer, 64-bit. To build: the .NET 10 SDK. For the firmware: the Arduino IDE with the MAX6675 library.', id: 'Windows 10 (1607) atau lebih baru, 64-bit. Untuk membangun: .NET 10 SDK. Untuk firmware: Arduino IDE dengan pustaka MAX6675.' },
+      commands: [
+        '# 1. Flash firmware/Program_PID_CP/Program_PID_CP.ino to the board (Arduino IDE, "MAX6675 library")',
+        '# 2. Check everything that needs no roaster: restore, build, tests and the firmware simulation',
+        './check.ps1',
+        '# 3. Run the app, or publish one self-contained .exe',
+        'dotnet run --project src/CoffeeRoasto.App -c Release',
+        './installer/publish.ps1',
+        '# Always test with the burner disconnected before the first real roast',
+      ],
+    },
+    phases: [],
+    gallery: [
+      { kind: 'flow', file: 'flows/pid-roast.gif', width: 1100, height: 695, caption: { en: 'A whole 29-minute roast replayed through the real window: the bean temperature follows the reference', id: 'Satu sangrai penuh 29 menit diputar ulang lewat jendela asli: suhu biji mengikuti acuan' } },
+      { kind: 'shot', file: 'screenshots/01-start.png', width: 2040, height: 1290, caption: { en: 'Start screen: everything is off until Connect', id: 'Layar awal: semua mati sampai Connect' } },
+      { kind: 'shot', file: 'screenshots/02-connected.png', width: 2040, height: 1290, caption: { en: 'Connected: the control cards are on and a COM port is chosen', id: 'Tersambung: kartu kontrol aktif dan port COM dipilih' } },
+      { kind: 'shot', file: 'screenshots/03-profile-loaded.png', width: 2040, height: 1290, caption: { en: 'A reference profile loaded from Excel into the data card', id: 'Profil acuan dari Excel dimuat ke kartu data' } },
+      { kind: 'shot', file: 'screenshots/04-pid-running-05min.png', width: 2040, height: 1290, caption: { en: 'PID mode after 5 minutes', id: 'Mode PID setelah 5 menit' } },
+      { kind: 'shot', file: 'screenshots/04-pid-running-15min.png', width: 2040, height: 1290, caption: { en: 'PID mode after 15 minutes: the bean follows the reference, with the difference and rate of rise on the tiles', id: 'Mode PID setelah 15 menit: biji mengikuti acuan, dengan selisih dan laju kenaikan pada ubin' } },
+      { kind: 'shot', file: 'screenshots/05-roast-finished.png', width: 2040, height: 1290, caption: { en: 'Roast finished: the recording is in the data card and a toast says so', id: 'Sangrai selesai: rekaman ada di kartu data dan toast memberi tahu' } },
+      { kind: 'shot', file: 'screenshots/06-dark-theme.png', width: 2040, height: 1290, caption: { en: 'The same screen in the dark theme', id: 'Layar yang sama dalam tema gelap' } },
+    ],
+    links: [],
   },
 ];
 
