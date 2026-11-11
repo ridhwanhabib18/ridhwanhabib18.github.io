@@ -80,7 +80,7 @@
 == Personal Projects
 
 - *SchoMans, School Management System (2026):* system architect, system designer and author (assisted by Claude) of an end-to-end school platform for 6 roles: real-time QR attendance (SignalR), grading, assignments, admissions, announcements, approval workflows, PDF report cards and AI features with human review (.NET 10, Clean Architecture, SQL Server, Keycloak, Hangfire, React 19, TypeScript). Unit, integration and Playwright end-to-end tests with test evidence for each phase; code and documentation are public at #link("https://github.com/ridhwanhabib18/schomans")[github.com/ridhwanhabib18/schomans]
-- *Coffee Roasto, Coffee Roaster Monitoring and Control (2026):* author of the Windows app and Arduino firmware of my undergraduate thesis system, rewritten on .NET 10: monitors a drum coffee roaster and roasts automatically with a PID controller that follows an Excel reference profile (WPF, MVVM, ScottPlot, Arduino C++). 32 unit tests plus a firmware simulation whose 12 scenarios match traces of the original firmware
+- *Coffee Roasto, Coffee Roaster Monitoring and Control (2026):* author of the Windows app and Arduino firmware of my undergraduate thesis system, rewritten on .NET 10: monitors a drum coffee roaster and roasts automatically with a PID controller that follows an Excel reference profile (WPF, MVVM, ScottPlot, Arduino C++). 32 unit tests plus a firmware simulation whose 12 scenarios match traces of the original firmware; code and documentation are public at #link("https://github.com/ridhwanhabib18/capstone-coffee-roasto")[github.com/ridhwanhabib18/capstone-coffee-roasto]
 
 == Education
 

@@ -21,7 +21,11 @@ function imageSize(file: string): [number, number] {
   const b = readFileSync(`public/projects/${file}`);
   if (b.subarray(1, 4).toString('latin1') === 'PNG') return [b.readUInt32BE(16), b.readUInt32BE(20)];
   if (b.subarray(0, 3).toString('latin1') === 'GIF') return [b.readUInt16LE(6), b.readUInt16LE(8)];
-  throw new Error(`${file} is neither a PNG nor a GIF`);
+  if (file.endsWith('.svg')) {
+    const svg = b.toString('utf8');
+    return [Number(svg.match(/<svg[^>]*\swidth="(\d+)"/)![1]), Number(svg.match(/<svg[^>]*\sheight="(\d+)"/)![1])];
+  }
+  throw new Error(`${file} is neither a PNG, a GIF nor an SVG`);
 }
 
 describe('personal projects', () => {
@@ -111,21 +115,21 @@ describe('personal projects', () => {
     }
   });
 
-  it('show the Coffee Roasto page in both languages, without links to a private repository', () => {
+  it('show the Coffee Roasto page in both languages, with links to its public repository', () => {
     expect(routes).toContain('/work/coffee-roasto');
     expect(routes).toContain('/id/work/coffee-roasto');
     const p = personalProjects.find((x) => x.slug === 'coffee-roasto')!;
-    expect(p.links, 'no public repository yet').toEqual([]);
-    expect(p.docs).toEqual([]);
+    expect(p.links[0]?.href).toBe('https://github.com/ridhwanhabib18/capstone-coffee-roasto');
+    expect(p.docs.length).toBeGreaterThan(0);
+    expect(p.decisions.every((d) => d.href?.includes('/capstone-coffee-roasto/blob/main/docs/en/adr/'))).toBe(true);
     for (const [route, expected, absent] of [
-      ['/work/coffee-roasto', ['Done', 'Overview', 'Features', 'FR-9', 'Control loop (PID on the Arduino)', 'Known limitations', 'Key decisions (ADRs)', 'ADR-006', 'Tech stack', 'WPF-UI 4 (Fluent)', 'Getting started', 'Screenshots and flows'], ['id="p-phases"', 'id="p-docs"']],
+      ['/work/coffee-roasto', ['Done', 'Overview', 'Features', 'FR-9', 'Control loop (PID on the Arduino)', 'Known limitations', 'Key decisions (ADRs)', 'ADR-006', 'Tech stack', 'WPF-UI 4 (Fluent)', 'Getting started', 'Screenshots and flows', 'Read the decision record'], ['id="p-phases"']],
       ['/id/work/coffee-roasto', ['Selesai', 'Ringkasan', 'Fitur', 'FR-9', 'Loop kendali (PID di Arduino)', 'Keterbatasan yang diketahui', 'ADR-006', 'Cara memulai'], ['id="p-phases"']],
     ] as [string, string[], string[]][]) {
       const { html, head } = render(route);
       for (const text of expected) expect(html, `${route}: ${text}`).toContain(text);
       for (const text of absent) expect(html, `${route} has no ${text}`).not.toContain(text);
       expect(head?.title, route).toContain('Coffee Roasto');
-      expect(html, route).not.toContain('Read the decision record');
       expect(html, route).toContain('projects/coffee-roasto/flows/pid-roast.gif');
       expect((html.match(/<img [^>]*alt=""/g) ?? []).length, `${route} images without a description`).toBe(0);
       expect(html.match(/<img /g)?.length ?? 0, `${route} images`).toBeGreaterThanOrEqual(p.gallery.length);

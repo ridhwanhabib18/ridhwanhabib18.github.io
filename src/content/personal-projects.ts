@@ -45,6 +45,8 @@ export interface PersonalProject {
 
 const REPO = 'https://github.com/ridhwanhabib18/schomans';
 const DOCS = `${REPO}/blob/main/docs/en`;
+const ROASTO = 'https://github.com/ridhwanhabib18/capstone-coffee-roasto';
+const ROASTO_DOCS = `${ROASTO}/blob/main/docs/en`;
 
 const containers: DiagramDef = {
   nodes: [
@@ -504,12 +506,12 @@ export const personalProjects: PersonalProject[] = [
     ],
     dataModules: [],
     decisions: [
-      { id: 'ADR-001', title: { en: 'Single-character serial protocol', id: 'Protokol serial satu karakter' }, summary: { en: 'Commands are single ASCII characters and the board answers with a text frame. Trivial to parse and test by hand, but with no error detection.', id: 'Perintah berupa satu karakter ASCII dan board menjawab dengan frame teks. Mudah diurai dan diuji manual, tetapi tanpa deteksi kesalahan.' } },
-      { id: 'ADR-002', title: { en: 'PID control runs on the Arduino', id: 'Kendali PID berjalan di Arduino' }, summary: { en: 'A steady sampling period and safety that does not depend on the PC; the cost is that tuning means re-flashing the board.', id: 'Periode sampling stabil dan keselamatan yang tidak bergantung pada PC; harganya, penyetelan berarti mem-flash ulang board.' } },
-      { id: 'ADR-003', title: { en: 'Excel files for profiles and exports', id: 'Berkas Excel untuk profil dan ekspor' }, summary: { en: 'Operators already plan roasts in spreadsheets. ExcelDataReader and ClosedXML work without Excel installed.', id: 'Operator sudah merencanakan sangrai di spreadsheet. ExcelDataReader dan ClosedXML bekerja tanpa Excel terpasang.' } },
-      { id: 'ADR-004', title: { en: 'Averaging, regression correction and a dead band', id: 'Perataan, koreksi regresi, dan dead band' }, summary: { en: 'Four samples averaged, each channel corrected against a reference thermometer, and changes below 0.25 °C ignored.', id: 'Empat sampel dirata-ratakan, tiap kanal dikoreksi terhadap termometer acuan, dan perubahan di bawah 0,25 °C diabaikan.' } },
-      { id: 'ADR-005', title: { en: 'Windows Forms on .NET Framework with ClickOnce (v1.0, superseded)', id: 'Windows Forms di .NET Framework dengan ClickOnce (v1.0, digantikan)' }, summary: { en: 'The original choice: everything in the framework and an installer from a folder or a USB stick, but no automated tests because the logic sat in the form.', id: 'Pilihan awal: semua ada di framework dan installer dari folder atau USB, tetapi tanpa tes otomatis karena logikanya ada di form.' } },
-      { id: 'ADR-006', title: { en: 'WPF with WPF-UI on .NET 10, a screenless Core and a single-file exe', id: 'WPF dengan WPF-UI di .NET 10, Core tanpa layar, dan exe satu berkas' }, summary: { en: 'A real Fluent look with a light and dark theme, a modern chart, logic that is covered by tests, correct high-DPI, and one self-contained file for a machine that is often offline.', id: 'Tampilan Fluent sungguhan dengan tema terang dan gelap, grafik modern, logika yang tercakup tes, high-DPI yang benar, dan satu berkas mandiri untuk mesin yang sering offline.' } },
+      { id: 'ADR-001', title: { en: 'Single-character serial protocol', id: 'Protokol serial satu karakter' }, summary: { en: 'Commands are single ASCII characters and the board answers with a text frame. Trivial to parse and test by hand, but with no error detection.', id: 'Perintah berupa satu karakter ASCII dan board menjawab dengan frame teks. Mudah diurai dan diuji manual, tetapi tanpa deteksi kesalahan.' }, href: `${ROASTO_DOCS}/adr/single-character-serial-protocol.md` },
+      { id: 'ADR-002', title: { en: 'PID control runs on the Arduino', id: 'Kendali PID berjalan di Arduino' }, summary: { en: 'A steady sampling period and safety that does not depend on the PC; the cost is that tuning means re-flashing the board.', id: 'Periode sampling stabil dan keselamatan yang tidak bergantung pada PC; harganya, penyetelan berarti mem-flash ulang board.' }, href: `${ROASTO_DOCS}/adr/pid-on-the-arduino.md` },
+      { id: 'ADR-003', title: { en: 'Excel files for profiles and exports', id: 'Berkas Excel untuk profil dan ekspor' }, summary: { en: 'Operators already plan roasts in spreadsheets. ExcelDataReader and ClosedXML work without Excel installed.', id: 'Operator sudah merencanakan sangrai di spreadsheet. ExcelDataReader dan ClosedXML bekerja tanpa Excel terpasang.' }, href: `${ROASTO_DOCS}/adr/excel-reference-profiles.md` },
+      { id: 'ADR-004', title: { en: 'Averaging, regression correction and a dead band', id: 'Perataan, koreksi regresi, dan dead band' }, summary: { en: 'Four samples averaged, each channel corrected against a reference thermometer, and changes below 0.25 °C ignored.', id: 'Empat sampel dirata-ratakan, tiap kanal dikoreksi terhadap termometer acuan, dan perubahan di bawah 0,25 °C diabaikan.' }, href: `${ROASTO_DOCS}/adr/thermocouple-calibration.md` },
+      { id: 'ADR-005', title: { en: 'Windows Forms on .NET Framework with ClickOnce (v1.0, superseded)', id: 'Windows Forms di .NET Framework dengan ClickOnce (v1.0, digantikan)' }, summary: { en: 'The original choice: everything in the framework and an installer from a folder or a USB stick, but no automated tests because the logic sat in the form.', id: 'Pilihan awal: semua ada di framework dan installer dari folder atau USB, tetapi tanpa tes otomatis karena logikanya ada di form.' }, href: `${ROASTO_DOCS}/adr/windows-forms-clickonce.md` },
+      { id: 'ADR-006', title: { en: 'WPF with WPF-UI on .NET 10, a screenless Core and a single-file exe', id: 'WPF dengan WPF-UI di .NET 10, Core tanpa layar, dan exe satu berkas' }, summary: { en: 'A real Fluent look with a light and dark theme, a modern chart, logic that is covered by tests, correct high-DPI, and one self-contained file for a machine that is often offline.', id: 'Tampilan Fluent sungguhan dengan tema terang dan gelap, grafik modern, logika yang tercakup tes, high-DPI yang benar, dan satu berkas mandiri untuk mesin yang sering offline.' }, href: `${ROASTO_DOCS}/adr/wpf-on-dotnet-10.md` },
     ],
     stackGroups: [
       { group: { en: 'Desktop app', id: 'Aplikasi desktop' }, items: ['C#', '.NET 10', 'WPF', 'WPF-UI 4 (Fluent)', 'ScottPlot 5', 'CommunityToolkit.Mvvm', 'System.IO.Ports'] },
@@ -536,7 +538,17 @@ export const personalProjects: PersonalProject[] = [
         'Dokumentasi dalam bahasa Inggris dan Indonesia: kebutuhan yang ditulis balik dari kode, desain sistem, enam catatan keputusan, protokol serial, panduan perangkat keras, dan daftar keterbatasan yang diketahui.',
       ],
     },
-    docs: [],
+    docs: [
+      { label: { en: 'Product requirements (PRD)', id: 'Kebutuhan produk (PRD)' }, href: `${ROASTO_DOCS}/PRD.md` },
+      { label: { en: 'System design', id: 'Desain sistem' }, href: `${ROASTO_DOCS}/system-design.md` },
+      { label: { en: 'Architecture decisions', id: 'Keputusan arsitektur' }, href: `${ROASTO}/tree/main/docs/en/adr` },
+      { label: { en: 'Serial protocol', id: 'Protokol serial' }, href: `${ROASTO_DOCS}/serial-protocol.md` },
+      { label: { en: 'Hardware guide', id: 'Panduan perangkat keras' }, href: `${ROASTO_DOCS}/hardware.md` },
+      { label: { en: 'Technical Q&A', id: 'Tanya jawab teknis' }, href: `${ROASTO_DOCS}/technical-qa.md` },
+      { label: { en: 'Testing', id: 'Pengujian' }, href: `${ROASTO_DOCS}/testing.md` },
+      { label: { en: 'Deployment guide', id: 'Panduan deployment' }, href: `${ROASTO_DOCS}/deployment.md` },
+      { label: { en: 'Test evidence', id: 'Bukti pengujian' }, href: `${ROASTO}/tree/main/docs/assets/testing` },
+    ],
     gettingStarted: {
       requirements: { en: 'Windows 10 (1607) or newer, 64-bit. To build: the .NET 10 SDK. For the firmware: the Arduino IDE with the MAX6675 library.', id: 'Windows 10 (1607) atau lebih baru, 64-bit. Untuk membangun: .NET 10 SDK. Untuk firmware: Arduino IDE dengan pustaka MAX6675.' },
       commands: [
@@ -559,8 +571,13 @@ export const personalProjects: PersonalProject[] = [
       { kind: 'shot', file: 'screenshots/04-pid-running-15min.png', width: 2040, height: 1290, caption: { en: 'PID mode after 15 minutes: the bean follows the reference, with the difference and rate of rise on the tiles', id: 'Mode PID setelah 15 menit: biji mengikuti acuan, dengan selisih dan laju kenaikan pada ubin' } },
       { kind: 'shot', file: 'screenshots/05-roast-finished.png', width: 2040, height: 1290, caption: { en: 'Roast finished: the recording is in the data card and a toast says so', id: 'Sangrai selesai: rekaman ada di kartu data dan toast memberi tahu' } },
       { kind: 'shot', file: 'screenshots/06-dark-theme.png', width: 2040, height: 1290, caption: { en: 'The same screen in the dark theme', id: 'Layar yang sama dalam tema gelap' } },
+      { kind: 'shot', file: 'diagrams/pid-characteristic.svg', width: 780, height: 700, caption: { en: 'How the controller reacts to the temperature error: PID output, valve angle and burner state (the labels in the diagram are in English)', id: 'Cara pengendali bereaksi terhadap galat suhu: keluaran PID, sudut katup, dan status pembakar (label pada diagram berbahasa Inggris)' } },
     ],
-    links: [],
+    links: [
+      { label: { en: 'Source code on GitHub', id: 'Kode sumber di GitHub' }, href: ROASTO },
+      { label: { en: 'System design', id: 'Desain sistem' }, href: `${ROASTO_DOCS}/system-design.md` },
+      { label: { en: 'Architecture decisions', id: 'Keputusan arsitektur' }, href: `${ROASTO}/tree/main/docs/en/adr` },
+    ],
   },
 ];
 

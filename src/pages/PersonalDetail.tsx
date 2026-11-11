@@ -321,9 +321,9 @@ export default function PersonalDetail({ p }: { p: PersonalProject }) {
           </h3>
           <ul className="reveal-items grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {shots.map((g) => (
-              <li key={g.file}>
+              <li key={g.file} className={g.file.endsWith('.svg') ? 'sm:col-span-2 lg:col-span-3' : undefined}>
                 <figure>
-                  <img src={`${base}${g.file}`} alt={l(g.caption)} width={g.width} height={g.height} loading="lazy" decoding="async" className={cn('h-auto rounded-lg border', g.width < 600 ? 'w-40' : 'w-full')} />
+                  <img src={`${base}${g.file}`} alt={l(g.caption)} width={g.width} height={g.height} loading="lazy" decoding="async" className={cn('h-auto rounded-lg border', g.file.endsWith('.svg') ? 'w-full max-w-3xl' : g.width < 600 ? 'w-40' : 'w-full')} />
                   <figcaption className="mt-2 text-sm text-muted-foreground">{l(g.caption)}</figcaption>
                 </figure>
               </li>

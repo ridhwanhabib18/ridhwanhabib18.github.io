@@ -445,15 +445,15 @@ test.describe('a personal project has its own page', () => {
   });
 });
 
-test('the Coffee Roasto page shows its sections and pictures, and leaves out what a private repository cannot back', async ({ page }) => {
+test('the Coffee Roasto page shows its sections, documentation and links to the public repository, and its pictures', async ({ page }) => {
   await page.goto('/work/coffee-roasto/');
   await expect(page.getByRole('heading', { level: 1, name: /Coffee Roasto/ })).toBeVisible();
   for (const h of ['Overview', 'Features', 'System architecture', 'System design', 'Key decisions (ADRs)', 'Tech stack', 'Getting started']) {
     await expect(page.getByRole('heading', { level: 2, name: h })).toBeVisible();
   }
   await expect(page.getByRole('heading', { level: 2, name: 'Build phases' })).toHaveCount(0);
-  await expect(page.getByRole('heading', { level: 2, name: 'Documentation' })).toHaveCount(0);
-  await expect(page.locator('a[href*="github.com/ridhwanhabib18/capstone"]')).toHaveCount(0);
+  await expect(page.getByRole('heading', { level: 2, name: 'Documentation' })).toBeVisible();
+  await expect(page.locator('a[href*="github.com/ridhwanhabib18/capstone-coffee-roasto"]').first()).toBeVisible();
   const shot = page.getByRole('img', { name: /dark theme/ });
   await shot.scrollIntoViewIfNeeded();
   await expect.poll(() => shot.evaluate((el: HTMLImageElement) => el.complete && el.naturalWidth > 0)).toBe(true);
