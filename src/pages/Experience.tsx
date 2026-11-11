@@ -31,7 +31,7 @@ export default function Experience() {
     <>
       <Seo title={t('exp.title')} description={t('exp.lead')} />
       <div className={cn(container, 'py-12')}>
-        <header className="mb-10">
+        <header className="stagger mb-10">
           <Badge>
             {profile.yearsExperience} {t('home.years')}
           </Badge>

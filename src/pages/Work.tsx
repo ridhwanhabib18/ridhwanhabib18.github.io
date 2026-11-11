@@ -26,7 +26,7 @@ export default function Work() {
         <h3 id={`h-${kind}`} className="mb-4 text-lg font-semibold">
           {heading}
         </h3>
-        <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+        <div className="reveal-items grid gap-5 md:grid-cols-2 lg:grid-cols-3">
           {list.map((p) => (
             <ProjectCard key={p.slug} p={p} />
           ))}
@@ -49,7 +49,7 @@ export default function Work() {
     <>
       <Seo title={t('work.title')} description={t('work.lead')} />
       <div className={cn(container, 'py-12')}>
-        <header className="mb-8">
+        <header className="stagger mb-8">
           <h1 className="text-4xl font-extrabold sm:text-5xl">{t('work.title')}</h1>
           <p className="mt-3 max-w-2xl text-lg text-muted-foreground">{t('work.lead')}</p>
         </header>
@@ -92,7 +92,7 @@ export default function Work() {
               {t('work.personal')}
             </h2>
             <p className="mt-2 max-w-2xl text-muted-foreground">{t('work.personalLead')}</p>
-            <div className="mt-6 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+            <div className="reveal-items mt-6 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
               {personal.map((p) => (
                 <PersonalProjectCard key={p.slug} p={p} />
               ))}

@@ -16,8 +16,10 @@ export default function Resume() {
     <>
       <Seo title={t('resume.title')} description={t('resume.lead')} />
       <div className={cn(narrow, 'py-12')}>
-        <h1 className="text-4xl font-extrabold sm:text-5xl">{t('resume.title')}</h1>
-        <p className="mt-3 mb-8 text-lg text-muted-foreground">{t('resume.lead')}</p>
+        <header className="stagger">
+          <h1 className="text-4xl font-extrabold sm:text-5xl">{t('resume.title')}</h1>
+          <p className="mt-3 mb-8 text-lg text-muted-foreground">{t('resume.lead')}</p>
+        </header>
 
         <Tabs defaultValue="lead">
           <TabsList aria-label={t('resume.title')} className="w-full justify-start sm:w-fit">

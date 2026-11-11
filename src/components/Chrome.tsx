@@ -52,6 +52,9 @@ export function Layout() {
   const { t, path, lang } = useI18n();
   const [scrolled, setScrolled] = useState(false);
   const { pathname } = useLocation();
+  // The visit-statistics note is only for the developer's own machine; on the live site it is not shown (set after mount, so the pre-rendered pages stay the same)
+  const [onLocalhost, setOnLocalhost] = useState(false);
+  useEffect(() => setOnLocalhost(['localhost', '127.0.0.1'].includes(window.location.hostname)), []);
 
   useEffect(() => {
     // a new page starts at the top at once; smooth scrolling (html:focus-within in globals.css) would leave the page
@@ -134,18 +137,7 @@ export function Layout() {
           <div>
             <p className="font-semibold">{profile.name}</p>
             <p className="text-sm text-muted-foreground">{t('footer.built')}</p>
-            <p className="text-xs text-muted-foreground">
-              {t('footer.logo')}{' '}
-              <a className="underline underline-offset-2 hover:text-foreground" href="https://brand.ugm.ac.id/" target="_blank" rel="noopener noreferrer">
-                brand.ugm.ac.id
-              </a>
-              ,{' '}
-              <a className="underline underline-offset-2 hover:text-foreground" href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer">
-                {t('footer.license')}
-              </a>
-              .
-            </p>
-            {analyticsEnabled && <p className="text-sm text-muted-foreground">{t('footer.analytics')}</p>}
+            {analyticsEnabled && onLocalhost && <p className="text-sm text-muted-foreground">{t('footer.analytics')}</p>}
           </div>
           <div className="flex gap-5 text-sm">
             <a className="text-muted-foreground transition-colors hover:text-foreground" href={profile.github} target="_blank" rel="noopener noreferrer">

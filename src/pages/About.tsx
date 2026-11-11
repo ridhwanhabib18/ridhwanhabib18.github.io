@@ -16,7 +16,7 @@ export default function About() {
     <>
       <Seo title={t('about.title')} description={paras[0]} jsonLd={graph(personLd())} />
       <div className={cn(narrow, 'py-12')}>
-        <div className="flex items-center gap-5">
+        <div className="stagger flex items-center gap-5">
           <img
             src={`${import.meta.env.BASE_URL}${profile.photo}`}
             alt={profile.name}
@@ -26,14 +26,14 @@ export default function About() {
           />
           <h1 className="text-4xl font-extrabold sm:text-5xl">{t('about.title')}</h1>
         </div>
-        <div className="mt-6 space-y-4 text-lg text-muted-foreground">
+        <div className="reveal-items mt-6 space-y-4 text-lg text-muted-foreground">
           {paras.map((p) => (
             <p key={p}>{p}</p>
           ))}
         </div>
 
         <h2 className={cn(h2, 'mt-12 mb-4')}>{t('about.how')}</h2>
-        <ul className="grid gap-4 sm:grid-cols-2">
+        <ul className="reveal-items grid gap-4 sm:grid-cols-2">
           {profile.howIWork.map((h) => (
             <li key={h.title.en}>
               <Card className="h-full flex-row gap-3 px-5">
@@ -48,7 +48,7 @@ export default function About() {
         </ul>
 
         <h2 className={cn(h2, 'mt-12 mb-4')}>{t('about.stack')}</h2>
-        <div className="grid gap-6 sm:grid-cols-2">
+        <div className="reveal-items grid gap-6 sm:grid-cols-2">
           {profile.stack.map((g) => (
             <div key={g.group.en}>
               <h3 className={cn(eyebrow, 'mb-2')}>{l(g.group)}</h3>
@@ -58,7 +58,7 @@ export default function About() {
         </div>
 
         <h2 className={cn(h2, 'mt-12 mb-4')}>{t('about.certs')}</h2>
-        <ul className="grid gap-4 lg:grid-cols-2">
+        <ul className="reveal-items grid gap-4 lg:grid-cols-2">
           {profile.certifications.map((c) => (
             <li key={c.name}>
               <CertCard cert={c} />

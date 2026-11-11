@@ -41,6 +41,10 @@ async function settle(page: Page) {
       await new Promise((r) => setTimeout(r, 40));
     }
     window.scrollTo(0, 0);
+    // cards just below the fold are still part-way through their scroll fade at the top of the page; measure the end state
+    const style = document.createElement('style');
+    style.textContent = '*, *::before, *::after { animation: none !important; }';
+    document.head.append(style);
   });
   await page.waitForTimeout(900);
 }

@@ -125,7 +125,7 @@ export const profile = {
     return { name: c.name, url: c.url, issuer: meta?.issuer ?? '', level: meta?.level, image: meta?.image, issued: meta?.issued, expires: meta?.expires, summary: meta?.summary };
   }),
   education: {
-    /** Emblem of the university, cropped from its logo (CC BY 4.0, see the footer credit); in public/. */
+    /** Emblem of the university, cropped from its logo (from brand.ugm.ac.id, CC BY 4.0; the owner chose to show no credit line on the site); in public/. */
     logo: 'ugm-emblem.png',
     /** The undergraduate thesis in the university repository; the card on About opens it. */
     thesisUrl: 'https://etd.repository.ugm.ac.id/home/detail_pencarian/217482',

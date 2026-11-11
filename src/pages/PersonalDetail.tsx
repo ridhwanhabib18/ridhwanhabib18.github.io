@@ -62,7 +62,7 @@ export default function PersonalDetail({ p }: { p: PersonalProject }) {
           </Link>
         </Button>
 
-        <header className="mt-4 max-w-3xl">
+        <header className="stagger mt-4 max-w-3xl">
           <div className="flex flex-wrap items-center gap-2">
             <Badge variant="outline">
               <AppIcon name="user" />
@@ -95,13 +95,13 @@ export default function PersonalDetail({ p }: { p: PersonalProject }) {
         </header>
 
         <Block id="p-overview" title={t('personal.overview')}>
-          <div className="max-w-3xl space-y-4">
+          <div className="reveal-items max-w-3xl space-y-4">
             {l(p.overview).map((para) => (
               <p key={para}>{para}</p>
             ))}
           </div>
           <h3 className={cn(eyebrow, 'mt-8 mb-3')}>{t('personal.highlights')}</h3>
-          <ul className={cn(bullets, 'max-w-3xl')}>
+          <ul className={cn(bullets, 'reveal-items max-w-3xl')}>
             {l(p.highlights).map((h) => (
               <li key={h}>{h}</li>
             ))}
@@ -109,7 +109,7 @@ export default function PersonalDetail({ p }: { p: PersonalProject }) {
 {p.roles.length > 0 && (
 <>
           <h3 className={cn(eyebrow, 'mt-8 mb-3')}>{t('personal.roles')}</h3>
-          <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          <ul className="reveal-items grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {p.roles.map((r) => (
               <li key={r.name.en} className="flex gap-3 rounded-lg border bg-card p-4">
                 <IconTile name={personalIcons.roles[r.name.en as keyof typeof personalIcons.roles]} size="sm" />
@@ -125,7 +125,7 @@ export default function PersonalDetail({ p }: { p: PersonalProject }) {
         </Block>
 
         <Block id="p-features" title={t('personal.features')}>
-          <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          <ul className="reveal-items grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {p.features.map((f) => (
               <li key={f.id} className="flex gap-3 rounded-lg border bg-card p-4">
                 <IconTile name={personalIcons.features[f.id as keyof typeof personalIcons.features]} size="sm" />
@@ -140,7 +140,7 @@ export default function PersonalDetail({ p }: { p: PersonalProject }) {
 {p.aiFeatures.length > 0 && (
 <>
           <h3 className={cn(eyebrow, 'mt-8 mb-3')}>{t('personal.ai')}</h3>
-          <ul className="grid gap-2 sm:grid-cols-2">
+          <ul className="reveal-items grid gap-2 sm:grid-cols-2">
             {p.aiFeatures.map((a) => (
               <li key={a.id} className="flex items-center gap-2 text-sm">
                 <AppIcon name="sparkles" className="size-4 text-primary" />
@@ -164,7 +164,7 @@ export default function PersonalDetail({ p }: { p: PersonalProject }) {
           </div>
           <p className="mt-3 text-sm text-muted-foreground">{t('work.architectureNote')}</p>
           <h3 className={cn(eyebrow, 'mt-8 mb-3')}>{t('personal.layers')}</h3>
-          <ul className="grid gap-3 md:grid-cols-2">
+          <ul className="reveal-items grid gap-3 md:grid-cols-2">
             {p.architecture.layers.map((x) => (
               <li key={x.name} className="rounded-lg border bg-card p-4">
                 <strong>{x.name}</strong>
@@ -177,7 +177,7 @@ export default function PersonalDetail({ p }: { p: PersonalProject }) {
 
         <Block id="p-design" title={t('personal.design')}>
           <h3 className={cn(eyebrow, 'mb-3')}>{t('personal.quality')}</h3>
-          <ul className="grid gap-3 md:grid-cols-2">
+          <ul className="reveal-items grid gap-3 md:grid-cols-2">
             {p.qualityGoals.map((q) => (
               <li key={q.goal.en} className="flex gap-3 rounded-lg border bg-card p-4 text-sm">
                 <IconTile name={personalIcons.quality[q.goal.en as keyof typeof personalIcons.quality]} size="sm" />
@@ -213,7 +213,7 @@ export default function PersonalDetail({ p }: { p: PersonalProject }) {
 {p.decisions.length > 0 && (
 <>
         <Block id="p-decisions" title={t('personal.decisions')}>
-          <ul className="grid gap-3 md:grid-cols-2">
+          <ul className="reveal-items grid gap-3 md:grid-cols-2">
             {p.decisions.map((d) => (
               <li key={d.id} className="flex gap-3 rounded-lg border bg-card p-4">
                 <IconTile name="scale" size="sm" />
@@ -272,7 +272,7 @@ export default function PersonalDetail({ p }: { p: PersonalProject }) {
 {p.docs.length > 0 && (
 <>
         <Block id="p-docs" title={t('personal.docs')}>
-          <ul className="grid gap-x-8 gap-y-2 sm:grid-cols-2">
+          <ul className="reveal-items grid gap-x-8 gap-y-2 sm:grid-cols-2">
             {p.docs.map((d) => (
               <li key={d.href}>
                 <a href={d.href} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 font-medium text-primary hover:underline">
@@ -302,7 +302,7 @@ export default function PersonalDetail({ p }: { p: PersonalProject }) {
             <AppIcon name="play" />
             {t('personal.flows')}
           </h3>
-          <ul className="grid gap-5 md:grid-cols-2">
+          <ul className="reveal-items grid gap-5 md:grid-cols-2">
             {flows.map((g) => (
               <li key={g.file}>
                 <figure>
@@ -319,7 +319,7 @@ export default function PersonalDetail({ p }: { p: PersonalProject }) {
             <AppIcon name="image" />
             {t('personal.screens')}
           </h3>
-          <ul className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          <ul className="reveal-items grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {shots.map((g) => (
               <li key={g.file}>
                 <figure>

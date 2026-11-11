@@ -262,7 +262,7 @@ describe('education entry with the university emblem', () => {
     expect(b.length, 'keep the emblem light').toBeLessThan(30_000);
   });
 
-  it('is shown on About and Experience in both languages, as a decoration, with the credit in the footer', () => {
+  it('is shown on About and Experience in both languages, as a decoration', () => {
     for (const [route, gpa] of [['/about', 'GPA'], ['/id/about', 'IPK'], ['/experience', 'GPA'], ['/id/experience', 'IPK']]) {
       const html = render(route).html;
       expect(html, route).toContain(profile.education.school);
@@ -270,8 +270,7 @@ describe('education entry with the university emblem', () => {
       expect(html, route).toContain(profile.education.gpa);
       expect(html, route).toContain(route.endsWith('about') ? `<dt class="text-muted-foreground">${gpa}</dt>` : `${gpa} ${profile.education.gpa}`); // About: a card with a details list; Experience: one line
       expect(html, route).toContain('Universitas Gadjah Mada');
-      expect(html, route).toContain('https://brand.ugm.ac.id/');
-      expect(html, route).toContain('https://creativecommons.org/licenses/by/4.0/');
+      expect(html, route).not.toContain('brand.ugm.ac.id'); // no credit line in the footer (decision of the site owner)
     }
   });
 });

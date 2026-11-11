@@ -35,10 +35,12 @@ export default function Contact() {
     <>
       <Seo title={t('contact.title')} description={t('contact.lead')} />
       <div className={cn(narrow, 'py-12')}>
-        <h1 className="text-4xl font-extrabold sm:text-5xl">{t('contact.title')}</h1>
-        <p className="mt-3 mb-8 text-lg text-muted-foreground">{t('contact.lead')}</p>
+        <header className="stagger">
+          <h1 className="text-4xl font-extrabold sm:text-5xl">{t('contact.title')}</h1>
+          <p className="mt-3 mb-8 text-lg text-muted-foreground">{t('contact.lead')}</p>
+        </header>
 
-        <ul className="grid gap-4 sm:grid-cols-2">
+        <ul className="reveal-items grid gap-4 sm:grid-cols-2">
           <li>
             <Item icon={<Mail className="size-5" />} label={t('contact.email')}>
               <span className="flex flex-wrap items-center gap-2">

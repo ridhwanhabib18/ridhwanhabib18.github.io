@@ -158,6 +158,81 @@
   }
 }
 
+/* Same fade-and-rise for every direct child of a list or text block (.reveal-items): each child has its own scroll
+   position, so a grid of cards fills in one after another as it comes into view. */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .reveal-items > * {
+      animation: reveal-in linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 35%;
+    }
+  }
+}
+
+/* Page intro (.stagger): the children of a page header rise in one after another when the page opens, with a clear
+   gap between them so the title, then the lead, then the details read in order. Time based, so it also plays on a
+   page that is already fully in view. Reduced motion and print show it still. */
+@keyframes stagger-in {
+  from {
+    opacity: 0;
+    transform: translateY(0.9rem);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .stagger > * {
+    animation: stagger-in 0.6s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  }
+  .stagger > :nth-child(2) {
+    animation-delay: 0.08s;
+  }
+  .stagger > :nth-child(3) {
+    animation-delay: 0.16s;
+  }
+  .stagger > :nth-child(4) {
+    animation-delay: 0.24s;
+  }
+  .stagger > :nth-child(5) {
+    animation-delay: 0.32s;
+  }
+  .stagger > :nth-child(n + 6) {
+    animation-delay: 0.4s;
+  }
+}
+
+/* A short accent bar under every section heading that draws itself once the heading is on screen. */
+@keyframes bar-draw {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+.h-bar::after {
+  content: '';
+  display: block;
+  width: 2.5rem;
+  height: 3px;
+  margin-top: 0.5rem;
+  border-radius: 2px;
+  background: var(--primary);
+  transform-origin: left;
+}
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .h-bar::after {
+      animation: bar-draw linear both;
+      animation-timeline: view();
+      animation-range: entry 20% entry 80%;
+    }
+  }
+}
+
 /* Experience timeline: a line that grows as the page scrolls past it, and a dot that lights up as its role enters the
    screen. Scroll-driven like .reveal, so no JavaScript; without support (or with reduced motion) the plain line and
    outlined dots stay as they are. */
@@ -373,7 +448,9 @@
   nav {
     display: none !important;
   }
-  .reveal {
+  .reveal,
+  .reveal-items > *,
+  .stagger > * {
     opacity: 1 !important;
     transform: none !important;
   }

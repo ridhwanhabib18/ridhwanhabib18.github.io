@@ -243,7 +243,7 @@ The site can count page views and clicks on the resume and email buttons with [G
 
 1. Create a free account at goatcounter.com and pick a site code (for example `ridhwan`).
 2. In the GitHub repository: Settings, Secrets and variables, Actions, Variables, add `GOATCOUNTER_CODE` with that code.
-3. Push; the next build includes the script, widens the Content Security Policy for it, and shows a one-line privacy note in the footer.
+3. Push; the next build includes the script, widens the Content Security Policy for it, and (on your own machine, `localhost`, only) shows a one-line privacy note in the footer; the live site does not show that note.
 
 To try it locally, build with `VITE_GOATCOUNTER_CODE=ridhwan npm run build`. Without the variable the build contains no third-party script at all. A test expects statistics to be on exactly when `VITE_GOATCOUNTER_CODE` is set, so it passes both in CI (variable set) and locally (not set).
 

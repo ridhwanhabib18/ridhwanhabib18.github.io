@@ -20,7 +20,7 @@ function Block({ title, children }: { title: string; children: ReactNode }) {
   return (
     <section className="mt-10">
       <h2 className={cn(h2, 'mb-3 text-2xl')}>{title}</h2>
-      {children}
+      <div className="reveal-items">{children}</div>
     </section>
   );
 }
@@ -66,7 +66,7 @@ function CaseStudy({ slug }: { slug: string }) {
             {t('cta.back')}
           </Link>
         </Button>
-        <header className="mt-4">
+        <header className="stagger mt-4">
           <Badge variant={p.kind === 'delivered' ? 'default' : 'outline'}>{t(`badge.${p.kind}`)}</Badge>
           <h1 className="mt-3 text-4xl font-extrabold sm:text-5xl">{l(p.title)}</h1>
           <p className="mt-4 text-lg text-muted-foreground">{l(p.summary)}</p>
