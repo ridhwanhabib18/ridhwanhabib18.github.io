@@ -445,6 +445,27 @@ test.describe('a personal project has its own page', () => {
   });
 });
 
+test('Experience: a role opens and closes cleanly, and a closed role stays closed', async ({ page }) => {
+  await page.goto('/experience/');
+  const toggles = page.locator('main button[aria-expanded]');
+  const panel = (i: number) => toggles.nth(i).evaluate((t) => { const c = t.nextElementSibling as HTMLElement; return { h: Math.round(c.getBoundingClientRect().height), v: getComputedStyle(c).visibility }; });
+  // the first role starts open; the others start closed (not showing their content)
+  expect((await panel(0)).h).toBeGreaterThan(100);
+  expect(await panel(1)).toEqual({ h: 0, v: 'hidden' });
+  // closing ends at zero height and stays there (it used to spring back open when the animation ended)
+  await toggles.nth(0).click();
+  await expect.poll(() => panel(0), { timeout: 3000 }).toEqual({ h: 0, v: 'hidden' });
+  await page.waitForTimeout(600);
+  expect(await panel(0)).toEqual({ h: 0, v: 'hidden' });
+  // opening shows the whole content, and a closed panel's links are not reachable with the keyboard
+  await toggles.nth(1).click();
+  await expect.poll(async () => (await panel(1)).h, { timeout: 3000 }).toBeGreaterThan(100);
+  expect((await panel(1)).v).toBe('visible');
+  // printing shows every role, open or not
+  await page.emulateMedia({ media: 'print' });
+  await expect.poll(async () => (await panel(0)).h, { timeout: 3000 }).toBeGreaterThan(100);
+});
+
 test('the Coffee Roasto page shows its sections, documentation and links to the public repository, and its pictures', async ({ page }) => {
   await page.goto('/work/coffee-roasto/');
   await expect(page.getByRole('heading', { level: 1, name: /Coffee Roasto/ })).toBeVisible();

@@ -73,7 +73,7 @@ export default function Experience() {
                         {t('exp.responsibilities')}
                         <ChevronDown className="size-4 transition-transform duration-200 group-data-[state=open]:rotate-180" aria-hidden="true" />
                       </CollapsibleTrigger>
-                      <CollapsibleContent forceMount className="overflow-hidden data-[state=closed]:animate-collapsible-up data-[state=open]:animate-collapsible-down print:block print:h-auto">
+                      <CollapsibleContent forceMount className="overflow-hidden transition-[height,visibility] duration-200! ease-out [interpolate-size:allow-keywords] data-[state=closed]:invisible data-[state=closed]:h-0 data-[state=open]:h-auto print:block print:transition-none print:data-[state=closed]:visible! print:data-[state=closed]:h-auto!">
                         <ul className={cn(bullets, 'pb-2')}>
                           {r.bullets.map((b) => (
                             <li key={l(b.text)}>
