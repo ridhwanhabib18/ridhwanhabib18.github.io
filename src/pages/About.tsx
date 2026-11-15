@@ -1,17 +1,36 @@
+import { useState } from 'react';
 import { CertCard } from '@/components/CertCard';
 import { IconTile } from '@/components/icons';
 import { Seo } from '@/components/Seo';
 import { graph, personLd } from '@/lib/jsonld';
 import { EducationEntry, StackChips } from '@/components/Parts';
 import { Card } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
 import { useI18n } from '@/i18n';
 import { profile } from '@/content/profile';
 import { eyebrow, h2, narrow } from '@/lib/ui';
 import { cn } from '@/lib/utils';
 
+export function filterSkillGroups(query: string) {
+  const term = query.trim().toLocaleLowerCase();
+  if (!term) return profile.stack;
+
+  return profile.stack
+    .map((group) => {
+      const matchesGroup = `${group.group.en} ${group.group.id}`.toLocaleLowerCase().includes(term);
+      return {
+        ...group,
+        items: matchesGroup ? group.items : group.items.filter((item) => item.toLocaleLowerCase().includes(term)),
+      };
+    })
+    .filter((group) => group.items.length > 0);
+}
+
 export default function About() {
   const { t, l } = useI18n();
   const paras = l(profile.about);
+  const [skillQuery, setSkillQuery] = useState('');
+  const filteredSkills = filterSkillGroups(skillQuery);
   return (
     <>
       <Seo title={t('about.title')} description={paras[0]} jsonLd={graph(personLd())} />
@@ -48,14 +67,27 @@ export default function About() {
         </ul>
 
         <h2 className={cn(h2, 'mt-12 mb-4')}>{t('about.stack')}</h2>
+        <div className="mb-5 max-w-sm">
+          <label htmlFor="skill-filter" className="sr-only">
+            {t('about.skillFilter')}
+          </label>
+          <Input
+            id="skill-filter"
+            type="search"
+            value={skillQuery}
+            onChange={(event) => setSkillQuery(event.target.value)}
+            placeholder={t('about.skillFilterPlaceholder')}
+          />
+        </div>
         <div className="reveal-items grid gap-6 sm:grid-cols-2">
-          {profile.stack.map((g) => (
+          {filteredSkills.map((g) => (
             <div key={g.group.en}>
               <h3 className={cn(eyebrow, 'mb-2')}>{l(g.group)}</h3>
               <StackChips items={g.items} />
             </div>
           ))}
         </div>
+        {filteredSkills.length === 0 && <p className="text-sm text-muted-foreground">{t('about.noSkillsFound')}</p>}
 
         <h2 className={cn(h2, 'mt-12 mb-4')}>{t('about.certs')}</h2>
         <ul className="reveal-items grid gap-4 lg:grid-cols-2">

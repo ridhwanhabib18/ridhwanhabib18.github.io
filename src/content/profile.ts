@@ -52,6 +52,8 @@ export const profile = {
   linkedinText: r.linkedin,
   github: `https://${r.github}`,
   githubText: r.github,
+  website: `https://${r.website}`,
+  websiteText: r.website,
   location: toL10n(r.location),
   yearsExperience: '4+',
   /** Flip to false to hide the availability badge. */

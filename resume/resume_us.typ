@@ -8,6 +8,7 @@
 #let phone = "" // The real number lives only in the private repository and is never published.
 #let linkedin = "linkedin.com/in/mridhwanhabib"
 #let github = "github.com/ridhwanhabib18"
+#let website = "ridhwanhabib18.github.io"
 
 // Build inputs (used by the website build): --input role=<senior|lead|analyst> --input public=true
 // public=true leaves out the phone number and the work-authorization line, for a PDF published on the web.
@@ -20,6 +21,7 @@
   phone: if public { "" } else { phone },
   linkedin: linkedin,
   github: github,
+  personal-site: website,
   accent-color: "#26428b",
   paper: "us-letter",
 )

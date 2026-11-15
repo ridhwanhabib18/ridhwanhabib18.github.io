@@ -9,6 +9,7 @@ export interface ResumeData {
   email: string;
   linkedin: string;
   github: string;
+  website: string;
   summaries: Record<'senior' | 'lead' | 'analyst', string>;
   experience: {
     title: string;

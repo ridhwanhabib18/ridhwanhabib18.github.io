@@ -29,7 +29,7 @@ export const personLd = () => ({
   description: profile.positioning.en,
   url: home,
   image: `${home}${profile.photo}`,
-  sameAs: [profile.linkedin, profile.github],
+  sameAs: [profile.linkedin, profile.github, profile.website],
   worksFor: { '@type': 'Organization', name: current.company },
   alumniOf: { '@type': 'CollegeOrUniversity', name: school.institution },
   knowsAbout: technologies,

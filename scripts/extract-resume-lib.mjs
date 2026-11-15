@@ -140,6 +140,7 @@ export function extractResume(source) {
     email: letString(text, 'email'),
     linkedin: letString(text, 'linkedin'),
     github: letString(text, 'github'),
+    website: letString(text, 'website'),
     summaries,
     experience,
     education,

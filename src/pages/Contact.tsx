@@ -1,4 +1,4 @@
-import { Mail, MapPin } from 'lucide-react';
+import { Globe, Mail, MapPin } from 'lucide-react';
 import { GithubIcon, LinkedinIcon } from '@/components/BrandIcons';
 import { CopyButton } from '@/components/CopyButton';
 import { Seo } from '@/components/Seo';
@@ -62,6 +62,13 @@ export default function Contact() {
             <Item icon={<GithubIcon className="size-5" />} label={t('contact.github')}>
               <a className={link} href={profile.github} target="_blank" rel="noopener noreferrer">
                 {profile.githubText}
+              </a>
+            </Item>
+          </li>
+          <li>
+            <Item icon={<Globe className="size-5" />} label={t('contact.website')}>
+              <a className={link} href={profile.website} target="_blank" rel="noopener noreferrer">
+                {profile.websiteText}
               </a>
             </Item>
           </li>

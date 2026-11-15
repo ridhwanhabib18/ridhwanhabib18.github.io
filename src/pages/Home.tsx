@@ -1,5 +1,5 @@
 import { Link } from '@/components/TransitionLink';
-import { ArrowRight, Download, Mail } from 'lucide-react';
+import { ArrowRight, Download, Globe, Mail } from 'lucide-react';
 import { GithubIcon, LinkedinIcon } from '@/components/BrandIcons';
 import { CertCard } from '@/components/CertCard';
 import { CopyButton } from '@/components/CopyButton';
@@ -110,6 +110,12 @@ export default function Home() {
               <a className={heroLink} href={profile.github} target="_blank" rel="noopener noreferrer">
                 <GithubIcon className="size-4" aria-hidden="true" />
                 {t('contact.github')}
+              </a>
+            </li>
+            <li>
+              <a className={heroLink} href={profile.website+"/work"} target="_blank" rel="noopener noreferrer">
+                <Globe className="size-4" aria-hidden="true" />
+                {t('contact.website')}
               </a>
             </li>
           </ul>
