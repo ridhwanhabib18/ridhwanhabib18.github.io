@@ -8,7 +8,7 @@ import { CountUp } from '@/components/CountUp';
 import { Seo } from '@/components/Seo';
 import { Reveal } from '@/components/Reveal';
 import { RotatingWord } from '@/components/RotatingWord';
-import { MetricBadge, ProjectCard, Section, StackChips } from '@/components/Parts';
+import { CoreSkills, MetricBadge, ProjectCard, Section, StackChips } from '@/components/Parts';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
@@ -216,6 +216,7 @@ export default function Home() {
           </Button>
         }
       >
+        <CoreSkills className="mb-8" />
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {profile.stack.map((g) => (
             <div key={g.group.en}>

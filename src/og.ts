@@ -36,7 +36,7 @@ export function ogExtras(route: string): OgExtras {
   const lang: Lang = route === '/id' || route.startsWith('/id/') ? 'id' : 'en';
   const bare = route.replace(/^\/id(?=\/|$)/, '') || '/';
   const t = (key: string) => dictionaries[lang][key] ?? dictionaries.en[key];
-  const metric = (m: Metric): OgMetric => ({ tone: m.type, badge: t(`badge.${m.type}`), value: m.value[lang], label: m.label[lang] });
+  const metric = (m: Metric, label = m.label): OgMetric => ({ tone: m.type, badge: t(`badge.${m.type}`), value: m.value[lang], label: label[lang] });
 
   if (bare === '/') {
     return {
@@ -47,7 +47,10 @@ export function ogExtras(route: string): OgExtras {
       kicker: profile.headline[lang],
       title: profile.name,
       description: profile.positioning[lang],
-      metrics: proofSlugs.slice(0, 3).map((s) => metric(getProject(s)!.metrics[0])),
+      metrics: proofSlugs.slice(0, 3).map((s) => {
+        const p = getProject(s)!;
+        return metric(p.metrics[0], p.proofLabel);
+      }),
       chips: [],
     };
   }
@@ -77,7 +80,7 @@ export function ogExtras(route: string): OgExtras {
       kicker: t(`badge.${project.kind}`),
       title: project.title[lang],
       description: project.summary[lang],
-      metrics: project.metrics.slice(0, 3).map(metric),
+      metrics: project.metrics.slice(0, 3).map((m) => metric(m)),
       chips: project.stack.slice(0, 5),
     };
   }

@@ -67,6 +67,23 @@ export function StackChips({ items, className }: { items: string[]; className?: 
   );
 }
 
+/** The few technologies a reader most wants to see first: large chips above the full skill list. */
+export function CoreSkills({ className }: { className?: string }) {
+  const { t } = useI18n();
+  return (
+    <div className={className}>
+      <h3 className="mb-2 text-xs font-semibold tracking-widest text-primary uppercase">{t('about.core')}</h3>
+      <ul className="flex flex-wrap gap-2">
+        {profile.coreSkills.map((s) => (
+          <li key={s} className="rounded-xl border border-primary/40 bg-primary/10 px-3.5 py-1.5 font-mono text-sm font-semibold">
+            {s}
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
 export function ProjectCard({ p }: { p: Project }) {
   const { t, l, path } = useI18n();
   const lead = p.metrics[0];
@@ -91,15 +108,14 @@ export function ProjectCard({ p }: { p: Project }) {
           </Link>
         </h3>
         <p className="text-sm text-muted-foreground">{l(p.summary)}</p>
-        <p className="text-xs font-medium text-muted-foreground">{`${t('card.role')}: ${l(p.role)}`}</p>
         {lead ? (
-          <p className="flex flex-wrap items-center gap-x-2 gap-y-1 text-sm">
+          <div className="rounded-xl border bg-background/50 p-3">
             <MetricBadge type={lead.type} />
-            <strong>{l(lead.value)}</strong>
-            <span className="text-muted-foreground">· {l(lead.label)}</span>
-          </p>
+            <strong className="text-gradient mt-2 block text-xl leading-tight">{l(lead.value)}</strong>
+            <span className="mt-1 block text-sm text-muted-foreground">{l(p.proofLabel ?? lead.label)}</span>
+          </div>
         ) : (
-          <p className="text-sm text-muted-foreground">{l(p.role)}</p>
+          <p className="text-xs font-medium text-muted-foreground">{`${t('card.role')}: ${l(p.role)}`}</p>
         )}
         <StackChips items={p.stack.slice(0, 4)} className="mt-auto pt-1" />
         <span className="inline-flex items-center gap-1 text-sm font-medium text-primary" aria-hidden="true">
@@ -250,7 +266,7 @@ export function PersonalProjectCard({ p }: { p: PersonalProject }) {
           </Link>
         </h3>
         <p className="text-sm text-muted-foreground">{l(p.summary)}</p>
-        <p className="text-sm">{l(p.status)}</p>
+        <p className="rounded-xl border bg-background/50 p-3 text-sm">{l(p.status)}</p>
         <p className="text-xs font-medium text-muted-foreground">{`${t('card.role')}: ${l(p.role)}`}</p>
         <StackChips items={p.cardStack} className="mt-auto pt-1" />
         <span className="inline-flex items-center gap-1 text-sm font-medium text-primary" aria-hidden="true">

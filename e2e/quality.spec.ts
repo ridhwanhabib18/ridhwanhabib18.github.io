@@ -291,7 +291,8 @@ test.describe('page transitions', () => {
     await page.getByRole('banner').getByRole('link', { name: 'Projects', exact: true }).click();
     await expect(page).toHaveURL(/\/work\/?$/);
     await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
-    expect(await page.evaluate(() => window.scrollY)).toBe(0);
+    // the scroll to the top runs in an effect right after the new page renders, so wait for it instead of reading once
+    await expect.poll(() => page.evaluate(() => window.scrollY)).toBe(0);
     expect(await page.evaluate(() => (window as unknown as { __vt: number }).__vt)).toBe(1);
   });
 

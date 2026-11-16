@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import { Link, NavLink } from '@/components/TransitionLink';
-import { Menu, Moon, Sun } from 'lucide-react';
+import { ArrowUp, Download, Mail, Menu, Moon, Sun } from 'lucide-react';
+import { GithubIcon, LinkedinIcon } from '@/components/BrandIcons';
 import { BrandMark } from '@/components/BrandMark';
 import { useI18n } from '@/i18n';
 import { profile } from '@/content/profile';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetClose, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
-import { Separator } from '@/components/ui/separator';
 import { cn } from '@/lib/utils';
 import { container } from '@/lib/ui';
 import { analyticsEnabled, trackPage } from '@/lib/analytics';
@@ -45,11 +45,18 @@ function LangToggle() {
   );
 }
 
+const footLink = 'link-underline group inline-flex items-center gap-1.5 font-medium text-muted-foreground transition-colors hover:text-foreground';
+
+function toTop() {
+  const calm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  window.scrollTo({ top: 0, left: 0, behavior: calm ? 'instant' : 'smooth' });
+}
+
 const linkClass = ({ isActive }: { isActive: boolean }) =>
   cn('relative py-1 text-sm transition-colors hover:text-foreground', isActive ? 'font-medium text-foreground' : 'text-muted-foreground');
 
 export function Layout() {
-  const { t, path, lang } = useI18n();
+  const { t, l, path, lang } = useI18n();
   const [scrolled, setScrolled] = useState(false);
   const { pathname } = useLocation();
   // The visit-statistics note is only for the developer's own machine; on the live site it is not shown (set after mount, so the pre-rendered pages stay the same)
@@ -131,29 +138,41 @@ export function Layout() {
         <Outlet />
       </main>
 
-      <footer className="mt-20">
-        <Separator />
-        <div className={cn(container, 'flex flex-wrap items-center justify-between gap-4 py-8')}>
-          <div>
-            <p className="font-semibold">{profile.name}</p>
-            <p className="text-sm text-muted-foreground">{t('footer.built')}</p>
-            {analyticsEnabled && onLocalhost && <p className="text-sm text-muted-foreground">{t('footer.analytics')}</p>}
-          </div>
-          <div className="flex gap-5 text-sm">
-            <a className="text-muted-foreground transition-colors hover:text-foreground" href={profile.github} target="_blank" rel="noopener noreferrer">
-              GitHub
-            </a>
-            <a className="text-muted-foreground transition-colors hover:text-foreground" href={profile.linkedin} target="_blank" rel="noopener noreferrer">
-              LinkedIn
-            </a>
-            <a className="text-muted-foreground transition-colors hover:text-foreground" href={`mailto:${profile.email}`}>
-              Email
-            </a>
-            {resumeHref(primaryResumeKey) && (
-              <a className="text-muted-foreground transition-colors hover:text-foreground" href={resumeHref(primaryResumeKey)!} download data-event={`resume-download-${primaryResumeKey}`}>
-                {t('footer.resume')}
+      <footer className="relative mt-8 overflow-hidden print:mt-8">
+        <div aria-hidden="true" className="h-px bg-[linear-gradient(to_right,transparent,var(--primary),transparent)] opacity-60" />
+        <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 bottom-0 h-48 bg-[radial-gradient(40rem_12rem_at_50%_100%,var(--glow),transparent_75%)] print:hidden" />
+        <div className={cn(container, 'relative py-12')}>
+          <div className="reveal-items flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
+            <div>
+              <p className="text-2xl font-extrabold tracking-tight sm:text-3xl">{profile.name}</p>
+              <p className="mt-1 font-medium text-primary">{l(profile.headline)}</p>
+              <p className="mt-3 text-sm text-muted-foreground">{t('footer.built')}</p>
+              {analyticsEnabled && onLocalhost && <p className="text-sm text-muted-foreground">{t('footer.analytics')}</p>}
+            </div>
+            <nav aria-label={t('footer.links')} className="flex flex-wrap items-center gap-x-5 gap-y-3 text-sm">
+              <a className={footLink} href={profile.github} target="_blank" rel="noopener noreferrer">
+                <GithubIcon className="size-4" aria-hidden="true" />
+                GitHub
               </a>
-            )}
+              <a className={footLink} href={profile.linkedin} target="_blank" rel="noopener noreferrer">
+                <LinkedinIcon className="size-4" aria-hidden="true" />
+                LinkedIn
+              </a>
+              <a className={footLink} href={`mailto:${profile.email}`}>
+                <Mail className="size-4" aria-hidden="true" />
+                Email
+              </a>
+              {resumeHref(primaryResumeKey) && (
+                <a className={footLink} href={resumeHref(primaryResumeKey)!} download data-event={`resume-download-${primaryResumeKey}`}>
+                  <Download className="size-4" aria-hidden="true" />
+                  {t('footer.resume')}
+                </a>
+              )}
+              <Button type="button" variant="outline" size="sm" className="print:hidden" onClick={toTop}>
+                <ArrowUp aria-hidden="true" />
+                {t('footer.top')}
+              </Button>
+            </nav>
           </div>
         </div>
       </footer>

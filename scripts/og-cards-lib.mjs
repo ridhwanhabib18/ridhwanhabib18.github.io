@@ -46,14 +46,22 @@ export function cardHtml(card, fonts) {
   * { box-sizing: border-box; margin: 0; }
   html, body { width: ${OG_WIDTH}px; height: ${OG_HEIGHT}px; overflow: hidden; }
   body {
-    font-family: 'OGInter', sans-serif; color: #e8edf7; background: #0a0f1a;
-    background-image: radial-gradient(900px 420px at 15% -10%, rgba(143,176,255,0.22), transparent 70%), radial-gradient(700px 360px at 100% 110%, rgba(143,176,255,0.12), transparent 70%);
+    font-family: 'OGInter', sans-serif; color: #f2f5fb; background: #070b14; position: relative;
+    background-image: radial-gradient(900px 420px at 15% -10%, rgba(119,178,255,0.24), transparent 70%), radial-gradient(700px 360px at 100% 110%, rgba(119,178,255,0.12), transparent 70%);
     display: flex; flex-direction: column; justify-content: space-between; padding: 38px 64px 30px;
   }
+  /* the same faint blueprint grid as the site, fading down the card */
+  body::before {
+    content: ''; position: absolute; inset: 0; z-index: 0; pointer-events: none;
+    background-image: linear-gradient(to right, rgba(255,255,255,0.06) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.06) 1px, transparent 1px);
+    background-size: 56px 56px;
+    -webkit-mask-image: radial-gradient(ellipse 90% 80% at 50% 0%, #000 20%, transparent 78%); mask-image: radial-gradient(ellipse 90% 80% at 50% 0%, #000 20%, transparent 78%);
+  }
+  body > * { position: relative; z-index: 1; }
   .top { display: flex; align-items: center; justify-content: space-between; gap: 14px; flex-shrink: 0; }
-  .portrait { width: 84px; height: 84px; border-radius: 50%; object-fit: cover; border: 3px solid rgba(143,176,255,0.55); }
-  .avatar { width: 42px; height: 42px; flex-shrink: 0; border-radius: 50%; object-fit: cover; border: 2px solid rgba(143,176,255,0.55); }
-  .kicker { display: inline-block; padding: 5px 16px; border-radius: 999px; background: rgba(143,176,255,0.16); color: #b7ccff; font-weight: 650; font-size: 22px; }
+  .portrait { width: 84px; height: 84px; border-radius: 50%; object-fit: cover; border: 3px solid rgba(119,178,255,0.55); }
+  .avatar { width: 42px; height: 42px; flex-shrink: 0; border-radius: 50%; object-fit: cover; border: 2px solid rgba(119,178,255,0.55); }
+  .kicker { display: inline-block; padding: 5px 16px; border-radius: 999px; background: rgba(119,178,255,0.16); color: #b7ccff; font-weight: 650; font-size: 22px; }
   .main { display: flex; flex-direction: column; gap: 16px; flex: 1; min-height: 0; justify-content: center; overflow: hidden; }
   h1 { font-weight: 800; letter-spacing: -0.02em; line-height: 1.08; font-size: ${titleSize(card)}px; }
   .desc { color: #a3afc4; font-size: 27px; line-height: 1.32; display: -webkit-box; -webkit-line-clamp: ${card.kind === 'page' ? 4 : 2}; -webkit-box-orient: vertical; overflow: hidden; max-width: 1020px; }
@@ -63,7 +71,7 @@ export function cardHtml(card, fonts) {
   .badge.actual { background: rgba(111,215,160,0.16); color: #6fd7a0; }
   .badge.target { background: rgba(242,193,102,0.16); color: #f2c166; }
   .value { font-weight: 800; line-height: 1.12; letter-spacing: -0.01em; }
-  .label { color: #a3afc4; font-size: 19px; line-height: 1.25; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+  .label { color: #a3afc4; font-size: 19px; line-height: 1.25; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
   .chips { display: flex; flex-wrap: wrap; gap: 10px; }
   .chip { font-family: 'OGMono', monospace; font-size: 19px; padding: 4px 13px; border-radius: 999px; background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12); color: #e8edf7; }
   .foot { display: flex; align-items: center; justify-content: space-between; gap: 24px; border-top: 1px solid rgba(255,255,255,0.12); padding-top: 16px; margin-top: 14px; flex-shrink: 0; }

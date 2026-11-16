@@ -543,3 +543,24 @@ a:hover [data-slot='card'],
     transform: translateY(-3px);
   }
 }
+
+/* Text links with an underline that draws itself from the left on hover and keyboard focus. */
+.link-underline {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  background-size: 0% 1.5px;
+  padding-bottom: 2px;
+  transition:
+    background-size 0.3s cubic-bezier(0.2, 0.7, 0.2, 1),
+    color 0.2s;
+}
+.link-underline:hover,
+.link-underline:focus-visible {
+  background-size: 100% 1.5px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .link-underline {
+    transition: color 0.2s;
+  }
+}

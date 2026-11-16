@@ -121,6 +121,8 @@ export const profile = {
   ],
   // Skills, certifications and education come from the Typst resume source.
   stack: r.skills.map((g) => ({ group: toL10n(g.group), items: g.items })),
+  /** The technologies shown first, as large chips, on Home and About. Each must be the start of an item in the resume Skills section (a test checks it). */
+  coreSkills: ['C#', 'ASP.NET Core', 'SQL Server', 'React', 'TypeScript', 'Entity Framework Core'],
   certifications: r.certifications.map((c) => {
     const code = c.name.match(/\(([A-Z0-9-]+)\)\s*$/)?.[1] ?? '';
     const meta = certMeta[code];

@@ -3,7 +3,8 @@ import { CertCard } from '@/components/CertCard';
 import { IconTile } from '@/components/icons';
 import { Seo } from '@/components/Seo';
 import { graph, personLd } from '@/lib/jsonld';
-import { EducationEntry, StackChips } from '@/components/Parts';
+import { CoreSkills, EducationEntry, StackChips } from '@/components/Parts';
+import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { useI18n } from '@/i18n';
@@ -11,11 +12,12 @@ import { profile } from '@/content/profile';
 import { eyebrow, h2, narrow } from '@/lib/ui';
 import { cn } from '@/lib/utils';
 
-export function filterSkillGroups(query: string) {
+export function filterSkillGroups(query: string, category = '') {
   const term = query.trim().toLocaleLowerCase();
-  if (!term) return profile.stack;
+  const groups = category ? profile.stack.filter((group) => group.group.en === category) : profile.stack;
+  if (!term) return groups;
 
-  return profile.stack
+  return groups
     .map((group) => {
       const matchesGroup = `${group.group.en} ${group.group.id}`.toLocaleLowerCase().includes(term);
       return {
@@ -30,7 +32,8 @@ export default function About() {
   const { t, l } = useI18n();
   const paras = l(profile.about);
   const [skillQuery, setSkillQuery] = useState('');
-  const filteredSkills = filterSkillGroups(skillQuery);
+  const [skillCategory, setSkillCategory] = useState('');
+  const filteredSkills = filterSkillGroups(skillQuery, skillCategory);
   return (
     <>
       <Seo title={t('about.title')} description={paras[0]} jsonLd={graph(personLd())} />
@@ -67,6 +70,15 @@ export default function About() {
         </ul>
 
         <h2 className={cn(h2, 'mt-12 mb-4')}>{t('about.stack')}</h2>
+        <CoreSkills className="mb-6" />
+        <div role="group" aria-label={t('about.skillCategories')} className="mb-4 flex flex-wrap gap-2">
+          {[{ en: '', label: t('about.skillAll'), count: profile.stack.reduce((n, g) => n + g.items.length, 0) }, ...profile.stack.map((g) => ({ en: g.group.en, label: l(g.group), count: g.items.length }))].map((c) => (
+            <Button key={c.en || 'all'} type="button" size="sm" variant={skillCategory === c.en ? 'default' : 'outline'} aria-pressed={skillCategory === c.en} onClick={() => setSkillCategory(c.en)}>
+              {c.label}
+              <span className="font-mono text-xs opacity-80">{c.count}</span>
+            </Button>
+          ))}
+        </div>
         <div className="mb-5 max-w-sm">
           <label htmlFor="skill-filter" className="sr-only">
             {t('about.skillFilter')}

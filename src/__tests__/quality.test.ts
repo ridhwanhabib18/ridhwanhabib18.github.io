@@ -239,7 +239,8 @@ describe('home page flow (issue 7)', () => {
     const html = render('/id/').html;
     expect(html).toContain('Mari berdiskusi');
     expect(html).toContain('Cara saya bekerja');
-    expect(html).toContain('Peran:');
+    // the plain-language result labels of the "Hasil sekilas" strip are translated too
+    expect(html).toContain('Beban kerja planner, menggantikan perencanaan ulang manual di Excel');
   });
 });
 
