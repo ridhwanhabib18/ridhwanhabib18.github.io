@@ -88,6 +88,8 @@
         "Dapper",
         "T-SQL",
         "SQL Server",
+        "PostgreSQL",
+        "Npgsql",
         "FluentValidation",
         "OpenAPI",
         "QuestPDF",
@@ -101,6 +103,9 @@
       "group": "Frontend",
       "items": [
         "React",
+        "Angular",
+        "Angular Material",
+        "RxJS",
         "TypeScript",
         "JavaScript",
         "Vite",

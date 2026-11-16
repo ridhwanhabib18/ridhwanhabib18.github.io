@@ -12,6 +12,7 @@ const ROUTES = [
   '/work/production-file-distribution/',
   '/work/schomans/',
   '/work/coffee-roasto/',
+  '/work/linewise/',
   '/work/production-planning-scheduling/',
   '/work/paperless-invoice-approval/',
   '/work/part-approval-certification/',
@@ -24,6 +25,7 @@ const ROUTES = [
   '/id/work/production-file-distribution/',
   '/id/work/schomans/',
   '/id/work/coffee-roasto/',
+  '/id/work/linewise/',
   '/id/experience/',
   '/id/about/',
   '/id/resume/',
@@ -481,6 +483,21 @@ test('the Coffee Roasto page shows its sections, documentation and links to the 
   await expect.poll(() => shot.evaluate((el: HTMLImageElement) => el.complete && el.naturalWidth > 0)).toBe(true);
   await page.goto('/work/');
   await expect(page.getByRole('link', { name: /Coffee Roasto/ }).first()).toBeVisible();
+});
+
+test('the LineWise page shows its sections, the contents row, the demo credit and its pictures', async ({ page }) => {
+  await page.goto('/work/linewise/');
+  await expect(page.getByRole('heading', { level: 1, name: /LineWise/ })).toBeVisible();
+  for (const h of ['Overview', 'Features', 'System architecture', 'System design', 'Key decisions (ADRs)', 'Tech stack', 'Build phases', 'Getting started']) {
+    await expect(page.getByRole('heading', { level: 2, name: h })).toBeVisible();
+  }
+  await expect(page.locator('a[href*="github.com/ridhwanhabib18/LineWise"]').first()).toBeVisible();
+  await page.getByRole('navigation', { name: 'On this page' }).getByRole('link', { name: 'Tech stack' }).click();
+  await expect(page.getByRole('heading', { level: 2, name: 'Tech stack' })).toBeInViewport();
+  const shot = page.getByRole('img', { name: /Approval inbox/ });
+  await shot.scrollIntoViewIfNeeded();
+  await expect.poll(() => shot.evaluate((el: HTMLImageElement) => el.complete && el.naturalWidth > 0)).toBe(true);
+  await expect(page.getByText('Demo by Muhammad Ridhwan Habib Abdillah').first()).toBeVisible();
 });
 
 test('the education card on About opens the thesis in the university repository, in a new tab', async ({ page }) => {

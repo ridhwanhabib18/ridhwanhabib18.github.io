@@ -136,6 +136,32 @@ describe('personal projects', () => {
     }
   });
 
+  it('show the LineWise page in both languages, with the demo credited to the owner and links to its repository', () => {
+    expect(routes).toContain('/work/linewise');
+    expect(routes).toContain('/id/work/linewise');
+    const p = personalProjects.find((x) => x.slug === 'linewise')!;
+    expect(p.links[0]?.href).toBe('https://github.com/ridhwanhabib18/LineWise');
+    expect(p.decisions.every((d) => d.href?.includes('/LineWise/blob/main/docs/en/adr/'))).toBe(true);
+    const items = flat(p);
+    expect(new Set(items).size, 'a technology is listed twice').toBe(items.length);
+    for (const tech of ['Angular 22', 'Angular Material', 'RxJS', 'PostgreSQL', 'Npgsql', 'Keycloak', 'Testcontainers', 'Playwright', 'Caddy']) expect(items, tech).toContain(tech);
+    for (const g of p.gallery) {
+      expect(g.caption.en, g.file).toContain('Muhammad Ridhwan Habib Abdillah');
+      expect(g.caption.id, g.file).toContain('Muhammad Ridhwan Habib Abdillah');
+    }
+    for (const [route, expected] of [
+      ['/work/linewise', ['Done', 'Overview', 'Features', 'FR-08', 'Key decisions (ADRs)', 'ADR-010', 'Build phases', 'Tech stack', 'Angular Material', 'Getting started', 'Screenshots and flows', 'Demo by Muhammad Ridhwan Habib Abdillah']],
+      ['/id/work/linewise', ['Selesai', 'Ringkasan', 'Fitur', 'FR-08', 'Fase pengerjaan', 'Cara memulai', 'Demo oleh Muhammad Ridhwan Habib Abdillah']],
+    ] as [string, string[]][]) {
+      const { html, head } = render(route);
+      for (const text of expected) expect(html, `${route}: ${text}`).toContain(text);
+      expect(head?.title, route).toContain('LineWise');
+      expect(html, route).toContain('projects/linewise/flows/demo-tour.gif');
+      expect((html.match(/<img [^>]*alt=""/g) ?? []).length, `${route} images without a description`).toBe(0);
+      expect(html.match(/<img /g)?.length ?? 0, `${route} images`).toBeGreaterThanOrEqual(p.gallery.length);
+    }
+  });
+
   it('have a share image like every other page', () => {
     for (const route of ['/work/schomans', '/id/work/schomans']) {
       const { head } = render(route);

@@ -25,7 +25,7 @@ export interface Sections {
   lookback?: L10n<string[]>;
 }
 
-export type Tag = 'aspnet' | 'react' | 'realtime' | 'integration' | 'devops' | 'data' | 'embedded' | 'desktop';
+export type Tag = 'angular' | 'aspnet' | 'react' | 'realtime' | 'integration' | 'devops' | 'data' | 'embedded' | 'desktop';
 
 export interface Project {
   slug: string;

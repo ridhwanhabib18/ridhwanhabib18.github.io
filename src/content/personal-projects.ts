@@ -48,6 +48,11 @@ const DOCS = `${REPO}/blob/main/docs/en`;
 const ROASTO = 'https://github.com/ridhwanhabib18/capstone-coffee-roasto';
 const ROASTO_DOCS = `${ROASTO}/blob/main/docs/en`;
 
+const LW = 'https://github.com/ridhwanhabib18/LineWise';
+const LW_DOCS = `${LW}/blob/main/docs/en`;
+const LW_ADR = `${LW_DOCS}/adr`;
+const DEMO_BY = 'Muhammad Ridhwan Habib Abdillah';
+
 const containers: DiagramDef = {
   nodes: [
     { id: 'browser', label: 'Browser: React SPA (PWA)', col: 0, row: 1, kind: 'client' },
@@ -577,6 +582,294 @@ export const personalProjects: PersonalProject[] = [
       { label: { en: 'Source code on GitHub', id: 'Kode sumber di GitHub' }, href: ROASTO },
       { label: { en: 'System design', id: 'Desain sistem' }, href: `${ROASTO_DOCS}/system-design.md` },
       { label: { en: 'Architecture decisions', id: 'Keputusan arsitektur' }, href: `${ROASTO}/tree/main/docs/en/adr` },
+    ],
+  },
+  {
+    slug: 'linewise',
+    title: { en: 'LineWise: Manufacturing Operations and Quality Management System', id: 'LineWise: Sistem Manajemen Operasi dan Kualitas Manufaktur' },
+    summary: {
+      en: 'Production orders, work orders, quality inspections, defect handling, approvals, KPI dashboards and an audit trail in one platform for a mid-to-large manufacturing plant. A portfolio project built on simulated data only, with an Angular front end and an ASP.NET Core API on PostgreSQL.',
+      id: 'Order produksi, work order, inspeksi kualitas, penanganan cacat, persetujuan, dashboard KPI, dan jejak audit dalam satu platform untuk pabrik manufaktur menengah hingga besar. Proyek portofolio yang hanya memakai data simulasi, dengan front end Angular dan API ASP.NET Core di atas PostgreSQL.',
+    },
+    state: 'done',
+    status: {
+      en: 'All phases (0 to 9) are built and tested. A production Docker Compose package passes a 20-check smoke test from empty volumes; there is no hosted demo yet. Demo by Muhammad Ridhwan Habib Abdillah, on fictional data.',
+      id: 'Semua fase (0 sampai 9) sudah dibangun dan diuji. Paket produksi Docker Compose lolos smoke test 20 pemeriksaan dari volume kosong; belum ada demo yang di-host. Demo oleh Muhammad Ridhwan Habib Abdillah, dengan data fiktif.',
+    },
+    role: { en: 'System Architect, System Design and Author (Muhammad Ridhwan Habib Abdillah), assisted by Claude', id: 'Arsitek Sistem, Desain Sistem, dan Penulis (Muhammad Ridhwan Habib Abdillah), dibantu Claude' },
+    year: '2026',
+    tags: ['angular', 'aspnet', 'data'],
+    cardStack: ['Angular', 'ASP.NET Core', 'PostgreSQL', 'Keycloak', 'Docker'],
+    overview: {
+      en: [
+        'In a plant, production output, quality checks and defects often live in separate spreadsheets and paper forms, so a defect is found late, a decision is hard to trace, and nobody can say who changed what. LineWise puts the whole chain in one system: a planner releases an order, operators record output, inspectors fill a checklist, a failed check raises its defect, and serious decisions need two approvals.',
+        'It is built for one plant with seven roles. The API is a modular monolith with Clean Architecture, and it is also the backend-for-frontend of Keycloak, so the browser holds only an HttpOnly session cookie. Every protected operation is checked in the backend, submitted records are append-only, and an audit trail records every change. The dashboard figures are calculated from the stored records, not typed in.',
+      ],
+      id: [
+        'Di pabrik, output produksi, pemeriksaan kualitas, dan cacat sering tersebar di spreadsheet dan formulir kertas, sehingga cacat ditemukan terlambat, keputusan sulit ditelusuri, dan tidak ada yang tahu siapa mengubah apa. LineWise menyatukan seluruh rantainya: planner merilis order, operator mencatat output, inspektur mengisi daftar periksa, pemeriksaan yang gagal memunculkan cacatnya, dan keputusan penting membutuhkan dua persetujuan.',
+        'Sistem ini dibuat untuk satu pabrik dengan tujuh peran. API-nya adalah modular monolith dengan Clean Architecture sekaligus backend-for-frontend untuk Keycloak, sehingga browser hanya memegang cookie sesi HttpOnly. Setiap operasi terlindungi diperiksa di backend, rekaman yang sudah dikirim bersifat append-only, dan jejak audit mencatat setiap perubahan. Angka dashboard dihitung dari data yang tersimpan, bukan diketik.',
+      ],
+    },
+    roles: [
+      { name: { en: 'System Administrator', id: 'System Administrator' }, needs: { en: 'Manages accounts, roles, master data and the permission matrix.', id: 'Mengelola akun, peran, data master, dan matriks izin.' } },
+      { name: { en: 'Production Planner', id: 'Production Planner' }, needs: { en: 'Creates, releases and monitors production orders and their work orders.', id: 'Membuat, merilis, dan memantau order produksi beserta work order-nya.' } },
+      { name: { en: 'Production Operator', id: 'Production Operator' }, needs: { en: 'Records good and rejected output on a work order, on a tablet or laptop.', id: 'Mencatat output baik dan reject pada work order, di tablet atau laptop.' } },
+      { name: { en: 'QC Inspector', id: 'QC Inspector' }, needs: { en: 'Performs checklist inspections; a failed one raises its defect.', id: 'Melakukan inspeksi berbasis daftar periksa; inspeksi yang gagal memunculkan cacatnya.' } },
+      { name: { en: 'QC Supervisor', id: 'QC Supervisor' }, needs: { en: 'Reviews defects, sets the disposition and corrective actions, and approves the first step.', id: 'Meninjau cacat, menetapkan disposisi dan tindakan korektif, dan menyetujui langkah pertama.' } },
+      { name: { en: 'Production Supervisor', id: 'Production Supervisor' }, needs: { en: 'Follows output, status and exceptions, and can put an order on hold.', id: 'Memantau output, status, dan pengecualian, serta dapat menahan order.' } },
+      { name: { en: 'Management', id: 'Management' }, needs: { en: 'Reads KPIs, trends and reports, and gives the second approval.', id: 'Membaca KPI, tren, dan laporan, serta memberi persetujuan kedua.' } },
+    ],
+    features: [
+      { id: 'FR-01', title: { en: 'Sign-in with Keycloak', id: 'Masuk dengan Keycloak' }, note: { en: 'OpenID Connect through the API as backend-for-frontend; the browser holds only an HttpOnly cookie, with antiforgery and a rate limit.', id: 'OpenID Connect lewat API sebagai backend-for-frontend; browser hanya memegang cookie HttpOnly, dengan antiforgery dan pembatasan laju.' } },
+      { id: 'FR-02', title: { en: 'Users, roles and permissions', id: 'Pengguna, peran, dan izin' }, note: { en: 'Seven roles and a permission matrix that administrators can edit, enforced on every endpoint.', id: 'Tujuh peran dan matriks izin yang dapat diubah administrator, diberlakukan di setiap endpoint.' } },
+      { id: 'FR-03', title: { en: 'Master data', id: 'Data master' }, note: { en: 'Products, lines, workstations and defect categories with unique codes; deactivated, never deleted.', id: 'Produk, lini, workstation, dan kategori cacat dengan kode unik; dinonaktifkan, tidak pernah dihapus.' } },
+      { id: 'FR-04', title: { en: 'Production orders', id: 'Order produksi' }, note: { en: 'A lifecycle of release, hold, resume, complete, cancel and reopen, with filters and progress.', id: 'Siklus rilis, tahan, lanjut, selesai, batal, dan buka kembali, dengan filter dan progres.' } },
+      { id: 'FR-05', title: { en: 'Work orders and output tracking', id: 'Work order dan pelacakan output' }, note: { en: 'Output records are append-only; a mistake is fixed by an adjustment, with an output limit and idempotent writes.', id: 'Rekaman output bersifat append-only; kesalahan dikoreksi lewat penyesuaian, dengan batas output dan penulisan idempoten.' } },
+      { id: 'FR-06', title: { en: 'Quality inspections', id: 'Inspeksi kualitas' }, note: { en: 'Versioned checklist templates per product; the template rule decides the result.', id: 'Template daftar periksa berversi per produk; aturan template menentukan hasilnya.' } },
+      { id: 'FR-07', title: { en: 'Defect management', id: 'Manajemen cacat' }, note: { en: 'A failed inspection raises its defect in one transaction; review, disposition, corrective actions with owner and due date.', id: 'Inspeksi yang gagal memunculkan cacatnya dalam satu transaksi; tinjauan, disposisi, tindakan korektif dengan pemilik dan tenggat.' } },
+      { id: 'FR-08', title: { en: 'Two-step approval', id: 'Persetujuan dua langkah' }, note: { en: 'Closing a scrap or use-as-is defect and reopening a completed order need two approvers, with segregation of duties.', id: 'Menutup cacat scrap atau use-as-is dan membuka kembali order selesai membutuhkan dua penyetuju, dengan pemisahan tugas.' } },
+      { id: 'FR-09', title: { en: 'KPI dashboard', id: 'Dashboard KPI' }, note: { en: 'Defect rate, inspection pass rate and production achievement from aggregation queries, with filters and N/A for a zero denominator.', id: 'Tingkat cacat, tingkat lolos inspeksi, dan pencapaian produksi dari query agregasi, dengan filter dan N/A untuk penyebut nol.' } },
+      { id: 'FR-10', title: { en: 'Search, filters and CSV export', id: 'Pencarian, filter, dan ekspor CSV' }, note: { en: 'Streamed CSV that follows the active filters and the user’s permissions.', id: 'CSV yang dialirkan dan mengikuti filter aktif serta izin pengguna.' } },
+      { id: 'FR-11', title: { en: 'In-app notifications', id: 'Notifikasi dalam aplikasi' }, note: { en: 'Written in the same transaction as the event, with a bell and an unread count; a background job covers due dates.', id: 'Ditulis dalam transaksi yang sama dengan kejadiannya, dengan ikon lonceng dan jumlah belum dibaca; job latar menangani tenggat.' } },
+      { id: 'FR-12', title: { en: 'Audit trail', id: 'Jejak audit' }, note: { en: 'An interceptor records changed fields only, never a secret; an Audit log screen and a timeline on orders, inspections and defects.', id: 'Interceptor mencatat hanya kolom yang berubah, tidak pernah rahasia; layar Audit log dan lini masa pada order, inspeksi, dan cacat.' } },
+    ],
+    aiFeatures: [],
+    architecture: {
+      intro: {
+        en: 'A modular monolith: one deployable API with four layers, an Angular single-page app, Keycloak for identity and PostgreSQL for data, all behind a Caddy proxy in production. Dependencies point one way, and Domain depends on nothing.',
+        id: 'Modular monolith: satu API yang dapat di-deploy dengan empat lapisan, aplikasi Angular satu halaman, Keycloak untuk identitas, dan PostgreSQL untuk data, semuanya di belakang proxy Caddy di produksi. Dependensi satu arah, dan Domain tidak bergantung pada apa pun.',
+      },
+      diagrams: [
+        {
+          title: { en: 'Containers (production package)', id: 'Kontainer (paket produksi)' },
+          def: {
+            nodes: [
+              { id: 'browser', label: 'Browser: Angular SPA', col: 0, row: 1, kind: 'client' },
+              { id: 'proxy', label: 'Caddy reverse proxy (HTTPS)', col: 1, row: 1, kind: 'service' },
+              { id: 'api', label: 'api: ASP.NET Core .NET 10 (BFF)', col: 2, row: 0, kind: 'service' },
+              { id: 'kc', label: 'Keycloak (OIDC)', col: 2, row: 2, kind: 'service' },
+              { id: 'pg', label: 'PostgreSQL', col: 3, row: 0, kind: 'data' },
+              { id: 'kcdb', label: 'PostgreSQL (Keycloak data)', col: 3, row: 2, kind: 'data' },
+            ],
+            edges: [
+              { from: 'browser', to: 'proxy', label: 'HttpOnly cookie' },
+              { from: 'proxy', to: 'api' },
+              { from: 'proxy', to: 'kc', label: 'login pages' },
+              { from: 'api', to: 'pg' },
+              { from: 'api', to: 'kc', label: 'OIDC, users' },
+              { from: 'kc', to: 'kcdb' },
+            ],
+          },
+        },
+        {
+          title: { en: 'Backend layers (dependencies point one way)', id: 'Lapisan backend (dependensi satu arah)' },
+          def: {
+            nodes: [
+              { id: 'api', label: 'Api', col: 0, row: 1, kind: 'client' },
+              { id: 'infra', label: 'Infrastructure', col: 2, row: 0, kind: 'external' },
+              { id: 'app', label: 'Application', col: 2, row: 2, kind: 'service' },
+              { id: 'domain', label: 'Domain', col: 3, row: 2, kind: 'data' },
+            ],
+            edges: [
+              { from: 'api', to: 'infra', label: 'DI wiring' },
+              { from: 'api', to: 'app', label: 'calls use cases' },
+              { from: 'infra', to: 'app', label: 'implements interfaces' },
+              { from: 'app', to: 'domain' },
+            ],
+          },
+        },
+      ],
+      layers: [
+        { name: 'LineWise.Domain', does: { en: 'Entities, status rules and business invariants. No dependencies.', id: 'Entitas, aturan status, dan invarian bisnis. Tanpa dependensi.' }, dependsOn: { en: 'Nothing', id: 'Tidak ada' } },
+        { name: 'LineWise.Application', does: { en: 'One folder per use case, validation and Result<T>. Reaches data only through IAppDbContext.', id: 'Satu folder per use case, validasi, dan Result<T>. Mengakses data hanya lewat IAppDbContext.' }, dependsOn: { en: 'Domain', id: 'Domain' } },
+        { name: 'LineWise.Infrastructure', does: { en: 'EF Core with Npgsql, migrations, the audit interceptor, seeding and background jobs. PostgreSQL-specific code stays here.', id: 'EF Core dengan Npgsql, migrasi, interceptor audit, seeding, dan job latar. Kode khusus PostgreSQL tetap di sini.' }, dependsOn: { en: 'Application', id: 'Application' } },
+        { name: 'LineWise.Api', does: { en: 'Minimal API endpoints, one file per feature, the Keycloak session, error envelope and security headers.', id: 'Endpoint Minimal API, satu berkas per fitur, sesi Keycloak, amplop error, dan header keamanan.' }, dependsOn: { en: 'Infrastructure, Application', id: 'Infrastructure, Application' } },
+      ],
+    },
+    qualityGoals: [
+      { goal: { en: 'Responsiveness', id: 'Responsivitas' }, target: { en: 'Common list and detail APIs at p95 under 500 ms', id: 'API daftar dan detail umum p95 di bawah 500 ms' }, response: { en: 'Measured on 100,000 output rows, with one covering index; the figures are recorded in ADR-016', id: 'Diukur pada 100.000 baris output, dengan satu covering index; angkanya tercatat di ADR-016' } },
+      { goal: { en: 'Security and privacy', id: 'Keamanan dan privasi' }, target: { en: 'Backend authorization on every operation; no secrets in the repository', id: 'Otorisasi backend di setiap operasi; tidak ada rahasia di repositori' }, response: { en: '401 and 403 tests for every endpoint, security headers, HSTS, a CORS allowlist and a dependency scan in the CI', id: 'Tes 401 dan 403 untuk setiap endpoint, header keamanan, HSTS, allowlist CORS, dan pemindaian dependensi di CI' } },
+      { goal: { en: 'Data integrity', id: 'Integritas data' }, target: { en: 'History is never lost', id: 'Riwayat tidak pernah hilang' }, response: { en: 'Append-only inspections and output, corrections by revision, void or adjustment, soft delete, and one transaction for multi-record steps', id: 'Inspeksi dan output append-only, koreksi lewat revisi, pembatalan, atau penyesuaian, soft delete, dan satu transaksi untuk langkah multi-rekaman' } },
+      { goal: { en: 'Accessibility', id: 'Aksesibilitas' }, target: { en: 'WCAG AA on the critical screens', id: 'WCAG AA pada layar kritis' }, response: { en: 'axe runs in the end-to-end suite with no violation; Lighthouse 100 for accessibility on the login page and the dashboard', id: 'axe berjalan di suite end-to-end tanpa pelanggaran; Lighthouse 100 untuk aksesibilitas pada halaman login dan dashboard' } },
+      { goal: { en: 'Testability', id: 'Kemampuan diuji' }, target: { en: 'Line coverage of at least 70% for Domain and Application', id: 'Cakupan baris minimal 70% untuk Domain dan Application' }, response: { en: 'Unit tests, integration tests on a real PostgreSQL with Testcontainers, and Playwright end-to-end tests; 94.5% measured', id: 'Tes unit, tes integrasi di PostgreSQL asli dengan Testcontainers, dan tes end-to-end Playwright; terukur 94,5%' } },
+      { goal: { en: 'Operability', id: 'Kemudahan operasi' }, target: { en: 'A reviewer can run it from a clean machine', id: 'Peninjau dapat menjalankannya dari mesin bersih' }, response: { en: 'A Docker Compose package with a 20-check smoke test, backup and restore scripts, and published images', id: 'Paket Docker Compose dengan smoke test 20 pemeriksaan, skrip backup dan restore, dan image yang dipublikasikan' } },
+    ],
+    design: [
+      {
+        title: { en: 'Security and authorization', id: 'Keamanan dan otorisasi' },
+        body: {
+          en: [
+            'The API is the backend-for-frontend of Keycloak (ADR-010): it runs the OpenID Connect flow, keeps the tokens on the server, and gives the browser only an HttpOnly session cookie, plus antiforgery and a login rate limit. Keycloak owns accounts, credentials and the seven roles; the application owns the permission catalog (35 permissions) and the editable role-to-permission matrix.',
+            'Authorization is checked in the backend on every protected operation, by role and by the record itself. The front end hides what a role cannot use, but that is only a convenience. A user ID, a role or a permission is never read from a request body.',
+          ],
+          id: [
+            'API adalah backend-for-frontend untuk Keycloak (ADR-010): ia menjalankan alur OpenID Connect, menyimpan token di server, dan hanya memberi browser cookie sesi HttpOnly, ditambah antiforgery dan pembatasan laju login. Keycloak memegang akun, kredensial, dan tujuh peran; aplikasi memegang katalog izin (35 izin) dan matriks peran-ke-izin yang dapat diubah.',
+            'Otorisasi diperiksa di backend pada setiap operasi terlindungi, berdasarkan peran dan rekamannya sendiri. Front end menyembunyikan yang tidak boleh dipakai suatu peran, tetapi itu hanya kemudahan. ID pengguna, peran, atau izin tidak pernah dibaca dari body request.',
+          ],
+        },
+      },
+      {
+        title: { en: 'Append-only records and the audit trail', id: 'Rekaman append-only dan jejak audit' },
+        body: {
+          en: [
+            'Submitted inspections and production output are never deleted. A mistake goes through a revision, a void or an adjustment, each of which is recorded with who and when. An EF Core interceptor writes the audit log with the changed fields only and never a secret, and the screens show names instead of identifiers when the log is read.',
+            'Output writes are idempotent, and a work order accepts output up to its planned quantity plus a configurable tolerance (10 percent by default), so a double click does not count twice.',
+          ],
+          id: [
+            'Inspeksi yang sudah dikirim dan output produksi tidak pernah dihapus. Kesalahan lewat revisi, pembatalan, atau penyesuaian, yang masing-masing dicatat dengan siapa dan kapan. Interceptor EF Core menulis audit log dengan kolom yang berubah saja dan tidak pernah rahasia, dan layar menampilkan nama alih-alih identifier saat log dibaca.',
+            'Penulisan output bersifat idempoten, dan work order menerima output hingga kuantitas rencana ditambah toleransi yang dapat diatur (10 persen secara bawaan), sehingga klik ganda tidak dihitung dua kali.',
+          ],
+        },
+      },
+      {
+        title: { en: 'Inspections, defects and two-step approval', id: 'Inspeksi, cacat, dan persetujuan dua langkah' },
+        body: {
+          en: [
+            'The template decides an inspection’s result: a required item that fails makes it FAIL, and otherwise up to a set number of failed items gives CONDITIONAL. A failed inspection raises its defect in the same transaction (ADR-013).',
+            'Two actions need approval in two steps (ADR-014): closing a defect whose disposition is scrap or use-as-is, and reopening a completed order. When the last step approves, the system carries the action out in the same transaction. Segregation of duties stops a person from approving their own request.',
+          ],
+          id: [
+            'Template menentukan hasil inspeksi: item wajib yang gagal membuatnya FAIL, selain itu sampai jumlah tertentu item gagal menghasilkan CONDITIONAL. Inspeksi yang gagal memunculkan cacatnya dalam transaksi yang sama (ADR-013).',
+            'Dua aksi membutuhkan persetujuan dua langkah (ADR-014): menutup cacat berdisposisi scrap atau use-as-is, dan membuka kembali order yang selesai. Saat langkah terakhir menyetujui, sistem menjalankan aksinya dalam transaksi yang sama. Pemisahan tugas mencegah seseorang menyetujui permintaannya sendiri.',
+          ],
+        },
+      },
+      {
+        title: { en: 'KPIs, reports and notifications', id: 'KPI, laporan, dan notifikasi' },
+        body: {
+          en: [
+            'KPIs come from aggregation queries, not stored totals, and follow the date of their own event (ADR-015). A zero denominator shows N/A rather than a misleading zero. Charts use ECharts in a lazy-loaded chunk that loads only when the first chart is drawn.',
+            'CSV export is streamed and follows the active filters and the user’s permissions. Notifications are written in the same transaction as the event and found by polling every 30 seconds.',
+          ],
+          id: [
+            'KPI berasal dari query agregasi, bukan total tersimpan, dan mengikuti tanggal kejadiannya sendiri (ADR-015). Penyebut nol menampilkan N/A alih-alih nol yang menyesatkan. Grafik memakai ECharts dalam chunk yang dimuat malas dan baru dimuat saat grafik pertama digambar.',
+            'Ekspor CSV dialirkan dan mengikuti filter aktif serta izin pengguna. Notifikasi ditulis dalam transaksi yang sama dengan kejadiannya dan ditemukan lewat polling tiap 30 detik.',
+          ],
+        },
+      },
+      {
+        title: { en: 'Hardening and testing', id: 'Penguatan dan pengujian' },
+        body: {
+          en: [
+            'Phase 8 measured instead of claiming (ADR-016): a p95 under 500 ms on 100,000 output rows, WCAG A and AA checked by axe on the critical screens with no violation, Lighthouse of 100 for performance and accessibility on the login page and the dashboard, and 94.5% line coverage of Domain and Application.',
+            'Every endpoint has integration tests for success, validation failure, 401 and a forbidden role, run on a real PostgreSQL started by Testcontainers, with an in-process stand-in for Keycloak. Playwright runs the real app, API and Keycloak end to end.',
+          ],
+          id: [
+            'Fase 8 mengukur, bukan mengklaim (ADR-016): p95 di bawah 500 ms pada 100.000 baris output, WCAG A dan AA diperiksa axe pada layar kritis tanpa pelanggaran, Lighthouse 100 untuk performa dan aksesibilitas pada halaman login dan dashboard, dan cakupan baris 94,5% untuk Domain dan Application.',
+            'Setiap endpoint punya tes integrasi untuk sukses, kegagalan validasi, 401, dan peran terlarang, dijalankan di PostgreSQL asli yang dinyalakan Testcontainers, dengan pengganti Keycloak di dalam proses. Playwright menjalankan aplikasi, API, dan Keycloak yang asli dari ujung ke ujung.',
+          ],
+        },
+      },
+      {
+        title: { en: 'Deployment', id: 'Deployment' },
+        body: {
+          en: [
+            'The production package is a Docker Compose stack (ADR-017): Caddy for HTTPS and the app, the API as an unprivileged user, Keycloak in production mode and PostgreSQL. It passes a 20-check smoke test from empty volumes, backup and restore scripts are proven with identical row counts, and the CI builds, scans and publishes the images to the GitHub Container Registry.',
+          ],
+          id: [
+            'Paket produksi adalah stack Docker Compose (ADR-017): Caddy untuk HTTPS dan aplikasi, API sebagai pengguna tanpa hak istimewa, Keycloak dalam mode produksi, dan PostgreSQL. Paket ini lolos smoke test 20 pemeriksaan dari volume kosong, skrip backup dan restore terbukti dengan jumlah baris identik, dan CI membangun, memindai, dan mempublikasikan image ke GitHub Container Registry.',
+          ],
+        },
+      },
+      {
+        title: { en: 'Known limitations', id: 'Keterbatasan yang diketahui' },
+        body: {
+          en: [
+            'The project lists what it does not do, so nobody finds out by accident: one plant only, a fixed two-step approval, no machine or ERP integration, in-app notifications only, no hosted demo, manual backups, and a shell that does not support a phone width. Each item names the decision or measurement behind it, and a roadmap follows.',
+          ],
+          id: [
+            'Proyek mencantumkan yang tidak dikerjakannya, agar tidak ada yang menemukannya secara tidak sengaja: hanya satu pabrik, persetujuan dua langkah yang tetap, tanpa integrasi mesin atau ERP, hanya notifikasi dalam aplikasi, belum ada demo yang di-host, backup manual, dan shell yang belum mendukung lebar layar ponsel. Setiap butir menyebut keputusan atau pengukuran di baliknya, dan peta jalan menyusul.',
+          ],
+        },
+      },
+    ],
+    dataModules: [],
+    decisions: [
+      { id: 'ADR-001', title: { en: 'Signals + RxJS for front-end state', id: 'Signals + RxJS untuk state front end' }, summary: { en: 'Signals for state that templates read, RxJS for asynchronous streams, one service per feature. NgRx only if a real need appears.', id: 'Signals untuk state yang dibaca template, RxJS untuk aliran asinkron, satu service per fitur. NgRx hanya jika kebutuhan nyata muncul.' }, href: `${LW_ADR}/001-signals-rxjs-state.md` },
+      { id: 'ADR-002', title: { en: 'Modular monolith with Clean Architecture', id: 'Modular monolith dengan Clean Architecture' }, summary: { en: 'One deployable, four layers, no generic repository, and PostgreSQL-specific code kept in Infrastructure so a move to SQL Server stays easy.', id: 'Satu unit deploy, empat lapisan, tanpa generic repository, dan kode khusus PostgreSQL tetap di Infrastructure agar pindah ke SQL Server tetap mudah.' }, href: `${LW_ADR}/002-modular-monolith.md` },
+      { id: 'ADR-005', title: { en: 'MVP scope and data decisions', id: 'Cakupan MVP dan keputusan data' }, summary: { en: 'A single plant with a nullable plant_id kept for later, a fixed two-step approval on a generic table, and segregation of duties.', id: 'Satu pabrik dengan plant_id nullable untuk nanti, persetujuan dua langkah tetap pada tabel generik, dan pemisahan tugas.' }, href: `${LW_ADR}/005-mvp-scope-decisions.md` },
+      { id: 'ADR-010', title: { en: 'Keycloak as the identity provider', id: 'Keycloak sebagai penyedia identitas' }, summary: { en: 'The API is a backend-for-frontend, so tokens stay on the server. Keycloak owns accounts and roles; the application owns the permission matrix.', id: 'API adalah backend-for-frontend, sehingga token tetap di server. Keycloak memegang akun dan peran; aplikasi memegang matriks izin.' }, href: `${LW_ADR}/010-keycloak-identity-provider.md` },
+      { id: 'ADR-012', title: { en: 'Production orders, work orders and output tracking', id: 'Order produksi, work order, dan pelacakan output' }, summary: { en: 'A configurable output limit of the plan plus 10 percent, passing it is a 422, and output records are append-only.', id: 'Batas output yang dapat diatur sebesar rencana ditambah 10 persen, melewatinya menghasilkan 422, dan rekaman output append-only.' }, href: `${LW_ADR}/012-phase-4-production-and-tracking.md` },
+      { id: 'ADR-013', title: { en: 'Inspection templates, inspections and defects', id: 'Template inspeksi, inspeksi, dan cacat' }, summary: { en: 'The template rule decides the result, and a failed inspection raises its defect in one transaction.', id: 'Aturan template menentukan hasil, dan inspeksi yang gagal memunculkan cacatnya dalam satu transaksi.' }, href: `${LW_ADR}/013-phase-5-quality.md` },
+      { id: 'ADR-014', title: { en: 'Approval workflow and audit trail', id: 'Alur persetujuan dan jejak audit' }, summary: { en: 'Two actions need two approvals, and the system carries the action out in the same transaction as the last decision.', id: 'Dua aksi membutuhkan dua persetujuan, dan sistem menjalankan aksinya dalam transaksi yang sama dengan keputusan terakhir.' }, href: `${LW_ADR}/014-phase-6-approval-and-audit.md` },
+      { id: 'ADR-015', title: { en: 'Dashboard, reports and notifications', id: 'Dashboard, laporan, dan notifikasi' }, summary: { en: 'ECharts through ngx-echarts in a lazy chunk, KPIs from aggregation queries, and notifications written with the event.', id: 'ECharts lewat ngx-echarts dalam chunk malas, KPI dari query agregasi, dan notifikasi ditulis bersama kejadiannya.' }, href: `${LW_ADR}/015-phase-7-dashboard-reports-notifications.md` },
+      { id: 'ADR-016', title: { en: 'Hardening: security, performance, accessibility', id: 'Penguatan: keamanan, performa, aksesibilitas' }, summary: { en: 'axe in the end-to-end suite; Lighthouse and coverage are measured and recorded, not CI gates.', id: 'axe di suite end-to-end; Lighthouse dan cakupan diukur dan dicatat, bukan gerbang CI.' }, href: `${LW_ADR}/016-phase-8-hardening.md` },
+      { id: 'ADR-017', title: { en: 'Deployment package and documentation', id: 'Paket deployment dan dokumentasi' }, summary: { en: 'A production Docker Compose package tested from a clean state; no hosted deployment, recorded as a limitation.', id: 'Paket produksi Docker Compose yang diuji dari keadaan bersih; tanpa deployment ter-host, dicatat sebagai keterbatasan.' }, href: `${LW_ADR}/017-phase-9-deployment.md` },
+    ],
+    stackGroups: [
+      { group: { en: 'Frontend', id: 'Frontend' }, items: ['Angular 22', 'TypeScript', 'Angular Material', 'Angular Signals', 'RxJS', 'Angular Router', 'Angular Reactive Forms', 'Angular HttpClient', 'ngx-echarts (ECharts 6)'] },
+      { group: { en: 'Backend', id: 'Backend' }, items: ['C#', '.NET 10', 'ASP.NET Core Minimal API', 'Clean Architecture', 'FluentValidation', 'Serilog', 'OpenAPI', 'Scalar'] },
+      { group: { en: 'Data', id: 'Data' }, items: ['PostgreSQL', 'Entity Framework Core 10', 'Npgsql'] },
+      { group: { en: 'Identity', id: 'Identitas' }, items: ['Keycloak', 'OpenID Connect', 'HttpOnly session cookie (backend-for-frontend)'] },
+      { group: { en: 'Testing', id: 'Pengujian' }, items: ['xUnit', 'Testcontainers', 'Angular test runner (Vitest)', 'Playwright', 'axe-core', 'Lighthouse'] },
+      { group: { en: 'Delivery', id: 'Pengiriman' }, items: ['Docker', 'Docker Compose', 'Caddy', 'GitHub Actions', 'GitHub Container Registry'] },
+    ],
+    highlights: {
+      en: [
+        'A full operations-and-quality chain in one system: orders, work orders, output, inspections, defects, approvals, KPIs and an audit trail, for seven roles.',
+        'Security by design: Keycloak with the API as backend-for-frontend, 35 permissions enforced in the backend, and 401 and 403 tests for every endpoint.',
+        'Append-only records with corrections through audited revision, void or adjustment, and an audit log that never stores a secret.',
+        'Measured, not claimed: a p95 under 500 ms on 100,000 output rows, axe with no violation, Lighthouse 100 for performance and accessibility, and 94.5% line coverage of Domain and Application.',
+        'A production Docker Compose package that passes a 20-check smoke test from empty volumes, with proven backup and restore, and images published by the CI.',
+        'Documentation in English and Indonesian: a PRD, system design with diagrams, 17 decision records, wireframes, a technical Q&A, a deployment guide and an honest list of known limitations.',
+      ],
+      id: [
+        'Rantai operasi dan kualitas lengkap dalam satu sistem: order, work order, output, inspeksi, cacat, persetujuan, KPI, dan jejak audit, untuk tujuh peran.',
+        'Keamanan sejak desain: Keycloak dengan API sebagai backend-for-frontend, 35 izin yang diberlakukan di backend, dan tes 401 dan 403 untuk setiap endpoint.',
+        'Rekaman append-only dengan koreksi lewat revisi, pembatalan, atau penyesuaian yang diaudit, dan audit log yang tidak pernah menyimpan rahasia.',
+        'Diukur, bukan diklaim: p95 di bawah 500 ms pada 100.000 baris output, axe tanpa pelanggaran, Lighthouse 100 untuk performa dan aksesibilitas, dan cakupan baris 94,5% untuk Domain dan Application.',
+        'Paket produksi Docker Compose yang lolos smoke test 20 pemeriksaan dari volume kosong, dengan backup dan restore yang terbukti, dan image yang dipublikasikan oleh CI.',
+        'Dokumentasi dalam bahasa Inggris dan Indonesia: PRD, desain sistem dengan diagram, 17 catatan keputusan, wireframe, tanya jawab teknis, panduan deployment, dan daftar keterbatasan yang jujur.',
+      ],
+    },
+    docs: [
+      { label: { en: 'Product requirements (PRD)', id: 'Kebutuhan produk (PRD)' }, href: `${LW_DOCS}/PRD.md` },
+      { label: { en: 'System design', id: 'Desain sistem' }, href: `${LW_DOCS}/system-design.md` },
+      { label: { en: 'Architecture decisions', id: 'Keputusan arsitektur' }, href: `${LW}/tree/main/docs/en/adr` },
+      { label: { en: 'Wireframes', id: 'Wireframe' }, href: `${LW_DOCS}/wireframes.md` },
+      { label: { en: 'Technical Q&A', id: 'Tanya jawab teknis' }, href: `${LW_DOCS}/technical-qa.md` },
+      { label: { en: 'Deployment guide', id: 'Panduan deployment' }, href: `${LW_DOCS}/deployment.md` },
+      { label: { en: 'Known limitations and roadmap', id: 'Keterbatasan dan peta jalan' }, href: `${LW_DOCS}/known-limitations.md` },
+      { label: { en: 'Demo video script', id: 'Naskah video demo' }, href: `${LW_DOCS}/demo-video-script.md` },
+    ],
+    gettingStarted: {
+      requirements: { en: '.NET SDK 10, Node.js 24.15 or newer, and Docker for PostgreSQL and Keycloak (about 1 GB of memory for Keycloak). The production package needs only Docker.', id: '.NET SDK 10, Node.js 24.15 atau lebih baru, dan Docker untuk PostgreSQL dan Keycloak (sekitar 1 GB memori untuk Keycloak). Paket produksi hanya membutuhkan Docker.' },
+      commands: [
+        '# 1. PostgreSQL and Keycloak (copy the example env file first and pick local values)',
+        'cp .env.example .env',
+        'docker compose up -d',
+        '# 2. API on port 5036 (migrates and seeds the demo data in Development)',
+        'cd backend/src/LineWise.Api && dotnet run --launch-profile http',
+        '# 3. Web app on port 4200',
+        'cd frontend && npm ci && npx ng serve',
+        '# Or run the production package and its 20-check smoke test',
+        'docker compose --env-file .env.prod -f docker-compose.prod.yml up -d --build',
+        'bash deploy/scripts/smoke.sh',
+      ],
+    },
+    phases: [
+      { n: 1, scope: { en: 'Foundation: Angular shell, ASP.NET Core API, PostgreSQL, EF Core migration, first vertical slice', id: 'Fondasi: shell Angular, API ASP.NET Core, PostgreSQL, migrasi EF Core, irisan vertikal pertama' }, done: true },
+      { n: 2, scope: { en: 'Authentication and access: Keycloak sign-in, roles, permission matrix, Administration screens', id: 'Autentikasi dan akses: masuk dengan Keycloak, peran, matriks izin, layar Administrasi' }, done: true },
+      { n: 3, scope: { en: 'Master data: products, lines, workstations, defect categories', id: 'Data master: produk, lini, workstation, kategori cacat' }, done: true },
+      { n: 4, scope: { en: 'Production: order lifecycle, work orders, append-only output tracking', id: 'Produksi: siklus order, work order, pelacakan output append-only' }, done: true },
+      { n: 5, scope: { en: 'Quality: inspection templates, inspections, defects and corrective actions', id: 'Kualitas: template inspeksi, inspeksi, cacat, dan tindakan korektif' }, done: true },
+      { n: 6, scope: { en: 'Workflow: two-step approval and the audit trail', id: 'Alur kerja: persetujuan dua langkah dan jejak audit' }, done: true },
+      { n: 7, scope: { en: 'Dashboard, reports and notifications: KPIs, charts, CSV export, bell', id: 'Dashboard, laporan, dan notifikasi: KPI, grafik, ekspor CSV, lonceng' }, done: true },
+      { n: 8, scope: { en: 'Hardening: security, performance, accessibility, coverage', id: 'Penguatan: keamanan, performa, aksesibilitas, cakupan' }, done: true },
+      { n: 9, scope: { en: 'Deployment: production Docker Compose package, CI images, backup and restore, documentation', id: 'Deployment: paket produksi Docker Compose, image CI, backup dan restore, dokumentasi' }, done: true },
+    ],
+    gallery: [
+      { kind: 'flow', file: 'flows/demo-tour.gif', width: 1000, height: 604, caption: { en: `A 12-step tour recorded from the real app on the demo dataset: sign-in, dashboard, a failed inspection raising its defect, the approval inbox and the audit log. Demo by ${DEMO_BY}`, id: `Tur 12 langkah yang direkam dari aplikasi asli pada dataset demo: masuk, dashboard, inspeksi gagal yang memunculkan cacatnya, kotak masuk persetujuan, dan audit log. Demo oleh ${DEMO_BY}` } },
+      { kind: 'shot', file: 'screenshots/dashboard.png', width: 1280, height: 2355, caption: { en: `Dashboard: KPIs with their formulas, trends and the defect breakdown. Demo by ${DEMO_BY}`, id: `Dashboard: KPI beserta rumusnya, tren, dan rincian cacat. Demo oleh ${DEMO_BY}` } },
+      { kind: 'shot', file: 'screenshots/production-orders.png', width: 1280, height: 800, caption: { en: `Production orders: server-side filters, progress and CSV export. Demo by ${DEMO_BY}`, id: `Order produksi: filter di sisi server, progres, dan ekspor CSV. Demo oleh ${DEMO_BY}` } },
+      { kind: 'shot', file: 'screenshots/inspection.png', width: 1280, height: 951, caption: { en: `Inspection: a failed check raises its defect in one step. Demo by ${DEMO_BY}`, id: `Inspeksi: pemeriksaan yang gagal memunculkan cacatnya dalam satu langkah. Demo oleh ${DEMO_BY}` } },
+      { kind: 'shot', file: 'screenshots/defect.png', width: 1280, height: 1187, caption: { en: `Defect: workflow, corrective actions and activity. Demo by ${DEMO_BY}`, id: `Cacat: alur kerja, tindakan korektif, dan aktivitas. Demo oleh ${DEMO_BY}` } },
+      { kind: 'shot', file: 'screenshots/approvals.png', width: 1280, height: 800, caption: { en: `Approval inbox: two-step approval with segregation of duties. Demo by ${DEMO_BY}`, id: `Kotak masuk persetujuan: persetujuan dua langkah dengan pemisahan tugas. Demo oleh ${DEMO_BY}` } },
+    ],
+    links: [
+      { label: { en: 'Source code on GitHub', id: 'Kode sumber di GitHub' }, href: LW },
+      { label: { en: 'System design', id: 'Desain sistem' }, href: `${LW_DOCS}/system-design.md` },
+      { label: { en: 'Architecture decisions', id: 'Keputusan arsitektur' }, href: `${LW}/tree/main/docs/en/adr` },
     ],
   },
 ];
