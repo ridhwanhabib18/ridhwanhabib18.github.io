@@ -395,12 +395,10 @@ test.describe('the Projects page', () => {
     await expect(page.getByRole('heading', { level: 3, name: 'Delivered end to end' })).toBeVisible();
   });
 
-  test('the SchoMans page links out safely to the public repository and lists the stack by layer', async ({ page }) => {
+  test('the SchoMans page says the code is private and lists the stack by layer', async ({ page }) => {
     await page.goto('/work/schomans/');
-    const repo = page.getByRole('link', { name: /Source code on GitHub/ });
-    await expect(repo).toHaveAttribute('href', 'https://github.com/ridhwanhabib18/schomans');
-    await expect(repo).toHaveAttribute('target', '_blank');
-    expect(await repo.getAttribute('rel')).toContain('noopener');
+    await expect(page.getByText('The source code is in a private repository and is available on request.')).toBeVisible();
+    await expect(page.locator('a[href*="github.com/ridhwanhabib18/schomans"]')).toHaveCount(0);
     await expect(page.getByRole('heading', { level: 3, name: 'Testing' })).toBeVisible();
   });
 
@@ -420,7 +418,7 @@ test.describe('a personal project has its own page', () => {
     await expect(page).toHaveURL(/\/work\/schomans\/?$/);
     await expect(page.getByRole('heading', { level: 1, name: /SchoMans/ })).toBeVisible();
     await expect(page.getByText('Done', { exact: true }).first()).toBeVisible();
-    for (const h of ['Overview', 'Features', 'System architecture', 'System design', 'Key decisions (ADRs)', 'Tech stack', 'Build phases', 'Documentation', 'Getting started', 'Screenshots and flows']) {
+    for (const h of ['Overview', 'Features', 'System architecture', 'System design', 'Key decisions (ADRs)', 'Tech stack', 'Build phases', 'Getting started', 'Screenshots and flows']) {
       await expect(page.getByRole('heading', { level: 2, name: h })).toBeVisible();
     }
     // the architecture is drawn as pictures on a wide screen
@@ -432,9 +430,8 @@ test.describe('a personal project has its own page', () => {
       await img.scrollIntoViewIfNeeded();
       await expect.poll(() => img.evaluate((el: HTMLImageElement) => el.complete && el.naturalWidth > 0)).toBe(true);
     }
-    // external links are safe, and the way back works
-    const repo = page.getByRole('link', { name: /Source code on GitHub/ });
-    expect(await repo.getAttribute('rel')).toContain('noopener');
+    // the code is private: a note instead of a repository link, and the way back works
+    await expect(page.getByText('available on request')).toBeVisible();
     await page.getByRole('link', { name: 'Back to projects' }).click();
     await expect(page).toHaveURL(/\/work\/?$/);
   });
@@ -469,15 +466,16 @@ test('Experience: a role opens and closes cleanly, and a closed role stays close
   await expect.poll(async () => (await panel(0)).h, { timeout: 3000 }).toBeGreaterThan(100);
 });
 
-test('the Coffee Roasto page shows its sections, documentation and links to the public repository, and its pictures', async ({ page }) => {
+test('the Coffee Roasto page shows its sections, says the code is private, and shows its pictures', async ({ page }) => {
   await page.goto('/work/coffee-roasto/');
   await expect(page.getByRole('heading', { level: 1, name: /Coffee Roasto/ })).toBeVisible();
   for (const h of ['Overview', 'Features', 'System architecture', 'System design', 'Key decisions (ADRs)', 'Tech stack', 'Getting started']) {
     await expect(page.getByRole('heading', { level: 2, name: h })).toBeVisible();
   }
   await expect(page.getByRole('heading', { level: 2, name: 'Build phases' })).toHaveCount(0);
-  await expect(page.getByRole('heading', { level: 2, name: 'Documentation' })).toBeVisible();
-  await expect(page.locator('a[href*="github.com/ridhwanhabib18/capstone-coffee-roasto"]').first()).toBeVisible();
+  await expect(page.getByRole('heading', { level: 2, name: 'Documentation' })).toHaveCount(0);
+  await expect(page.locator('a[href*="github.com/ridhwanhabib18/capstone-coffee-roasto"]')).toHaveCount(0);
+  await expect(page.getByText('available on request')).toBeVisible();
   const shot = page.getByRole('img', { name: /dark theme/ });
   await shot.scrollIntoViewIfNeeded();
   await expect.poll(() => shot.evaluate((el: HTMLImageElement) => el.complete && el.naturalWidth > 0)).toBe(true);
@@ -491,7 +489,7 @@ test('the LineWise page shows its sections, the contents row, the demo credit an
   for (const h of ['Overview', 'Features', 'System architecture', 'System design', 'Key decisions (ADRs)', 'Tech stack', 'Build phases', 'Getting started']) {
     await expect(page.getByRole('heading', { level: 2, name: h })).toBeVisible();
   }
-  await expect(page.locator('a[href*="github.com/ridhwanhabib18/LineWise"]').first()).toBeVisible();
+  await expect(page.locator('a[href*="github.com/ridhwanhabib18/LineWise"]')).toHaveCount(0);
   await page.getByRole('navigation', { name: 'On this page' }).getByRole('link', { name: 'Tech stack' }).click();
   await expect(page.getByRole('heading', { level: 2, name: 'Tech stack' })).toBeInViewport();
   const shot = page.getByRole('img', { name: /Approval inbox/ });

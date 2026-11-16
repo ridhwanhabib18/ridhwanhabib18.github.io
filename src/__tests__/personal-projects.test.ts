@@ -6,7 +6,7 @@ import { render, routes } from '../entry-server';
 
 /**
  * Personal projects are not resume case studies, so they skip the resume guards, but they have their own: everything is
- * bilingual, links are public GitHub pages of the owner, the pictures exist with the sizes stated, each project has a state
+ * bilingual, no project links to a private repository, the pictures exist with the sizes stated, each project has a state
  * (done or in progress) and its own page, and no employer material or credentials appear.
  */
 
@@ -60,11 +60,16 @@ describe('personal projects', () => {
     }
   });
 
-  it('link only to public GitHub pages of the owner', () => {
+  it('keep the code private: no link to a project repository, and a note that it is available on request', () => {
     for (const p of personalProjects) {
-      // a project whose repository is private has no links yet (the page leaves those parts out); any link that exists must be public
-      const all = [...p.links.map((x) => x.href), ...p.docs.map((x) => x.href), ...p.decisions.flatMap((x) => (x.href ? [x.href] : []))];
-      for (const href of all) expect(href, `${p.slug}: ${href}`).toMatch(/^https:\/\/github\.com\/ridhwanhabib18\/[\w.-]+(\/(blob|tree)\/main\/[\w./-]+)?$/);
+      expect(p.links, `${p.slug} links`).toEqual([]);
+      expect(p.docs, `${p.slug} docs`).toEqual([]);
+      for (const d of p.decisions) expect(d.href, `${p.slug} ${d.id}`).toBeUndefined();
+    }
+    for (const route of ['/work/schomans', '/work/coffee-roasto', '/work/linewise', '/id/work/linewise']) {
+      const { html } = render(route);
+      expect(html, route).not.toMatch(/github\.com\/ridhwanhabib18\/(schomans|capstone-coffee-roasto|LineWise)/i);
+      expect(html, route).toMatch(/available on request|tersedia atas permintaan/);
     }
   });
 
@@ -103,8 +108,8 @@ describe('personal projects', () => {
     expect(routes).toContain('/work/schomans');
     expect(routes).toContain('/id/work/schomans');
     for (const [route, expected] of [
-      ['/work/schomans', ['Done', 'Overview', 'Features', 'System architecture', 'System design', 'Key decisions (ADRs)', 'Tech stack', 'Build phases', 'Documentation', 'Getting started', 'Screenshots and flows', 'ADR-005', 'F-03', 'Clean Architecture']],
-      ['/id/work/schomans', ['Selesai', 'Ringkasan', 'Fitur', 'Arsitektur sistem', 'Desain sistem', 'Keputusan penting (ADR)', 'Fase pengerjaan', 'Dokumentasi', 'Cara memulai', 'Tangkapan layar dan alur', 'ADR-005', 'F-03']],
+      ['/work/schomans', ['Done', 'Overview', 'Features', 'System architecture', 'System design', 'Key decisions (ADRs)', 'Tech stack', 'Build phases', 'Getting started', 'Screenshots and flows', 'ADR-005', 'F-03', 'Clean Architecture']],
+      ['/id/work/schomans', ['Selesai', 'Ringkasan', 'Fitur', 'Arsitektur sistem', 'Desain sistem', 'Keputusan penting (ADR)', 'Fase pengerjaan', 'Cara memulai', 'Tangkapan layar dan alur', 'ADR-005', 'F-03']],
     ] as [string, string[]][]) {
       const { html, head } = render(route);
       for (const text of expected) expect(html, `${route}: ${text}`).toContain(text);
@@ -115,15 +120,12 @@ describe('personal projects', () => {
     }
   });
 
-  it('show the Coffee Roasto page in both languages, with links to its public repository', () => {
+  it('show the Coffee Roasto page in both languages', () => {
     expect(routes).toContain('/work/coffee-roasto');
     expect(routes).toContain('/id/work/coffee-roasto');
     const p = personalProjects.find((x) => x.slug === 'coffee-roasto')!;
-    expect(p.links[0]?.href).toBe('https://github.com/ridhwanhabib18/capstone-coffee-roasto');
-    expect(p.docs.length).toBeGreaterThan(0);
-    expect(p.decisions.every((d) => d.href?.includes('/capstone-coffee-roasto/blob/main/docs/en/adr/'))).toBe(true);
     for (const [route, expected, absent] of [
-      ['/work/coffee-roasto', ['Done', 'Overview', 'Features', 'FR-9', 'Control loop (PID on the Arduino)', 'Known limitations', 'Key decisions (ADRs)', 'ADR-006', 'Tech stack', 'WPF-UI 4 (Fluent)', 'Getting started', 'Screenshots and flows', 'Read the decision record'], ['id="p-phases"']],
+      ['/work/coffee-roasto', ['Done', 'Overview', 'Features', 'FR-9', 'Control loop (PID on the Arduino)', 'Known limitations', 'Key decisions (ADRs)', 'ADR-006', 'Tech stack', 'WPF-UI 4 (Fluent)', 'Getting started', 'Screenshots and flows'], ['id="p-phases"']],
       ['/id/work/coffee-roasto', ['Selesai', 'Ringkasan', 'Fitur', 'FR-9', 'Loop kendali (PID di Arduino)', 'Keterbatasan yang diketahui', 'ADR-006', 'Cara memulai'], ['id="p-phases"']],
     ] as [string, string[], string[]][]) {
       const { html, head } = render(route);
@@ -136,12 +138,10 @@ describe('personal projects', () => {
     }
   });
 
-  it('show the LineWise page in both languages, with the demo credited to the owner and links to its repository', () => {
+  it('show the LineWise page in both languages, with the demo credited to the owner', () => {
     expect(routes).toContain('/work/linewise');
     expect(routes).toContain('/id/work/linewise');
     const p = personalProjects.find((x) => x.slug === 'linewise')!;
-    expect(p.links[0]?.href).toBe('https://github.com/ridhwanhabib18/LineWise');
-    expect(p.decisions.every((d) => d.href?.includes('/LineWise/blob/main/docs/en/adr/'))).toBe(true);
     const items = flat(p);
     expect(new Set(items).size, 'a technology is listed twice').toBe(items.length);
     for (const tech of ['Angular 22', 'Angular Material', 'RxJS', 'PostgreSQL', 'Npgsql', 'Keycloak', 'Testcontainers', 'Playwright', 'Caddy']) expect(items, tech).toContain(tech);

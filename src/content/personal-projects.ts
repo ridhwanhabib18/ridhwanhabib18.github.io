@@ -1,9 +1,9 @@
 import type { DiagramDef, L10n, Tag } from './types';
 
 /**
- * Personal projects: built outside an employer, with public code. They are not case studies of the resume, so they do not go
+ * Personal projects: built outside an employer, with code that stays private (the pages show the design, the pictures and the decisions). They are not case studies of the resume, so they do not go
  * through the resume guards (resume bullets, Actual/Target metrics); everything stated here must come from the project's own
- * README and documentation, and its links must be public. A test checks the links, the images and that no employer material
+ * README and documentation, and no link to a private repository may appear. A test checks the links, the images and that no employer material
  * or credentials appear. Each project has a card on the Projects page and its own page at /work/<slug>.
  */
 export interface PersonalProject {
@@ -38,19 +38,12 @@ export interface PersonalProject {
   docs: { label: L10n; href: string }[];
   gettingStarted: { requirements: L10n; commands: string[] };
   phases: { n: number; scope: L10n; done: boolean; note?: L10n }[];
-  /** Images copied from the project's public repository into public/projects/<slug>/ (fictional demo data only). */
+  /** Images copied from the project's repository into public/projects/<slug>/ (fictional demo data only). */
   gallery: { kind: 'flow' | 'shot'; file: string; width: number; height: number; caption: L10n }[];
   links: { label: L10n; href: string }[];
 }
 
-const REPO = 'https://github.com/ridhwanhabib18/schomans';
-const DOCS = `${REPO}/blob/main/docs/en`;
-const ROASTO = 'https://github.com/ridhwanhabib18/capstone-coffee-roasto';
-const ROASTO_DOCS = `${ROASTO}/blob/main/docs/en`;
 
-const LW = 'https://github.com/ridhwanhabib18/LineWise';
-const LW_DOCS = `${LW}/blob/main/docs/en`;
-const LW_ADR = `${LW_DOCS}/adr`;
 const DEMO_BY = 'Muhammad Ridhwan Habib Abdillah';
 
 const containers: DiagramDef = {
@@ -225,31 +218,26 @@ export const personalProjects: PersonalProject[] = [
         id: 'ADR-001',
         title: { en: 'No mediator pattern', id: 'Tanpa pola mediator' },
         summary: { en: 'Endpoints call handlers directly through dependency injection. No CQRS library, because it adds a layer without a need and MediatR became commercially licensed.', id: 'Endpoint memanggil handler langsung lewat dependency injection. Tanpa pustaka CQRS, karena menambah lapisan tanpa kebutuhan dan MediatR kini berlisensi komersial.' },
-        href: `${DOCS}/adr/001-no-mediator.md`,
       },
       {
         id: 'ADR-002',
         title: { en: 'Minimal API instead of controllers', id: 'Minimal API, bukan controller' },
         summary: { en: 'One endpoint file per feature, which fits the per-feature layout and the direct handler calls.', id: 'Satu berkas endpoint per fitur, sesuai tata letak per fitur dan pemanggilan handler langsung.' },
-        href: `${DOCS}/adr/002-minimal-api.md`,
       },
       {
         id: 'ADR-003',
         title: { en: 'Changing a role through the Keycloak Admin API', id: 'Mengubah peran lewat Admin API Keycloak' },
         summary: { en: 'When an applicant is enrolled, the API changes the realm role in Keycloak first, so the next login does not undo it, behind an identity provisioning interface.', id: 'Saat calon siswa didaftarkan, API mengubah peran realm di Keycloak lebih dulu agar login berikutnya tidak membatalkannya, di balik antarmuka identity provisioning.' },
-        href: `${DOCS}/adr/003-keycloak-role-change.md`,
       },
       {
         id: 'ADR-004',
         title: { en: 'AI providers behind one interface, mock by default', id: 'Penyedia AI di balik satu antarmuka, tiruan secara bawaan' },
         summary: { en: 'The Application layer knows one AI interface; the provider is chosen by configuration. The mock is the default, so demos and tests cost nothing and as little school data as possible leaves the machine.', id: 'Lapisan Application hanya mengenal satu antarmuka AI; penyedianya dipilih lewat konfigurasi. Tiruan adalah bawaan, sehingga demo dan tes tidak berbiaya dan data sekolah sesedikit mungkin keluar dari mesin.' },
-        href: `${DOCS}/adr/004-ai-providers.md`,
       },
       {
         id: 'ADR-005',
         title: { en: 'One VPS behind Caddy, and documents generated from the code', id: 'Satu VPS di belakang Caddy, dan dokumen dihasilkan dari kode' },
         summary: { en: 'Caddy ends TLS for the app and for Keycloak on separate addresses. The API reference, authorization matrix, jobs and real-time events, and the ERD are generated from the code and checked, so they cannot silently fall behind.', id: 'Caddy mengakhiri TLS untuk aplikasi dan Keycloak di alamat terpisah. Referensi API, matriks otorisasi, job dan event real-time, serta ERD dihasilkan dari kode dan diperiksa, sehingga tidak bisa diam-diam tertinggal.' },
-        href: `${DOCS}/adr/005-deployment-and-generated-docs.md`,
       },
     ],
     stackGroups: [
@@ -279,20 +267,7 @@ export const personalProjects: PersonalProject[] = [
         'Tes unit, integrasi (SQL Server dan penyimpanan S3 dijalankan dengan Testcontainers), dan end-to-end Playwright, dengan bukti pengujian untuk setiap fase.',
       ],
     },
-    docs: [
-      { label: { en: 'Product requirements (PRD)', id: 'Kebutuhan produk (PRD)' }, href: `${DOCS}/PRD.md` },
-      { label: { en: 'System design', id: 'Desain sistem' }, href: `${DOCS}/system-design.md` },
-      { label: { en: 'Architecture decisions', id: 'Keputusan arsitektur' }, href: `${REPO}/tree/main/docs/en/adr` },
-      { label: { en: 'Technical Q&A', id: 'Tanya jawab teknis' }, href: `${DOCS}/technical-qa.md` },
-      { label: { en: 'Deployment guide', id: 'Panduan deployment' }, href: `${DOCS}/deployment.md` },
-      { label: { en: 'API reference (generated from the code)', id: 'Referensi API (dihasilkan dari kode)' }, href: `${DOCS}/generated/api-reference.md` },
-      { label: { en: 'Authorization matrix (generated)', id: 'Matriks otorisasi (dihasilkan)' }, href: `${DOCS}/generated/authorization-matrix.md` },
-      { label: { en: 'Jobs and real-time events (generated)', id: 'Job dan event real-time (dihasilkan)' }, href: `${DOCS}/generated/jobs-and-realtime.md` },
-      { label: { en: 'Data model (ERD)', id: 'Model data (ERD)' }, href: `${DOCS}/diagrams/erd.mmd` },
-      { label: { en: 'Test evidence for each phase', id: 'Bukti pengujian untuk setiap fase' }, href: `${REPO}/tree/main/docs/assets/testing` },
-      { label: { en: 'Demo video script', id: 'Naskah video demo' }, href: `${DOCS}/demo-video-script.md` },
-      { label: { en: 'README in Indonesian', id: 'README dalam bahasa Indonesia' }, href: `${REPO}/blob/main/README.id.md` },
-    ],
+    docs: [],
     gettingStarted: {
       requirements: { en: '.NET 10 SDK, Node.js 24 and Docker with Compose.', id: '.NET 10 SDK, Node.js 24, dan Docker dengan Compose.' },
       commands: [
@@ -337,11 +312,7 @@ export const personalProjects: PersonalProject[] = [
       { kind: 'shot', file: 'screenshots/applicant/admissions-desktop.png', width: 1440, height: 900, caption: { en: 'Applicant: application with documents and status', id: 'Calon siswa: pendaftaran dengan dokumen dan status' } },
       { kind: 'shot', file: 'screenshots/teacher/dashboard-mobile.png', width: 390, height: 844, caption: { en: 'Teacher: dashboard on a phone', id: 'Guru: dashboard di ponsel' } },
     ],
-    links: [
-      { label: { en: 'Source code on GitHub', id: 'Kode sumber di GitHub' }, href: REPO },
-      { label: { en: 'System design', id: 'Desain sistem' }, href: `${DOCS}/system-design.md` },
-      { label: { en: 'Architecture decisions', id: 'Keputusan arsitektur' }, href: `${REPO}/tree/main/docs/en/adr` },
-    ],
+    links: [],
   },
   {
     slug: 'coffee-roasto',
@@ -511,12 +482,12 @@ export const personalProjects: PersonalProject[] = [
     ],
     dataModules: [],
     decisions: [
-      { id: 'ADR-001', title: { en: 'Single-character serial protocol', id: 'Protokol serial satu karakter' }, summary: { en: 'Commands are single ASCII characters and the board answers with a text frame. Trivial to parse and test by hand, but with no error detection.', id: 'Perintah berupa satu karakter ASCII dan board menjawab dengan frame teks. Mudah diurai dan diuji manual, tetapi tanpa deteksi kesalahan.' }, href: `${ROASTO_DOCS}/adr/single-character-serial-protocol.md` },
-      { id: 'ADR-002', title: { en: 'PID control runs on the Arduino', id: 'Kendali PID berjalan di Arduino' }, summary: { en: 'A steady sampling period and safety that does not depend on the PC; the cost is that tuning means re-flashing the board.', id: 'Periode sampling stabil dan keselamatan yang tidak bergantung pada PC; harganya, penyetelan berarti mem-flash ulang board.' }, href: `${ROASTO_DOCS}/adr/pid-on-the-arduino.md` },
-      { id: 'ADR-003', title: { en: 'Excel files for profiles and exports', id: 'Berkas Excel untuk profil dan ekspor' }, summary: { en: 'Operators already plan roasts in spreadsheets. ExcelDataReader and ClosedXML work without Excel installed.', id: 'Operator sudah merencanakan sangrai di spreadsheet. ExcelDataReader dan ClosedXML bekerja tanpa Excel terpasang.' }, href: `${ROASTO_DOCS}/adr/excel-reference-profiles.md` },
-      { id: 'ADR-004', title: { en: 'Averaging, regression correction and a dead band', id: 'Perataan, koreksi regresi, dan dead band' }, summary: { en: 'Four samples averaged, each channel corrected against a reference thermometer, and changes below 0.25 °C ignored.', id: 'Empat sampel dirata-ratakan, tiap kanal dikoreksi terhadap termometer acuan, dan perubahan di bawah 0,25 °C diabaikan.' }, href: `${ROASTO_DOCS}/adr/thermocouple-calibration.md` },
-      { id: 'ADR-005', title: { en: 'Windows Forms on .NET Framework with ClickOnce (v1.0, superseded)', id: 'Windows Forms di .NET Framework dengan ClickOnce (v1.0, digantikan)' }, summary: { en: 'The original choice: everything in the framework and an installer from a folder or a USB stick, but no automated tests because the logic sat in the form.', id: 'Pilihan awal: semua ada di framework dan installer dari folder atau USB, tetapi tanpa tes otomatis karena logikanya ada di form.' }, href: `${ROASTO_DOCS}/adr/windows-forms-clickonce.md` },
-      { id: 'ADR-006', title: { en: 'WPF with WPF-UI on .NET 10, a screenless Core and a single-file exe', id: 'WPF dengan WPF-UI di .NET 10, Core tanpa layar, dan exe satu berkas' }, summary: { en: 'A real Fluent look with a light and dark theme, a modern chart, logic that is covered by tests, correct high-DPI, and one self-contained file for a machine that is often offline.', id: 'Tampilan Fluent sungguhan dengan tema terang dan gelap, grafik modern, logika yang tercakup tes, high-DPI yang benar, dan satu berkas mandiri untuk mesin yang sering offline.' }, href: `${ROASTO_DOCS}/adr/wpf-on-dotnet-10.md` },
+      { id: 'ADR-001', title: { en: 'Single-character serial protocol', id: 'Protokol serial satu karakter' }, summary: { en: 'Commands are single ASCII characters and the board answers with a text frame. Trivial to parse and test by hand, but with no error detection.', id: 'Perintah berupa satu karakter ASCII dan board menjawab dengan frame teks. Mudah diurai dan diuji manual, tetapi tanpa deteksi kesalahan.' } },
+      { id: 'ADR-002', title: { en: 'PID control runs on the Arduino', id: 'Kendali PID berjalan di Arduino' }, summary: { en: 'A steady sampling period and safety that does not depend on the PC; the cost is that tuning means re-flashing the board.', id: 'Periode sampling stabil dan keselamatan yang tidak bergantung pada PC; harganya, penyetelan berarti mem-flash ulang board.' } },
+      { id: 'ADR-003', title: { en: 'Excel files for profiles and exports', id: 'Berkas Excel untuk profil dan ekspor' }, summary: { en: 'Operators already plan roasts in spreadsheets. ExcelDataReader and ClosedXML work without Excel installed.', id: 'Operator sudah merencanakan sangrai di spreadsheet. ExcelDataReader dan ClosedXML bekerja tanpa Excel terpasang.' } },
+      { id: 'ADR-004', title: { en: 'Averaging, regression correction and a dead band', id: 'Perataan, koreksi regresi, dan dead band' }, summary: { en: 'Four samples averaged, each channel corrected against a reference thermometer, and changes below 0.25 °C ignored.', id: 'Empat sampel dirata-ratakan, tiap kanal dikoreksi terhadap termometer acuan, dan perubahan di bawah 0,25 °C diabaikan.' } },
+      { id: 'ADR-005', title: { en: 'Windows Forms on .NET Framework with ClickOnce (v1.0, superseded)', id: 'Windows Forms di .NET Framework dengan ClickOnce (v1.0, digantikan)' }, summary: { en: 'The original choice: everything in the framework and an installer from a folder or a USB stick, but no automated tests because the logic sat in the form.', id: 'Pilihan awal: semua ada di framework dan installer dari folder atau USB, tetapi tanpa tes otomatis karena logikanya ada di form.' } },
+      { id: 'ADR-006', title: { en: 'WPF with WPF-UI on .NET 10, a screenless Core and a single-file exe', id: 'WPF dengan WPF-UI di .NET 10, Core tanpa layar, dan exe satu berkas' }, summary: { en: 'A real Fluent look with a light and dark theme, a modern chart, logic that is covered by tests, correct high-DPI, and one self-contained file for a machine that is often offline.', id: 'Tampilan Fluent sungguhan dengan tema terang dan gelap, grafik modern, logika yang tercakup tes, high-DPI yang benar, dan satu berkas mandiri untuk mesin yang sering offline.' } },
     ],
     stackGroups: [
       { group: { en: 'Desktop app', id: 'Aplikasi desktop' }, items: ['C#', '.NET 10', 'WPF', 'WPF-UI 4 (Fluent)', 'ScottPlot 5', 'CommunityToolkit.Mvvm', 'System.IO.Ports'] },
@@ -543,17 +514,7 @@ export const personalProjects: PersonalProject[] = [
         'Dokumentasi dalam bahasa Inggris dan Indonesia: kebutuhan yang ditulis balik dari kode, desain sistem, enam catatan keputusan, protokol serial, panduan perangkat keras, dan daftar keterbatasan yang diketahui.',
       ],
     },
-    docs: [
-      { label: { en: 'Product requirements (PRD)', id: 'Kebutuhan produk (PRD)' }, href: `${ROASTO_DOCS}/PRD.md` },
-      { label: { en: 'System design', id: 'Desain sistem' }, href: `${ROASTO_DOCS}/system-design.md` },
-      { label: { en: 'Architecture decisions', id: 'Keputusan arsitektur' }, href: `${ROASTO}/tree/main/docs/en/adr` },
-      { label: { en: 'Serial protocol', id: 'Protokol serial' }, href: `${ROASTO_DOCS}/serial-protocol.md` },
-      { label: { en: 'Hardware guide', id: 'Panduan perangkat keras' }, href: `${ROASTO_DOCS}/hardware.md` },
-      { label: { en: 'Technical Q&A', id: 'Tanya jawab teknis' }, href: `${ROASTO_DOCS}/technical-qa.md` },
-      { label: { en: 'Testing', id: 'Pengujian' }, href: `${ROASTO_DOCS}/testing.md` },
-      { label: { en: 'Deployment guide', id: 'Panduan deployment' }, href: `${ROASTO_DOCS}/deployment.md` },
-      { label: { en: 'Test evidence', id: 'Bukti pengujian' }, href: `${ROASTO}/tree/main/docs/assets/testing` },
-    ],
+    docs: [],
     gettingStarted: {
       requirements: { en: 'Windows 10 (1607) or newer, 64-bit. To build: the .NET 10 SDK. For the firmware: the Arduino IDE with the MAX6675 library.', id: 'Windows 10 (1607) atau lebih baru, 64-bit. Untuk membangun: .NET 10 SDK. Untuk firmware: Arduino IDE dengan pustaka MAX6675.' },
       commands: [
@@ -578,11 +539,7 @@ export const personalProjects: PersonalProject[] = [
       { kind: 'shot', file: 'screenshots/06-dark-theme.png', width: 2040, height: 1290, caption: { en: 'The same screen in the dark theme', id: 'Layar yang sama dalam tema gelap' } },
       { kind: 'shot', file: 'diagrams/pid-characteristic.svg', width: 780, height: 700, caption: { en: 'How the controller reacts to the temperature error: PID output, valve angle and burner state (the labels in the diagram are in English)', id: 'Cara pengendali bereaksi terhadap galat suhu: keluaran PID, sudut katup, dan status pembakar (label pada diagram berbahasa Inggris)' } },
     ],
-    links: [
-      { label: { en: 'Source code on GitHub', id: 'Kode sumber di GitHub' }, href: ROASTO },
-      { label: { en: 'System design', id: 'Desain sistem' }, href: `${ROASTO_DOCS}/system-design.md` },
-      { label: { en: 'Architecture decisions', id: 'Keputusan arsitektur' }, href: `${ROASTO}/tree/main/docs/en/adr` },
-    ],
+    links: [],
   },
   {
     slug: 'linewise',
@@ -785,16 +742,16 @@ export const personalProjects: PersonalProject[] = [
     ],
     dataModules: [],
     decisions: [
-      { id: 'ADR-001', title: { en: 'Signals + RxJS for front-end state', id: 'Signals + RxJS untuk state front end' }, summary: { en: 'Signals for state that templates read, RxJS for asynchronous streams, one service per feature. NgRx only if a real need appears.', id: 'Signals untuk state yang dibaca template, RxJS untuk aliran asinkron, satu service per fitur. NgRx hanya jika kebutuhan nyata muncul.' }, href: `${LW_ADR}/001-signals-rxjs-state.md` },
-      { id: 'ADR-002', title: { en: 'Modular monolith with Clean Architecture', id: 'Modular monolith dengan Clean Architecture' }, summary: { en: 'One deployable, four layers, no generic repository, and PostgreSQL-specific code kept in Infrastructure so a move to SQL Server stays easy.', id: 'Satu unit deploy, empat lapisan, tanpa generic repository, dan kode khusus PostgreSQL tetap di Infrastructure agar pindah ke SQL Server tetap mudah.' }, href: `${LW_ADR}/002-modular-monolith.md` },
-      { id: 'ADR-005', title: { en: 'MVP scope and data decisions', id: 'Cakupan MVP dan keputusan data' }, summary: { en: 'A single plant with a nullable plant_id kept for later, a fixed two-step approval on a generic table, and segregation of duties.', id: 'Satu pabrik dengan plant_id nullable untuk nanti, persetujuan dua langkah tetap pada tabel generik, dan pemisahan tugas.' }, href: `${LW_ADR}/005-mvp-scope-decisions.md` },
-      { id: 'ADR-010', title: { en: 'Keycloak as the identity provider', id: 'Keycloak sebagai penyedia identitas' }, summary: { en: 'The API is a backend-for-frontend, so tokens stay on the server. Keycloak owns accounts and roles; the application owns the permission matrix.', id: 'API adalah backend-for-frontend, sehingga token tetap di server. Keycloak memegang akun dan peran; aplikasi memegang matriks izin.' }, href: `${LW_ADR}/010-keycloak-identity-provider.md` },
-      { id: 'ADR-012', title: { en: 'Production orders, work orders and output tracking', id: 'Order produksi, work order, dan pelacakan output' }, summary: { en: 'A configurable output limit of the plan plus 10 percent, passing it is a 422, and output records are append-only.', id: 'Batas output yang dapat diatur sebesar rencana ditambah 10 persen, melewatinya menghasilkan 422, dan rekaman output append-only.' }, href: `${LW_ADR}/012-phase-4-production-and-tracking.md` },
-      { id: 'ADR-013', title: { en: 'Inspection templates, inspections and defects', id: 'Template inspeksi, inspeksi, dan cacat' }, summary: { en: 'The template rule decides the result, and a failed inspection raises its defect in one transaction.', id: 'Aturan template menentukan hasil, dan inspeksi yang gagal memunculkan cacatnya dalam satu transaksi.' }, href: `${LW_ADR}/013-phase-5-quality.md` },
-      { id: 'ADR-014', title: { en: 'Approval workflow and audit trail', id: 'Alur persetujuan dan jejak audit' }, summary: { en: 'Two actions need two approvals, and the system carries the action out in the same transaction as the last decision.', id: 'Dua aksi membutuhkan dua persetujuan, dan sistem menjalankan aksinya dalam transaksi yang sama dengan keputusan terakhir.' }, href: `${LW_ADR}/014-phase-6-approval-and-audit.md` },
-      { id: 'ADR-015', title: { en: 'Dashboard, reports and notifications', id: 'Dashboard, laporan, dan notifikasi' }, summary: { en: 'ECharts through ngx-echarts in a lazy chunk, KPIs from aggregation queries, and notifications written with the event.', id: 'ECharts lewat ngx-echarts dalam chunk malas, KPI dari query agregasi, dan notifikasi ditulis bersama kejadiannya.' }, href: `${LW_ADR}/015-phase-7-dashboard-reports-notifications.md` },
-      { id: 'ADR-016', title: { en: 'Hardening: security, performance, accessibility', id: 'Penguatan: keamanan, performa, aksesibilitas' }, summary: { en: 'axe in the end-to-end suite; Lighthouse and coverage are measured and recorded, not CI gates.', id: 'axe di suite end-to-end; Lighthouse dan cakupan diukur dan dicatat, bukan gerbang CI.' }, href: `${LW_ADR}/016-phase-8-hardening.md` },
-      { id: 'ADR-017', title: { en: 'Deployment package and documentation', id: 'Paket deployment dan dokumentasi' }, summary: { en: 'A production Docker Compose package tested from a clean state; no hosted deployment, recorded as a limitation.', id: 'Paket produksi Docker Compose yang diuji dari keadaan bersih; tanpa deployment ter-host, dicatat sebagai keterbatasan.' }, href: `${LW_ADR}/017-phase-9-deployment.md` },
+      { id: 'ADR-001', title: { en: 'Signals + RxJS for front-end state', id: 'Signals + RxJS untuk state front end' }, summary: { en: 'Signals for state that templates read, RxJS for asynchronous streams, one service per feature. NgRx only if a real need appears.', id: 'Signals untuk state yang dibaca template, RxJS untuk aliran asinkron, satu service per fitur. NgRx hanya jika kebutuhan nyata muncul.' } },
+      { id: 'ADR-002', title: { en: 'Modular monolith with Clean Architecture', id: 'Modular monolith dengan Clean Architecture' }, summary: { en: 'One deployable, four layers, no generic repository, and PostgreSQL-specific code kept in Infrastructure so a move to SQL Server stays easy.', id: 'Satu unit deploy, empat lapisan, tanpa generic repository, dan kode khusus PostgreSQL tetap di Infrastructure agar pindah ke SQL Server tetap mudah.' } },
+      { id: 'ADR-005', title: { en: 'MVP scope and data decisions', id: 'Cakupan MVP dan keputusan data' }, summary: { en: 'A single plant with a nullable plant_id kept for later, a fixed two-step approval on a generic table, and segregation of duties.', id: 'Satu pabrik dengan plant_id nullable untuk nanti, persetujuan dua langkah tetap pada tabel generik, dan pemisahan tugas.' } },
+      { id: 'ADR-010', title: { en: 'Keycloak as the identity provider', id: 'Keycloak sebagai penyedia identitas' }, summary: { en: 'The API is a backend-for-frontend, so tokens stay on the server. Keycloak owns accounts and roles; the application owns the permission matrix.', id: 'API adalah backend-for-frontend, sehingga token tetap di server. Keycloak memegang akun dan peran; aplikasi memegang matriks izin.' } },
+      { id: 'ADR-012', title: { en: 'Production orders, work orders and output tracking', id: 'Order produksi, work order, dan pelacakan output' }, summary: { en: 'A configurable output limit of the plan plus 10 percent, passing it is a 422, and output records are append-only.', id: 'Batas output yang dapat diatur sebesar rencana ditambah 10 persen, melewatinya menghasilkan 422, dan rekaman output append-only.' } },
+      { id: 'ADR-013', title: { en: 'Inspection templates, inspections and defects', id: 'Template inspeksi, inspeksi, dan cacat' }, summary: { en: 'The template rule decides the result, and a failed inspection raises its defect in one transaction.', id: 'Aturan template menentukan hasil, dan inspeksi yang gagal memunculkan cacatnya dalam satu transaksi.' } },
+      { id: 'ADR-014', title: { en: 'Approval workflow and audit trail', id: 'Alur persetujuan dan jejak audit' }, summary: { en: 'Two actions need two approvals, and the system carries the action out in the same transaction as the last decision.', id: 'Dua aksi membutuhkan dua persetujuan, dan sistem menjalankan aksinya dalam transaksi yang sama dengan keputusan terakhir.' } },
+      { id: 'ADR-015', title: { en: 'Dashboard, reports and notifications', id: 'Dashboard, laporan, dan notifikasi' }, summary: { en: 'ECharts through ngx-echarts in a lazy chunk, KPIs from aggregation queries, and notifications written with the event.', id: 'ECharts lewat ngx-echarts dalam chunk malas, KPI dari query agregasi, dan notifikasi ditulis bersama kejadiannya.' } },
+      { id: 'ADR-016', title: { en: 'Hardening: security, performance, accessibility', id: 'Penguatan: keamanan, performa, aksesibilitas' }, summary: { en: 'axe in the end-to-end suite; Lighthouse and coverage are measured and recorded, not CI gates.', id: 'axe di suite end-to-end; Lighthouse dan cakupan diukur dan dicatat, bukan gerbang CI.' } },
+      { id: 'ADR-017', title: { en: 'Deployment package and documentation', id: 'Paket deployment dan dokumentasi' }, summary: { en: 'A production Docker Compose package tested from a clean state; no hosted deployment, recorded as a limitation.', id: 'Paket produksi Docker Compose yang diuji dari keadaan bersih; tanpa deployment ter-host, dicatat sebagai keterbatasan.' } },
     ],
     stackGroups: [
       { group: { en: 'Frontend', id: 'Frontend' }, items: ['Angular 22', 'TypeScript', 'Angular Material', 'Angular Signals', 'RxJS', 'Angular Router', 'Angular Reactive Forms', 'Angular HttpClient', 'ngx-echarts (ECharts 6)'] },
@@ -822,16 +779,7 @@ export const personalProjects: PersonalProject[] = [
         'Dokumentasi dalam bahasa Inggris dan Indonesia: PRD, desain sistem dengan diagram, 17 catatan keputusan, wireframe, tanya jawab teknis, panduan deployment, dan daftar keterbatasan yang jujur.',
       ],
     },
-    docs: [
-      { label: { en: 'Product requirements (PRD)', id: 'Kebutuhan produk (PRD)' }, href: `${LW_DOCS}/PRD.md` },
-      { label: { en: 'System design', id: 'Desain sistem' }, href: `${LW_DOCS}/system-design.md` },
-      { label: { en: 'Architecture decisions', id: 'Keputusan arsitektur' }, href: `${LW}/tree/main/docs/en/adr` },
-      { label: { en: 'Wireframes', id: 'Wireframe' }, href: `${LW_DOCS}/wireframes.md` },
-      { label: { en: 'Technical Q&A', id: 'Tanya jawab teknis' }, href: `${LW_DOCS}/technical-qa.md` },
-      { label: { en: 'Deployment guide', id: 'Panduan deployment' }, href: `${LW_DOCS}/deployment.md` },
-      { label: { en: 'Known limitations and roadmap', id: 'Keterbatasan dan peta jalan' }, href: `${LW_DOCS}/known-limitations.md` },
-      { label: { en: 'Demo video script', id: 'Naskah video demo' }, href: `${LW_DOCS}/demo-video-script.md` },
-    ],
+    docs: [],
     gettingStarted: {
       requirements: { en: '.NET SDK 10, Node.js 24.15 or newer, and Docker for PostgreSQL and Keycloak (about 1 GB of memory for Keycloak). The production package needs only Docker.', id: '.NET SDK 10, Node.js 24.15 atau lebih baru, dan Docker untuk PostgreSQL dan Keycloak (sekitar 1 GB memori untuk Keycloak). Paket produksi hanya membutuhkan Docker.' },
       commands: [
@@ -866,11 +814,7 @@ export const personalProjects: PersonalProject[] = [
       { kind: 'shot', file: 'screenshots/defect.png', width: 1280, height: 1187, caption: { en: `Defect: workflow, corrective actions and activity. Demo by ${DEMO_BY}`, id: `Cacat: alur kerja, tindakan korektif, dan aktivitas. Demo oleh ${DEMO_BY}` } },
       { kind: 'shot', file: 'screenshots/approvals.png', width: 1280, height: 800, caption: { en: `Approval inbox: two-step approval with segregation of duties. Demo by ${DEMO_BY}`, id: `Kotak masuk persetujuan: persetujuan dua langkah dengan pemisahan tugas. Demo oleh ${DEMO_BY}` } },
     ],
-    links: [
-      { label: { en: 'Source code on GitHub', id: 'Kode sumber di GitHub' }, href: LW },
-      { label: { en: 'System design', id: 'Desain sistem' }, href: `${LW_DOCS}/system-design.md` },
-      { label: { en: 'Architecture decisions', id: 'Keputusan arsitektur' }, href: `${LW}/tree/main/docs/en/adr` },
-    ],
+    links: [],
   },
 ];
 

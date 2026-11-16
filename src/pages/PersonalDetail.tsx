@@ -104,6 +104,14 @@ export default function PersonalDetail({ p }: { p: PersonalProject }) {
           </ul>
 </>
 )}
+{p.links.length === 0 && (
+          <p className="mt-5 max-w-3xl text-sm text-muted-foreground">
+            {t('personal.private')}{' '}
+            <Link to={path('/contact')} className="font-medium text-primary hover:underline">
+              {t('cta.contact')}
+            </Link>
+          </p>
+)}
         </header>
 
         <nav aria-label={t('personal.toc')} className="mt-8 flex flex-wrap items-center gap-2">
