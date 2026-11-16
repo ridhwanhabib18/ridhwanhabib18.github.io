@@ -51,7 +51,7 @@ export default function Home() {
               alt={profile.name}
               width={320}
               height={320}
-              className="relative size-44 rounded-[2rem] object-cover ring-1 ring-border sm:size-56 lg:size-72"
+              className="relative size-44 rounded-[2rem] object-cover ring-1 ring-border dark:brightness-[0.86] dark:contrast-[1.05] sm:size-56 lg:size-72"
             />
           </div>
           <div className="flex flex-col items-center text-center lg:items-start lg:text-left">
@@ -147,7 +147,7 @@ export default function Home() {
         </div>
       </section>
 
-      <Section id="proof-h" title={t('home.proof')} lead={t('home.proofNote')}>
+      <Section id="proof-h" icon="target" title={t('home.proof')} lead={t('home.proofNote')}>
         <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {proof.map((p, i) => (
             <Reveal as="li" key={p.slug} delay={i * 0.06}>
@@ -170,6 +170,7 @@ export default function Home() {
 
       <Section
         id="feat-h"
+        icon="grid"
         title={t('home.featured')}
         lead={t('home.featuredLead')}
         action={
@@ -190,7 +191,7 @@ export default function Home() {
         </div>
       </Section>
 
-      <Section id="how-h" title={t('about.how')}>
+      <Section id="how-h" icon="workflow" title={t('about.how')}>
         <ul className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {profile.howIWork.map((h) => (
             <li key={h.title.en} className="flex gap-3">
@@ -206,6 +207,7 @@ export default function Home() {
 
       <Section
         id="stack-h"
+        icon="terminal"
         title={t('home.stack')}
         action={
           <Button asChild variant="ghost" size="sm">

@@ -3,7 +3,7 @@ import { Link } from '@/components/TransitionLink';
 import { ArrowRight, ExternalLink } from 'lucide-react';
 import { useI18n } from '@/i18n';
 import { profile } from '@/content/profile';
-import { AppIcon } from '@/components/icons';
+import { AppIcon, IconTile, type IconName } from '@/components/icons';
 import type { DiagramDef, Metric, Project } from '@/content/types';
 import type { PersonalProject } from '@/content/personal-projects';
 import { Badge } from '@/components/ui/badge';
@@ -12,13 +12,14 @@ import { cn } from '@/lib/utils';
 import { container, h2 } from '@/lib/ui';
 import type { ReactNode } from 'react';
 
-export function Section({ id, title, lead, action, children, className }: { id: string; title: string; lead?: string; action?: ReactNode; children: ReactNode; className?: string }) {
+export function Section({ id, title, lead, action, children, className, icon }: { id: string; title: string; icon?: IconName; lead?: string; action?: ReactNode; children: ReactNode; className?: string }) {
   return (
     <section className={cn('py-12 sm:py-14', className)} aria-labelledby={id}>
       <div className={container}>
         <div className="mb-6 flex flex-wrap items-end justify-between gap-3">
           <div>
-            <h2 id={id} className={h2}>
+            <h2 id={id} className={cn(h2, icon && 'flex items-center gap-3')}>
+              {icon && <IconTile name={icon} size="sm" />}
               {title}
             </h2>
             {lead && <p className="mt-2 max-w-2xl text-muted-foreground">{lead}</p>}

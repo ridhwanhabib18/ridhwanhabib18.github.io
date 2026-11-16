@@ -14,7 +14,7 @@ import { cn } from '@/lib/utils';
 
 function Block({ id, title, lead, children }: { id: string; title: string; lead?: string; children: ReactNode }) {
   return (
-    <section className="mt-14" aria-labelledby={id}>
+    <section className="mt-14 scroll-mt-24" aria-labelledby={id}>
       <h2 id={id} className={cn(h2, 'text-2xl')}>
         {title}
       </h2>
@@ -42,6 +42,18 @@ export default function PersonalDetail({ p }: { p: PersonalProject }) {
   const flows = p.gallery.filter((g) => g.kind === 'flow');
   const shots = p.gallery.filter((g) => g.kind === 'shot');
   const doneCount = p.phases.filter((x) => x.done).length;
+  const toc: [string, string][] = [
+    ['p-overview', t('personal.overview')],
+    ['p-features', t('personal.features')],
+    ['p-architecture', t('personal.architecture')],
+    ['p-design', t('personal.design')],
+    ...(p.decisions.length > 0 ? [['p-decisions', t('personal.decisions')] as [string, string]] : []),
+    ['p-stack', t('personal.stack')],
+    ...(p.phases.length > 0 ? [['p-phases', t('personal.phases')] as [string, string]] : []),
+    ...(p.docs.length > 0 ? [['p-docs', t('personal.docs')] as [string, string]] : []),
+    ['p-start', t('personal.start')],
+    ['p-gallery', t('personal.gallery')],
+  ];
 
   return (
     <>
@@ -93,6 +105,15 @@ export default function PersonalDetail({ p }: { p: PersonalProject }) {
 </>
 )}
         </header>
+
+        <nav aria-label={t('personal.toc')} className="mt-8 flex flex-wrap items-center gap-2">
+          <span className={eyebrow}>{t('personal.toc')}</span>
+          {toc.map(([id, label]) => (
+            <a key={id} href={`#${id}`} className="rounded-full border bg-card/60 px-3 py-1 text-sm text-muted-foreground transition-colors hover:border-primary/60 hover:text-foreground focus-visible:ring-[3px] focus-visible:ring-ring/60 focus-visible:outline-none">
+              {label}
+            </a>
+          ))}
+        </nav>
 
         <Block id="p-overview" title={t('personal.overview')}>
           <div className="reveal-items max-w-3xl space-y-4">

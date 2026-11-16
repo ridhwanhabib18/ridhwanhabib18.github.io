@@ -8,6 +8,7 @@ import { useI18n } from '@/i18n';
 import { profile } from '@/content/profile';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetClose, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
+import { AppIcon, type IconName } from '@/components/icons';
 import { cn } from '@/lib/utils';
 import { container } from '@/lib/ui';
 import { analyticsEnabled, trackPage } from '@/lib/analytics';
@@ -76,12 +77,12 @@ export function Layout() {
     return () => window.removeEventListener('scroll', on);
   }, []);
 
-  const links: [string, string][] = [
-    ['/work', t('nav.work')],
-    ['/experience', t('nav.experience')],
-    ['/about', t('nav.about')],
-    ['/resume', t('nav.resume')],
-    ['/contact', t('nav.contact')],
+  const links: [string, string, IconName][] = [
+    ['/work', t('nav.work'), 'grid'],
+    ['/experience', t('nav.experience'), 'briefcase'],
+    ['/about', t('nav.about'), 'user'],
+    ['/resume', t('nav.resume'), 'file'],
+    ['/contact', t('nav.contact'), 'mail'],
   ];
 
   return (
@@ -99,8 +100,9 @@ export function Layout() {
             <span>{profile.shortName}</span>
           </Link>
           <nav className="hidden items-center gap-6 md:flex" aria-label="Primary">
-            {links.map(([to, label]) => (
+            {links.map(([to, label, icon]) => (
               <NavLink key={to} to={path(to)} className={linkClass}>
+                <AppIcon name={icon} className="mr-1.5 inline size-3.5 align-[-2px]" />
                 {label}
               </NavLink>
             ))}
@@ -120,9 +122,10 @@ export function Layout() {
                   <SheetDescription className="sr-only">{profile.name}</SheetDescription>
                 </SheetHeader>
                 <nav className="flex flex-col gap-1 px-4" aria-label="Mobile">
-                  {links.map(([to, label]) => (
+                  {links.map(([to, label, icon]) => (
                     <SheetClose asChild key={to}>
-                      <NavLink to={path(to)} className={({ isActive }) => cn('rounded-md px-3 py-2.5 text-base transition-colors hover:bg-accent', isActive ? 'bg-accent font-medium text-foreground' : 'text-muted-foreground')}>
+                      <NavLink to={path(to)} className="flex items-center gap-3 rounded-md px-3 py-2.5 text-base text-muted-foreground transition-colors hover:bg-accent aria-[current=page]:bg-accent aria-[current=page]:font-medium aria-[current=page]:text-foreground">
+                        <AppIcon name={icon} />
                         {label}
                       </NavLink>
                     </SheetClose>

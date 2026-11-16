@@ -21,6 +21,7 @@ import {
   KeyRound,
   LayoutGrid,
   Lock,
+  Mail,
   Megaphone,
   Monitor,
   PackageCheck,
@@ -120,6 +121,7 @@ export const icons = {
   gauge: Gauge,
   alert: ShieldAlert,
   thermometer: Thermometer,
+  mail: Mail,
 } satisfies Record<string, LucideIcon>;
 
 export type IconName = keyof typeof icons;
