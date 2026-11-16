@@ -12,6 +12,7 @@ export const projects: Project[] = [
     beyondResume: ['inspection platform'],
     kind: 'delivered',
     title: { en: 'Parts Engineering Management System', id: 'Sistem Manajemen Parts Engineering' },
+    proofLabel: { en: 'Preparing each new-part review, replacing paper inspection sheets', id: 'Persiapan review setiap part baru, menggantikan lembar inspeksi kertas' },
     summary: {
       en: 'Replaced the paper part review inspection sheet with an online approval workflow.',
       id: 'Mengganti lembar inspeksi part review berbasis kertas dengan alur persetujuan online.',
@@ -84,6 +85,7 @@ export const projects: Project[] = [
     beyondResume: ['background download', 'scheduled version changes', 'column filtering', 'audit trail', 'Remote update', 'Trialled on lines'],
     kind: 'delivered',
     title: { en: 'Production File Distribution & Monitoring System', id: 'Sistem Distribusi & Monitoring File Produksi' },
+    proofLabel: { en: 'Getting a production line running again after a software change, with no more flash disks', id: 'Menjalankan kembali lini produksi setelah perubahan program, tanpa flash disk' },
     summary: {
       en: 'Central, automatic and monitored program updates for production line PCs, replacing flash disks.',
       id: 'Pembaruan program yang terpusat, otomatis, dan terpantau untuk PC lini produksi, menggantikan flash disk.',
@@ -167,6 +169,7 @@ export const projects: Project[] = [
     beyondResume: ['capacity control', 'WIP stock system', '45+ migrations', 'minimal API', 'Windows Service', 'payback within the first year'],
     kind: 'delivered',
     title: { en: 'Production Planning & Scheduling System', id: 'Sistem Perencanaan & Penjadwalan Produksi' },
+    proofLabel: { en: 'Planner workload, replacing manual replanning in Excel', id: 'Beban kerja planner, menggantikan perencanaan ulang manual di Excel' },
     summary: {
       en: 'Automated hourly planning cycle replacing manual Excel planning.',
       id: 'Siklus perencanaan otomatis per jam yang menggantikan perencanaan manual di Excel.',
@@ -374,6 +377,7 @@ export const projects: Project[] = [
     resumeBullet: 'Supporting contributions (3 further projects)',
     kind: 'contributed',
     title: { en: 'Part Approval Certification Workflow', id: 'Alur Sertifikasi Persetujuan Part' },
+    proofLabel: { en: 'Preparing part-approval certificates for suppliers, previously done by hand', id: 'Menyiapkan sertifikat persetujuan part untuk supplier, sebelumnya manual' },
     summary: {
       en: 'Online part approval certification preparation and issuing to suppliers. I developed the SQL Server stored procedures.',
       id: 'Persiapan dan penerbitan sertifikasi persetujuan part secara online ke supplier. Saya mengembangkan stored procedure SQL Server.',

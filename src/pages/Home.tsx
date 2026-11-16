@@ -25,10 +25,10 @@ const heroLink =
 const rise = 'animate-in fade-in slide-in-from-bottom-3 duration-500 fill-mode-both motion-reduce:animate-none';
 
 const proofItems = () =>
-  proofSlugs.map((slug) => ({
-    slug,
-    metric: getProject(slug)!.metrics[0],
-  }));
+  proofSlugs.map((slug) => {
+    const project = getProject(slug)!;
+    return { slug, project, metric: project.metrics[0] };
+  });
 
 export default function Home() {
   const { t, l, path } = useI18n();
@@ -152,7 +152,8 @@ export default function Home() {
                     <strong className="text-2xl leading-tight">
                       <CountUp text={l(p.metric.value)} />
                     </strong>
-                    <span className="text-sm text-muted-foreground">{l(p.metric.label)}</span>
+                    <span className="text-sm text-foreground">{l(p.project.proofLabel ?? p.metric.label)}</span>
+                    <span className="text-xs text-muted-foreground">{l(p.project.title)}</span>
                   </CardContent>
                 </Card>
               </Link>
