@@ -42,8 +42,8 @@ export default function Home() {
       <Seo description={l(profile.positioning)} jsonLd={graph(websiteLd(), personLd())} />
 
       <section className="relative overflow-hidden border-b bg-[radial-gradient(60rem_28rem_at_75%_-10%,var(--glow),transparent_70%)]">
-        <div className={cn(container, 'grid items-center gap-10 py-14 sm:py-20 lg:grid-cols-[minmax(0,1fr)_auto] lg:gap-16 lg:py-24')}>
-          <div className={cn(rise, 'relative mx-auto lg:order-last')}>
+        <div className={cn(container, 'grid items-center gap-10 py-14 sm:py-20 xl:grid-cols-[minmax(0,1fr)_auto] xl:gap-16 xl:py-24')}>
+          <div className={cn(rise, 'relative mx-auto xl:order-last')}>
             <div aria-hidden="true" className="absolute -inset-6 rounded-[2.5rem] bg-[radial-gradient(closest-side,var(--glow),transparent)] blur-xl" />
             <div aria-hidden="true" className="absolute inset-0 translate-x-3 translate-y-3 rounded-[2rem] border border-primary/40" />
             <img
@@ -51,10 +51,10 @@ export default function Home() {
               alt={profile.name}
               width={320}
               height={320}
-              className="relative size-44 rounded-[2rem] object-cover ring-1 ring-border dark:brightness-[0.86] dark:contrast-[1.05] sm:size-56 lg:size-72"
+              className="relative size-44 rounded-[2rem] object-cover ring-1 ring-border dark:brightness-[0.86] dark:contrast-[1.05] sm:size-56 xl:size-72"
             />
           </div>
-          <div className="flex flex-col items-center text-center lg:items-start lg:text-left">
+          <div className="flex flex-col items-center text-center xl:items-start xl:text-left">
           {profile.available && (
             <Badge variant="outline" className={cn(rise, 'max-w-full gap-2 rounded-2xl px-3 py-1 text-center text-sm font-normal whitespace-normal text-muted-foreground sm:rounded-full')}>
               <span className="size-2 rounded-full bg-success" aria-hidden="true" />
@@ -79,7 +79,7 @@ export default function Home() {
           <p className={cn(rise, 'mt-4 max-w-2xl text-lg text-muted-foreground')} style={{ animationDelay: '180ms' }}>
             {l(profile.positioning)}
           </p>
-          <div className={cn(rise, 'mt-8 flex flex-wrap justify-center gap-3 lg:justify-start')} style={{ animationDelay: '240ms' }}>
+          <div className={cn(rise, 'mt-8 flex flex-wrap justify-center gap-3 xl:justify-start')} style={{ animationDelay: '240ms' }}>
             <Button asChild size="lg">
               <Link to={path('/work')}>
                 {t('cta.viewWork')}
@@ -98,7 +98,7 @@ export default function Home() {
               </Button>
             )}
           </div>
-          <ul aria-label={t('home.links')} className={cn(rise, 'mt-5 flex flex-wrap justify-center gap-x-2 gap-y-1 text-sm lg:-ml-2.5 lg:justify-start')} style={{ animationDelay: '270ms' }}>
+          <ul aria-label={t('home.links')} className={cn(rise, 'mt-5 flex flex-wrap justify-center gap-x-2 gap-y-1 text-sm xl:-ml-2.5 xl:justify-start')} style={{ animationDelay: '270ms' }}>
             <li>
               <a className={heroLink} href={mail} data-event="email-click">
                 <Mail className="size-4" aria-hidden="true" />

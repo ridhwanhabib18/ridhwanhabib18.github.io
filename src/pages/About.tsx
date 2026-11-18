@@ -102,7 +102,7 @@ export default function About() {
         {filteredSkills.length === 0 && <p className="text-sm text-muted-foreground">{t('about.noSkillsFound')}</p>}
 
         <h2 className={cn(h2, 'mt-12 mb-4')}>{t('about.certs')}</h2>
-        <ul className="reveal-items grid gap-4 lg:grid-cols-2">
+        <ul className="reveal-items grid gap-4">
           {profile.certifications.map((c) => (
             <li key={c.name}>
               <CertCard cert={c} />

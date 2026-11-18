@@ -56,6 +56,16 @@ export default function Resume() {
             </TabsContent>
           ))}
         </Tabs>
+
+        <section className="mt-8 border-t pt-6">
+          <h2 className="text-xl font-bold">{t('resume.coverLetter')}</h2>
+          <p className="mt-2 mb-4 text-muted-foreground">{t('resume.coverLetterLead')}</p>
+          <Button asChild variant="outline">
+            <a href={`${base}cover-letter.html`} target="_blank" rel="noopener noreferrer">
+              {t('resume.openCoverLetter')}
+            </a>
+          </Button>
+        </section>
       </div>
     </>
   );

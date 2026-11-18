@@ -42,4 +42,10 @@ describe('static render of every route', () => {
     expect(render('/work')).toContain('href="/id/work"');
     expect(render('/id/work')).toContain('href="/work"');
   });
+
+  it('offers the cover letter alongside resume variants', () => {
+    const html = render('/resume');
+    expect(html).toContain('href="/cover-letter.html"');
+    expect(html).toContain('Open cover letter');
+  });
 });

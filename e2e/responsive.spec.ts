@@ -119,6 +119,15 @@ for (const width of [360, 390]) {
 test.describe('desktop 1280px', () => {
   test.use({ viewport: { width: 1280, height: 900 } });
 
+  test('the home hero uses two columns when there is room', async ({ page }) => {
+    await page.goto('/');
+    const portrait = await page.getByRole('img', { name: 'Muhammad Ridhwan Habib Abdillah' }).boundingBox();
+    const heading = await page.getByRole('heading', { level: 1 }).boundingBox();
+    expect(portrait).not.toBeNull();
+    expect(heading).not.toBeNull();
+    expect(portrait!.x).toBeGreaterThan(heading!.x);
+  });
+
   test('the architecture diagram is drawn as a picture', async ({ page }) => {
     await page.goto('/work/production-file-distribution/');
     await expect(page.locator('figure svg')).toBeVisible();
@@ -135,5 +144,30 @@ test.describe('desktop 1280px', () => {
       await scrollThrough(page);
       expect(await layoutProblems(page), route).toEqual([]);
     }
+  });
+});
+
+test.describe('tablet landscape 1024px', () => {
+  test.use({ viewport: { width: 1024, height: 900 } });
+
+  test('the home hero stays stacked until there is room for two columns', async ({ page }) => {
+    await page.goto('/');
+    const portrait = await page.getByRole('img', { name: 'Muhammad Ridhwan Habib Abdillah' }).boundingBox();
+    const heading = await page.getByRole('heading', { level: 1 }).boundingBox();
+    expect(portrait).not.toBeNull();
+    expect(heading).not.toBeNull();
+    expect(portrait!.y + portrait!.height).toBeLessThanOrEqual(heading!.y);
+  });
+
+  test('About certification cards keep the full content width', async ({ page }) => {
+    await page.goto('/about/');
+    const heading = page.getByRole('heading', { name: 'Certifications' });
+    const cards = heading.locator('xpath=following-sibling::ul[1]').locator('[data-slot="card"]');
+    await expect(cards).toHaveCount(2);
+    const first = (await cards.nth(0).boundingBox())!;
+    const second = (await cards.nth(1).boundingBox())!;
+    expect(first.width).toBeGreaterThan(600);
+    expect(second.x).toBe(first.x);
+    expect(second.y).toBeGreaterThan(first.y);
   });
 });
