@@ -3,7 +3,7 @@ import { en, id } from '../i18n/strings';
 import { projects, featured } from '../content/projects';
 import { roles } from '../content/experience';
 import { profile } from '../content/profile';
-import { resumeVariants } from '../content/resume';
+import { resumeRegions, resumeVariants } from '../content/resume';
 // @ts-expect-error plain ESM helper without types
 import { findViolations, loadBlocklist } from '../../scripts/guardrail-lib.mjs';
 
@@ -29,7 +29,7 @@ describe('i18n', () => {
 });
 
 describe('content', () => {
-  const all = { profile, projects, roles, resumeVariants };
+  const all = { profile, projects, roles, resumeVariants, resumeRegions };
 
   it('has both languages for every bilingual field, and arrays of equal length', () => {
     for (const p of pairs(all)) {
@@ -69,7 +69,7 @@ describe('content', () => {
 
 describe('confidentiality guardrail', () => {
   const blocklist: string[] = loadBlocklist();
-  const text = JSON.stringify({ profile, projects, roles, resumeVariants, en, id });
+  const text = JSON.stringify({ profile, projects, roles, resumeVariants, resumeRegions, en, id });
 
   it('finds no currency, hour counts or blocklisted code names in published content', () => {
     expect(findViolations(text, blocklist)).toEqual([]);

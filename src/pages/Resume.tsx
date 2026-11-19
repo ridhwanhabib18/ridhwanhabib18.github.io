@@ -1,16 +1,19 @@
+import { useState } from 'react';
 import { Download } from 'lucide-react';
 import { Seo } from '@/components/Seo';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useI18n } from '@/i18n';
-import { resumeVariants } from '@/content/resume';
+import { resumePdfPath, resumeRegions, resumeVariants, type ResumeRegion } from '@/content/resume';
 import { eyebrow, narrow } from '@/lib/ui';
 import { cn } from '@/lib/utils';
 
 export default function Resume() {
   const { t, l } = useI18n();
   const base = import.meta.env.BASE_URL;
+  const [region, setRegion] = useState<ResumeRegion>('us');
+  const regionInfo = resumeRegions.find((r) => r.key === region)!;
 
   return (
     <>
@@ -21,6 +24,20 @@ export default function Resume() {
           <p className="mt-3 mb-8 text-lg text-muted-foreground">{t('resume.lead')}</p>
         </header>
 
+        <div role="group" aria-labelledby="resume-region" className="mb-6">
+          <p id="resume-region" className={cn(eyebrow, 'mb-2')}>
+            {t('resume.region')}
+          </p>
+          <div className="flex flex-wrap gap-2">
+            {resumeRegions.map((r) => (
+              <Button key={r.key} type="button" size="sm" variant={r.key === region ? 'default' : 'outline'} aria-pressed={r.key === region} data-event={`resume-region-${r.key}`} onClick={() => setRegion(r.key)}>
+                {l(r.label)}
+              </Button>
+            ))}
+          </div>
+        </div>
+
+        <p className={cn(eyebrow, 'mb-2')}>{t('resume.role')}</p>
         <Tabs defaultValue="lead">
           <TabsList aria-label={t('resume.title')} className="w-full justify-start sm:w-fit">
             {resumeVariants.map((v) => (
@@ -36,12 +53,17 @@ export default function Resume() {
                   <p className={eyebrow}>{l(v.target)}</p>
                   <p className="leading-relaxed">{l(v.summary)}</p>
                   {v.pdf ? (
-                    <Button asChild>
-                      <a href={`${base}${v.pdf}`} download>
-                        <Download />
-                        {t('cta.download')}
-                      </a>
-                    </Button>
+                    <>
+                      <Button asChild>
+                        <a href={`${base}${resumePdfPath(region, v.key)}`} download data-event={`resume-download-${region}-${v.key}`}>
+                          <Download />
+                          {t('cta.download')}
+                        </a>
+                      </Button>
+                      <p className="text-sm text-muted-foreground">
+                        {l(regionInfo.label)}: {l(regionInfo.note)}
+                      </p>
+                    </>
                   ) : (
                     <>
                       <Button type="button" disabled aria-disabled="true">

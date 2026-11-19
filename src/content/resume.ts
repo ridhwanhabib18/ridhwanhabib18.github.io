@@ -2,13 +2,33 @@ import { resumeData, toL10n } from './resume-data';
 import type { L10n } from './types';
 
 export type ResumeKey = 'lead' | 'senior' | 'analyst';
+export type ResumeRegion = 'us' | 'ca' | 'au';
+
+export interface ResumeRegionInfo {
+  key: ResumeRegion;
+  label: L10n;
+  /** Paper size and format note shown next to the download button. */
+  note: L10n;
+}
+
+/** The country formats offered on the Resume page. The United States one is the default. */
+export const resumeRegions: ResumeRegionInfo[] = [
+  { key: 'us', label: { en: 'United States', id: 'Amerika Serikat' }, note: { en: 'US Letter paper', id: 'Kertas US Letter' } },
+  { key: 'ca', label: { en: 'Canada', id: 'Kanada' }, note: { en: 'US Letter paper, Canadian format (no photo, no date of birth)', id: 'Kertas US Letter, format Kanada (tanpa foto, tanpa tanggal lahir)' } },
+  { key: 'au', label: { en: 'Australia', id: 'Australia' }, note: { en: 'A4 paper, Australian format', id: 'Kertas A4, format Australia' } },
+];
+
+/** Path under public/ of the PDF for a country and role. The United States keeps the original file names. */
+export function resumePdfPath(region: ResumeRegion, key: ResumeKey): string {
+  return region === 'us' ? `resume/ridhwan-habib-resume-${key}.pdf` : `resume/ridhwan-habib-resume-${region}-${key}.pdf`;
+}
 
 export interface ResumeVariant {
   key: ResumeKey;
   label: L10n;
   target: L10n;
   summary: L10n;
-  /** Path under public/. CI compiles these from resume/resume_us.typ (see scripts/build-resume.mjs). Null shows a "coming soon" button. */
+  /** United States PDF, path under public/. CI compiles all regions from resume/resume_*.typ (see scripts/build-resume.mjs). Null shows a "coming soon" button. Use resumePdfPath for the other regions. */
   pdf: string | null;
 }
 

@@ -1,7 +1,7 @@
 import { roles } from './content/experience';
 import { profile } from './content/profile';
 import { projects } from './content/projects';
-import { resumeVariants } from './content/resume';
+import { resumeRegions, resumeVariants } from './content/resume';
 import { en, id } from './i18n/strings';
 
 /**
@@ -36,6 +36,7 @@ export function translationRows(): TranslationRow[] {
   for (const key of Object.keys(en)) out.push(row('Interface texts', key, en[key], id[key] ?? ''));
   walk(profile, 'Profile and About', 'profile', out);
   for (const v of resumeVariants) walk({ label: v.label, target: v.target, summary: v.summary }, 'Resume variants', v.key, out);
+  for (const g of resumeRegions) walk({ label: g.label, note: g.note }, 'Resume formats', g.key, out);
   for (const r of roles) walk(r.bullets.map((b) => ({ title: b.title, text: b.text })), 'Experience', r.company, out);
   for (const p of projects) walk({ title: p.title, summary: p.summary, role: p.role, metrics: p.metrics, sections: p.sections }, 'Case studies', p.slug, out);
   return out;

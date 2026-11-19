@@ -23,7 +23,7 @@ Accessibility note: the Typst documentation recommends PDF/UA-1 for accessible d
 ## If a portal rejects or garbles the PDF
 
 1. Upload the PDF and check the portal's text preview or parsed profile.
-2. If the text is missing or wrong, set `PDF_VERSION` to `'1.7'` in `scripts/build-resume.mjs` (and update the expectation in `src/__tests__/resume.test.ts`), then push. CI rebuilds all three PDFs.
+2. If the text is missing or wrong, set `PDF_VERSION` to `'1.7'` in `scripts/build-resume.mjs` (and update the expectation in `src/__tests__/resume.test.ts`), then push. CI rebuilds all nine PDFs.
 3. Optionally check text extraction locally, for example `pdftotext ridhwan-habib-resume-lead.pdf -`.
 
 ## Related

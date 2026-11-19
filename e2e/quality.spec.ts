@@ -528,3 +528,26 @@ test('the university emblem loads next to the education entry on About and Exper
     else await expect(entry).toHaveClass(/lift/);
   }
 });
+
+test('the Resume page offers the United States, Canada and Australia formats', async ({ page }) => {
+  await page.goto('/resume/');
+  const link = page.getByRole('tabpanel').getByRole('link', { name: 'Download PDF' });
+  const us = page.getByRole('button', { name: 'United States' });
+  await expect(us).toHaveAttribute('aria-pressed', 'true');
+  expect(await link.getAttribute('href')).toMatch(/resume\/ridhwan-habib-resume-lead\.pdf$/);
+
+  await page.getByRole('button', { name: 'Australia' }).click();
+  await expect(page.getByRole('button', { name: 'Australia' })).toHaveAttribute('aria-pressed', 'true');
+  expect(await link.getAttribute('href')).toMatch(/resume\/ridhwan-habib-resume-au-lead\.pdf$/);
+  await expect(page.getByText('A4 paper, Australian format')).toBeVisible();
+
+  await page.getByRole('button', { name: 'Canada' }).click();
+  await page.getByRole('tab', { name: 'Senior Engineer' }).click();
+  expect(await link.getAttribute('href')).toMatch(/resume\/ridhwan-habib-resume-ca-senior\.pdf$/);
+
+  for (const href of ['ridhwan-habib-resume-ca-senior.pdf', 'ridhwan-habib-resume-au-analyst.pdf', 'ridhwan-habib-resume-senior.pdf']) {
+    const res = await page.request.get(`/resume/${href}`);
+    expect(res.status(), href).toBe(200);
+    expect((await res.body()).subarray(0, 8).toString('latin1')).toBe('%PDF-2.0');
+  }
+});
