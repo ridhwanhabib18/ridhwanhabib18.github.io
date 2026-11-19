@@ -62,6 +62,14 @@ describe('resume source and PDF pipeline', () => {
     expect(letter).not.toMatch(/\+\d{1,3}[\d ]{8,}/);
   });
 
+  it('keeps the PDFs readable for applicant tracking systems: no split words, a short header line', () => {
+    for (const [key, src] of Object.entries(sources)) {
+      expect(src, key).toContain('#set text(hyphenate: false)');
+      expect(src, key).toMatch(/^#let header-location = "Bekasi, Indonesia"$/m);
+      expect(src, key).toContain('location: header-location,');
+    }
+  });
+
   it('exports PDF 2.0 and verifies the file header', () => {
     expect(script).toContain("PDF_VERSION = '2.0'");
     expect(script).toContain("'--pdf-standard', PDF_VERSION");

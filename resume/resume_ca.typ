@@ -4,6 +4,8 @@
 // Canada: city and country is enough, no full address, no photo, no date of birth
 #let name = "Muhammad Ridhwan Habib Abdillah"
 #let location = "Bekasi Regency, West Java, Indonesia"
+// Shorter place name for the header only, so the contact line fits on one line (an applicant tracking system can then read the LinkedIn address whole).
+#let header-location = "Bekasi, Indonesia"
 #let email = "eng.ridhwan18@gmail.com"
 // TODO: replace with a dedicated job-search number (international format, WhatsApp enabled)
 #let phone = "" // The real number lives only in the private repository and is never published.
@@ -17,7 +19,7 @@
 
 #show: resume.with(
   author: name,
-  location: location,
+  location: header-location,
   email: email,
   phone: if public { "" } else { phone },
   linkedin: linkedin,
@@ -26,6 +28,9 @@
   accent-color: "#26428b",
   paper: "us-letter",
 )
+
+// No hyphenation: a word split at a line end can reach an applicant tracking system as two fragments.
+#set text(hyphenate: false)
 
 // ---------- Per-application settings ----------
 // Pick one per application: "senior" (recommended), "lead" or "analyst"
