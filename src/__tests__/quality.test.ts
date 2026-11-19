@@ -145,7 +145,7 @@ describe('certifications', () => {
     }
     const home = render('/').html;
     expect(home.indexOf('Credly badge:')).toBeGreaterThan(-1);
-    expect(home.indexOf('Credly badge:')).toBeLessThan(home.indexOf('Results at a glance'));
+    expect(home.indexOf('Credly badge:')).toBeLessThan(home.indexOf('>Results<'));
     // the home page shows the short form (validity range on one line); the full dates are on About
     expect(home).toContain('Valid Oct 2026');
     expect(render('/id/').html).toContain('Berlaku Okt 2026');
@@ -239,7 +239,7 @@ describe('home page flow (issue 7)', () => {
     const html = render('/id/').html;
     expect(html).toContain('Mari berdiskusi');
     expect(html).toContain('Cara saya bekerja');
-    // the plain-language result labels of the "Hasil sekilas" strip are translated too
+    // the plain-language result labels of the "Hasil" strip are translated too
     expect(html).toContain('Beban kerja planner, menggantikan perencanaan ulang manual di Excel');
   });
 });

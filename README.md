@@ -196,9 +196,9 @@ To give something an icon, add the lucide icon to the `icons` list under a short
 
 The home page and the footer offer a one-click download of the recommended resume PDF (`primaryResumeKey` in `src/content/resume.ts`); the Contact page has a Copy email button that also announces the result to screen readers.
 
-## Certifications and "Results at a glance"
+## Certifications and "Results"
 
-**Order on the home page:** hero, then Certifications, then Results at a glance, then featured work, stack. Certifications come first on purpose: they are third-party proof a visitor can verify in one click, so they are seen without scrolling far.
+**Order on the home page:** hero, then Certifications, then Results, then featured work, stack. Certifications come first on purpose: they are third-party proof a visitor can verify in one click, so they are seen without scrolling far.
 
 **Certifications** are shown by `src/components/CertCard.tsx` on Home and About: Credly badge, level, issuer, date issued, valid until, a short summary and a "Verify on Credly" link. Where the data lives:
 
@@ -208,7 +208,7 @@ The home page and the footer offer a one-click download of the recommended resum
 
 To add or renew a certification: add the line to the Typst resume, add its entry to `certMeta`, put the badge PNG in `public/certs/`, then `npm run extract`, `npm test` (a test checks the badge is a PNG, the dates are in order, the link is a Credly badge URL, and that certifications appear before the results) and `npm run build`. The valid-until date is written by hand, so update it when a certification is renewed.
 
-**Results at a glance** (`home.proof`) is the strip of four headline percentages (`proofSlugs` in `src/content/projects.ts`; the home share image uses the first three). It matters because a recruiter often scans for a few seconds, and measured results back up the claims in the hero. Keep it honest:
+**Results** (`home.proof`) is the strip of four headline percentages (`proofSlugs` in `src/content/projects.ts`; the home share image uses the first three). It matters because a recruiter often scans for a few seconds, and measured results back up the claims in the hero. Keep it honest:
 
 - Percentages only, never USD or absolute hours (see Content guardrails).
 - Every card is labelled Actual (measured after go-live) or Target (from an approved proposal). Never present a target as an actual.
@@ -221,7 +221,7 @@ Tracked as GitHub issues #1 to #6 in the public repository. All of them are CSS 
 | Animation | Where | How | Issue |
 |---|---|---|---|
 | Fade and rise on scroll | most sections | `.reveal`, scroll-driven CSS (`animation-timeline: view()`) | earlier work |
-| Numbers count up | Results at a glance | `CountUp.tsx`: counts the first number once when it scrolls into view; the final text stays in the HTML and the figure keeps its width (`ch` units, tabular digits) | #1 done |
+| Numbers count up | Results | `CountUp.tsx`: counts the first number once when it scrolls into view; the final text stays in the HTML and the figure keeps its width (`ch` units, tabular digits) | #1 done |
 | Diagram drawn step by step | case-study architecture diagrams | boxes fade in, then each connection is drawn (`stroke-dashoffset`) while the figure scrolls from the bottom edge to the middle of the screen; arrow heads are plain triangles so they can follow their line | #2 done |
 | Card lift and badge glint | project and certification cards | one shared `.lift` style (pointer devices only, also on keyboard focus); the glint is a gradient clipped to the badge shape with a mask | #3 done |
 | Growing timeline | Experience | a primary-coloured line grows with scroll and each dot lights up as its role enters the screen | #4 done |

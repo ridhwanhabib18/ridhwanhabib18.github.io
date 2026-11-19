@@ -41,7 +41,7 @@ export interface Project {
   tags: Tag[];
   stack: string[];
   metrics: Metric[];
-  /** Plain-language line for the "Results at a glance" card on the home page (says what changed, for a reader outside the plant). */
+  /** Plain-language line for the "Results" card on the home page (says what changed, for a reader outside the plant). */
   proofLabel?: L10n;
   sections: Sections;
   diagram?: DiagramDef;
