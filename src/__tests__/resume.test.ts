@@ -55,6 +55,13 @@ describe('resume source and PDF pipeline', () => {
     expect(script).toContain("prefix: 'ridhwan-habib-resume-au'");
   });
 
+  it('checks the published cover letter too, and keeps the phone number out of it', () => {
+    expect(readFileSync('scripts/guardrail.mjs', 'utf8')).toContain("'public/cover-letter.html'");
+    const letter = readFileSync('public/cover-letter.html', 'utf8');
+    expect(findViolations(letter, loadBlocklist())).toEqual([]);
+    expect(letter).not.toMatch(/\+\d{1,3}[\d ]{8,}/);
+  });
+
   it('exports PDF 2.0 and verifies the file header', () => {
     expect(script).toContain("PDF_VERSION = '2.0'");
     expect(script).toContain("'--pdf-standard', PDF_VERSION");

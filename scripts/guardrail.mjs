@@ -4,7 +4,8 @@ import { join } from 'node:path';
 import { findViolations, loadBlocklist } from './guardrail-lib.mjs';
 
 const root = process.cwd();
-const targets = ['src/content', 'src/i18n', 'resume', 'index.html'];
+// public/cover-letter.html is plain published text outside src/, so it is listed here on purpose.
+const targets = ['src/content', 'src/i18n', 'resume', 'index.html', 'public/cover-letter.html'];
 const blocklist = loadBlocklist(root);
 
 if (blocklist.length === 0) {
