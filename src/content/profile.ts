@@ -24,8 +24,8 @@ const certMeta: Record<string, CertMeta> = {
     issued: '2026-10-08',
     expires: '2029-10-08',
     summary: {
-      en: 'Foundational understanding of IT services and their uses in the AWS Cloud, and the essential AWS services needed to set up AWS-focused projects.',
-      id: 'Pemahaman dasar tentang layanan TI dan penggunaannya di AWS Cloud, serta layanan AWS penting untuk menyiapkan proyek berbasis AWS.',
+      en: 'Core AWS Cloud services and what they are used for.',
+      id: 'Layanan inti AWS Cloud dan kegunaannya.',
     },
   },
   'AIF-C01': {
@@ -35,8 +35,8 @@ const certMeta: Record<string, CertMeta> = {
     issued: '2026-09-24',
     expires: '2029-09-24',
     summary: {
-      en: 'AI, machine learning and generative AI concepts in general and on AWS, choosing the right AI/ML technology for a use case, and using it responsibly.',
-      id: 'Konsep AI, machine learning, dan generative AI secara umum dan di AWS, memilih teknologi AI/ML yang tepat untuk suatu kasus, serta menggunakannya secara bertanggung jawab.',
+      en: 'AI, machine learning and generative AI concepts, on AWS and in general, and choosing the right AI/ML tool.',
+      id: 'Konsep AI, machine learning, dan generative AI, di AWS dan secara umum, serta memilih teknologi AI/ML yang tepat.',
     },
   },
 };
@@ -63,8 +63,8 @@ export const profile = {
     id: 'Full Stack Software Engineer (.NET)',
   } as L10n,
   positioning: {
-    en: 'I turn manufacturing requirements into reliable production software—from business case and system design to deployment and production support.',
-    id: 'Saya menerjemahkan kebutuhan manufaktur menjadi perangkat lunak produksi yang andal—dari business case dan desain sistem hingga deployment dan dukungan produksi.',
+    en: 'I build production software for manufacturing, from business case to deployment and support.',
+    id: 'Saya membangun perangkat lunak produksi untuk manufaktur, dari business case hingga deployment dan dukungan.',
   } as L10n,
   /** Roles shown one at a time (typed) under the headline; the first is the one in the pre-rendered HTML. */
   alsoRoles: {
@@ -77,12 +77,12 @@ export const profile = {
   } as L10n,
   about: {
     en: [
-      'I am a Full Stack .NET Engineer and technical lead of a 2-person team at PT Indonesia Epson Industry. Over 4+ years I have delivered 5 manufacturing systems end to end, from business case and stage-gate design reviews to architecture, code, deployment and production support.',
-      'My background is in Electrical Engineering (Universitas Gadjah Mada), so I am comfortable where software meets hardware and production lines.',
+      'Full Stack .NET Engineer and technical lead of a 2-person team at PT Indonesia Epson Industry. In 4+ years I delivered 5 manufacturing systems, from business case to production support.',
+      'I studied Electrical Engineering (Universitas Gadjah Mada), so I am at ease where software meets hardware and production lines.',
     ],
     id: [
-      'Saya Full Stack .NET Engineer sekaligus technical lead tim beranggotakan 2 orang di PT Indonesia Epson Industry. Selama lebih dari 4 tahun saya telah menyelesaikan 5 sistem manufaktur secara end to end, mulai dari business case dan stage-gate design review hingga arsitektur, kode, deployment, dan dukungan produksi.',
-      'Latar belakang saya Teknik Elektro (Universitas Gadjah Mada), sehingga saya nyaman bekerja di titik temu perangkat lunak, perangkat keras, dan lini produksi.',
+      'Full Stack .NET Engineer dan technical lead tim 2 orang di PT Indonesia Epson Industry. Dalam 4+ tahun saya menyelesaikan 5 sistem manufaktur, dari business case hingga dukungan produksi.',
+      'Saya lulusan Teknik Elektro (Universitas Gadjah Mada), jadi terbiasa di titik temu perangkat lunak, perangkat keras, dan lini produksi.',
     ],
   } as L10n<string[]>,
   howIWork: [
@@ -90,8 +90,8 @@ export const profile = {
       icon: 'workflow' as const,
       title: { en: 'System design', id: 'Desain sistem' } as L10n,
       body: {
-        en: 'Layered architecture, PRDs, system designs, ERDs and ADRs, so knowledge does not live in one person’s head.',
-        id: 'Arsitektur berlapis, PRD, desain sistem, ERD, dan ADR, agar pengetahuan tidak hanya ada di kepala satu orang.',
+        en: 'Layered architecture, PRDs, system designs, ERDs and ADRs.',
+        id: 'Arsitektur berlapis, PRD, desain sistem, ERD, dan ADR.',
       } as L10n,
     },
     {
@@ -114,8 +114,8 @@ export const profile = {
       icon: 'users' as const,
       title: { en: 'People', id: 'Kolaborasi' } as L10n,
       body: {
-        en: 'I turn requirements from production, engineering, purchasing and management into proposals, present them at design reviews and mentor a junior developer.',
-        id: 'Saya mengubah kebutuhan dari produksi, engineering, purchasing, dan manajemen menjadi proposal, mempresentasikannya di design review, dan membimbing seorang junior developer.',
+        en: 'Turn requirements into proposals, present at design reviews, mentor a junior developer.',
+        id: 'Mengubah kebutuhan menjadi proposal, presentasi di design review, membimbing junior developer.',
       } as L10n,
     },
   ],
