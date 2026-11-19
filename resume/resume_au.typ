@@ -50,7 +50,7 @@
 ]
 
 == Impact Highlights
-- *About 86% faster* part review preparation and fully paperless part review in the Parts Engineering system, and *about 96% faster* part approval certification preparation in the certification workflow I supported (actual)
+- *About 86% faster* part review preparation and fully paperless part review in the Parts Engineering system (actual)
 - *About 90% faster* production-line program update (hours to minutes), with no flash-disk distribution and no wrong-version installs, in the Production File Distribution system (actual)
 - *Targets:* about 48% less planner workload (Production Planning) and a large reduction in manual invoice handling effort (Paperless Invoice), per approved proposals
 

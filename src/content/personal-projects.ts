@@ -36,7 +36,6 @@ export interface PersonalProject {
   stackGroups: { group: L10n; items: string[] }[];
   highlights: L10n<string[]>;
   docs: { label: L10n; href: string }[];
-  gettingStarted: { requirements: L10n; commands: string[] };
   phases: { n: number; scope: L10n; done: boolean; note?: L10n }[];
   /** Images copied from the project's repository into public/projects/<slug>/ (fictional demo data only). */
   gallery: { kind: 'flow' | 'shot'; file: string; width: number; height: number; caption: L10n }[];
@@ -268,18 +267,6 @@ export const personalProjects: PersonalProject[] = [
       ],
     },
     docs: [],
-    gettingStarted: {
-      requirements: { en: '.NET 10 SDK, Node.js 24 and Docker with Compose.', id: '.NET 10 SDK, Node.js 24, dan Docker dengan Compose.' },
-      commands: [
-        '# 1. Start SQL Server, Keycloak and SeaweedFS (copy the example env file first)',
-        'cp infra/.env.example infra/.env',
-        'docker compose -f infra/docker-compose.yml --env-file infra/.env up -d',
-        '# 2. Run the API (applies migrations and seeds a fictional demo school in Development)',
-        'dotnet run --project src/SchoMans.Api',
-        '# 3. Run the web app',
-        'cd web && npm install && npm run dev',
-      ],
-    },
     phases: [
       { n: 1, scope: { en: 'Foundation: solution, Docker Compose, authentication and roles, i18n, demo data', id: 'Fondasi: solusi, Docker Compose, autentikasi dan peran, i18n, data demo' }, done: true },
       { n: 2, scope: { en: 'Core data: master data, announcements', id: 'Data inti: data induk, pengumuman' }, done: true },
@@ -515,18 +502,6 @@ export const personalProjects: PersonalProject[] = [
       ],
     },
     docs: [],
-    gettingStarted: {
-      requirements: { en: 'Windows 10 (1607) or newer, 64-bit. To build: the .NET 10 SDK. For the firmware: the Arduino IDE with the MAX6675 library.', id: 'Windows 10 (1607) atau lebih baru, 64-bit. Untuk membangun: .NET 10 SDK. Untuk firmware: Arduino IDE dengan pustaka MAX6675.' },
-      commands: [
-        '# 1. Flash firmware/Program_PID_CP/Program_PID_CP.ino to the board (Arduino IDE, "MAX6675 library")',
-        '# 2. Check everything that needs no roaster: restore, build, tests and the firmware simulation',
-        './check.ps1',
-        '# 3. Run the app, or publish one self-contained .exe',
-        'dotnet run --project src/CoffeeRoasto.App -c Release',
-        './installer/publish.ps1',
-        '# Always test with the burner disconnected before the first real roast',
-      ],
-    },
     phases: [],
     gallery: [
       { kind: 'flow', file: 'flows/pid-roast.gif', width: 1100, height: 695, caption: { en: 'A whole 29-minute roast replayed through the real window: the bean temperature follows the reference', id: 'Satu sangrai penuh 29 menit diputar ulang lewat jendela asli: suhu biji mengikuti acuan' } },
@@ -780,21 +755,6 @@ export const personalProjects: PersonalProject[] = [
       ],
     },
     docs: [],
-    gettingStarted: {
-      requirements: { en: '.NET SDK 10, Node.js 24.15 or newer, and Docker for PostgreSQL and Keycloak (about 1 GB of memory for Keycloak). The production package needs only Docker.', id: '.NET SDK 10, Node.js 24.15 atau lebih baru, dan Docker untuk PostgreSQL dan Keycloak (sekitar 1 GB memori untuk Keycloak). Paket produksi hanya membutuhkan Docker.' },
-      commands: [
-        '# 1. PostgreSQL and Keycloak (copy the example env file first and pick local values)',
-        'cp .env.example .env',
-        'docker compose up -d',
-        '# 2. API on port 5036 (migrates and seeds the demo data in Development)',
-        'cd backend/src/LineWise.Api && dotnet run --launch-profile http',
-        '# 3. Web app on port 4200',
-        'cd frontend && npm ci && npx ng serve',
-        '# Or run the production package and its 20-check smoke test',
-        'docker compose --env-file .env.prod -f docker-compose.prod.yml up -d --build',
-        'bash deploy/scripts/smoke.sh',
-      ],
-    },
     phases: [
       { n: 1, scope: { en: 'Foundation: Angular shell, ASP.NET Core API, PostgreSQL, EF Core migration, first vertical slice', id: 'Fondasi: shell Angular, API ASP.NET Core, PostgreSQL, migrasi EF Core, irisan vertikal pertama' }, done: true },
       { n: 2, scope: { en: 'Authentication and access: Keycloak sign-in, roles, permission matrix, Administration screens', id: 'Autentikasi dan akses: masuk dengan Keycloak, peran, matriks izin, layar Administrasi' }, done: true },

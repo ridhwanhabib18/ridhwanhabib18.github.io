@@ -108,8 +108,8 @@ describe('personal projects', () => {
     expect(routes).toContain('/work/schomans');
     expect(routes).toContain('/id/work/schomans');
     for (const [route, expected] of [
-      ['/work/schomans', ['Done', 'Overview', 'Features', 'System architecture', 'System design', 'Key decisions (ADRs)', 'Tech stack', 'Build phases', 'Getting started', 'Screenshots and flows', 'ADR-005', 'F-03', 'Clean Architecture']],
-      ['/id/work/schomans', ['Selesai', 'Ringkasan', 'Fitur', 'Arsitektur sistem', 'Desain sistem', 'Keputusan penting (ADR)', 'Fase pengerjaan', 'Cara memulai', 'Tangkapan layar dan alur', 'ADR-005', 'F-03']],
+      ['/work/schomans', ['Done', 'Overview', 'Features', 'System architecture', 'System design', 'Key decisions (ADRs)', 'Tech stack', 'Build phases', 'Screenshots and flows', 'ADR-005', 'F-03', 'Clean Architecture']],
+      ['/id/work/schomans', ['Selesai', 'Ringkasan', 'Fitur', 'Arsitektur sistem', 'Desain sistem', 'Keputusan penting (ADR)', 'Fase pengerjaan', 'Tangkapan layar dan alur', 'ADR-005', 'F-03']],
     ] as [string, string[]][]) {
       const { html, head } = render(route);
       for (const text of expected) expect(html, `${route}: ${text}`).toContain(text);
@@ -125,8 +125,8 @@ describe('personal projects', () => {
     expect(routes).toContain('/id/work/coffee-roasto');
     const p = personalProjects.find((x) => x.slug === 'coffee-roasto')!;
     for (const [route, expected, absent] of [
-      ['/work/coffee-roasto', ['Done', 'Overview', 'Features', 'FR-9', 'Control loop (PID on the Arduino)', 'Known limitations', 'Key decisions (ADRs)', 'ADR-006', 'Tech stack', 'WPF-UI 4 (Fluent)', 'Getting started', 'Screenshots and flows'], ['id="p-phases"']],
-      ['/id/work/coffee-roasto', ['Selesai', 'Ringkasan', 'Fitur', 'FR-9', 'Loop kendali (PID di Arduino)', 'Keterbatasan yang diketahui', 'ADR-006', 'Cara memulai'], ['id="p-phases"']],
+      ['/work/coffee-roasto', ['Done', 'Overview', 'Features', 'FR-9', 'Control loop (PID on the Arduino)', 'Known limitations', 'Key decisions (ADRs)', 'ADR-006', 'Tech stack', 'WPF-UI 4 (Fluent)', 'Screenshots and flows'], ['id="p-phases"']],
+      ['/id/work/coffee-roasto', ['Selesai', 'Ringkasan', 'Fitur', 'FR-9', 'Loop kendali (PID di Arduino)', 'Keterbatasan yang diketahui', 'ADR-006'], ['id="p-phases"']],
     ] as [string, string[], string[]][]) {
       const { html, head } = render(route);
       for (const text of expected) expect(html, `${route}: ${text}`).toContain(text);
@@ -150,8 +150,8 @@ describe('personal projects', () => {
       expect(g.caption.id, g.file).toContain('Muhammad Ridhwan Habib Abdillah');
     }
     for (const [route, expected] of [
-      ['/work/linewise', ['Done', 'Overview', 'Features', 'FR-08', 'Key decisions (ADRs)', 'ADR-010', 'Build phases', 'Tech stack', 'Angular Material', 'Getting started', 'Screenshots and flows', 'Demo by Muhammad Ridhwan Habib Abdillah']],
-      ['/id/work/linewise', ['Selesai', 'Ringkasan', 'Fitur', 'FR-08', 'Fase pengerjaan', 'Cara memulai', 'Demo oleh Muhammad Ridhwan Habib Abdillah']],
+      ['/work/linewise', ['Done', 'Overview', 'Features', 'FR-08', 'Key decisions (ADRs)', 'ADR-010', 'Build phases', 'Tech stack', 'Angular Material', 'Screenshots and flows', 'Demo by Muhammad Ridhwan Habib Abdillah']],
+      ['/id/work/linewise', ['Selesai', 'Ringkasan', 'Fitur', 'FR-08', 'Fase pengerjaan', 'Demo oleh Muhammad Ridhwan Habib Abdillah']],
     ] as [string, string[]][]) {
       const { html, head } = render(route);
       for (const text of expected) expect(html, `${route}: ${text}`).toContain(text);

@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useI18n } from '@/i18n';
-import { resumePdfPath, resumeRegions, resumeVariants, type ResumeRegion } from '@/content/resume';
+import { resumePdfPath, resumeRegions, resumeSummary, resumeVariants, type ResumeRegion } from '@/content/resume';
 import { eyebrow, narrow } from '@/lib/ui';
 import { cn } from '@/lib/utils';
 
@@ -51,7 +51,7 @@ export default function Resume() {
               <Card>
                 <CardContent className="flex flex-col items-start gap-4">
                   <p className={eyebrow}>{l(v.target)}</p>
-                  <p className="leading-relaxed">{l(v.summary)}</p>
+                  <p className="leading-relaxed">{l(resumeSummary(region, v.key))}</p>
                   {v.pdf ? (
                     <>
                       <Button asChild>

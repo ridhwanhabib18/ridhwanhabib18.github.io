@@ -68,6 +68,19 @@ function dates(block) {
   return { start: stringField(block, 'start-date'), end: stringField(block, 'end-date') };
 }
 
+/** Only the role summaries (`#let summaries = (...)`), for the Canada and Australia files whose other sections the site does not use. */
+export function extractSummaries(source) {
+  const text = source
+    .split(/\r?\n/)
+    .filter((l) => !l.trim().startsWith('//'))
+    .join('\n');
+  const block = text.match(/#let summaries = \(([\s\S]*?)\n\)/);
+  if (!block) throw new Error('extract-resume: summaries block not found');
+  const summaries = {};
+  for (const m of block[1].matchAll(/(\w+):\s*"((?:[^"\\]|\\.)*)"/g)) summaries[m[1]] = unescape(m[2]);
+  return summaries;
+}
+
 export function extractResume(source) {
   // Drop whole-line comments (TODO notes etc.).
   const text = source

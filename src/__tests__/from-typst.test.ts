@@ -1,9 +1,9 @@
 import { readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
 // @ts-expect-error plain ESM helper without types
-import { extractResume } from '../../scripts/extract-resume-lib.mjs';
+import { extractResume, extractSummaries } from '../../scripts/extract-resume-lib.mjs';
 import { idTranslations } from '../content/resume.id';
-import { resumeData, translatableStrings } from '../content/resume-data';
+import { regionSummaries, resumeData, translatableStrings } from '../content/resume-data';
 import { resumeVariants } from '../content/resume';
 import { roles } from '../content/experience';
 import { profile } from '../content/profile';
@@ -15,6 +15,12 @@ describe('web content follows the Typst resume source', () => {
   it('has a generated data file that is up to date with resume/resume_us.typ', () => {
     // If this fails, run `npm run extract` (it also runs before `npm run dev` and `npm run build`).
     expect(resumeData).toEqual(extractResume(typ));
+  });
+
+  it('has Canada and Australia summaries that are up to date with their sources', () => {
+    for (const r of ['ca', 'au'] as const) {
+      expect(regionSummaries[r], r).toEqual(extractSummaries(readFileSync(`resume/resume_${r}.typ`, 'utf8')));
+    }
   });
 
   it('keeps the phone number out of the public repository and out of published content', () => {

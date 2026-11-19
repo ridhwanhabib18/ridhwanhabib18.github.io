@@ -39,7 +39,7 @@ export function markSvg({ color = '#fff', size = 20, text = MARK } = {}) {
 }
 
 /** An <svg> filling a square icon: coloured background plus the mark at `fraction` of the icon width. */
-export function iconSvg({ size, fraction, background = '#26428b', color = '#fff', rounded = 0, text = MARK }) {
+export function iconSvg({ size, fraction, background = '#214092', color = '#fff', rounded = 0, text = MARK }) {
   const g = markGeometry(text);
   const markW = size * fraction;
   const markH = (g.height / g.width) * markW;

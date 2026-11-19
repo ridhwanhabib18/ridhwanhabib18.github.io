@@ -1,0 +1,12 @@
+{
+  "ca": {
+    "senior": "Full Stack .NET Engineer with 4+ years at PT Indonesia Epson Industry, a global manufacturer. Delivered 5 production systems end to end with ASP.NET Core, React/TypeScript and SQL Server, backed by CI/CD, integration tests and clear system design. One system cut part review preparation by about 86% and eliminated paper and ink.",
+    "lead": "Full Stack .NET Engineer and technical lead of a 2-person team at PT Indonesia Epson Industry. Over 4+ years, delivered 5 manufacturing systems end to end, from business case and stage-gate design reviews to architecture, ASP.NET Core and React code, SQL Server, CI/CD and production support. Set coding standards, run code reviews and mentor a junior developer.",
+    "analyst": "Full Stack .NET Engineer with 4+ years at PT Indonesia Epson Industry who turns requirements from production, engineering, purchasing and management into business cases, PRDs and system designs, then delivers them. Delivered 5 manufacturing systems; one cut part review preparation by about 86%."
+  },
+  "au": {
+    "senior": "Full Stack .NET Engineer with 4+ years at PT Indonesia Epson Industry, a global manufacturer. Delivered 5 production systems end to end with ASP.NET Core, React/TypeScript and SQL Server, backed by CI/CD, integration tests and clear system design. One system cut part review preparation by about 86% and eliminated paper and ink. Seeking a Senior Software Engineer role.",
+    "lead": "Full Stack .NET Engineer and technical lead of a 2-person team at PT Indonesia Epson Industry. Over 4+ years, delivered 5 manufacturing systems end to end, from business case and stage-gate design reviews to architecture, ASP.NET Core and React code, SQL Server, CI/CD and production support. Set coding standards, run code reviews and mentor a junior developer. Seeking a Tech Lead role.",
+    "analyst": "Full Stack .NET Engineer with 4+ years at PT Indonesia Epson Industry who turns requirements from production, engineering, purchasing and management into business cases, PRDs and system designs, then delivers them. Delivered 5 manufacturing systems; one cut part review preparation by about 86%. Seeking a System Analyst role."
+  }
+}

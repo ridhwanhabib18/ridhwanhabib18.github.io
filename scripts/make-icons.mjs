@@ -6,7 +6,8 @@ import { join } from 'node:path';
 import { chromium } from '@playwright/test';
 import { iconSvg, markSvg } from './brand-mark.mjs';
 
-const COLOR = '#26428b';
+// The site's light-theme --primary, oklch(0.4 0.14 265), in sRGB.
+const COLOR = '#214092';
 
 // "maskable" icons are cropped to a shape by the OS, so the mark must stay inside the central safe zone.
 const ICONS = [

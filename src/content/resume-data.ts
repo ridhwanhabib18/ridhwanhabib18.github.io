@@ -1,4 +1,5 @@
 import data from './resume.generated.json';
+import regionData from './resume.regions.generated.json';
 import { idTranslations } from './resume.id';
 import type { L10n } from './types';
 
@@ -26,6 +27,9 @@ export interface ResumeData {
 
 export const resumeData = data as unknown as ResumeData;
 
+/** Summaries of the Canada and Australia resumes (resume/resume_ca.typ, resume_au.typ). The United States ones are in resumeData.summaries. */
+export const regionSummaries = regionData as Record<'ca' | 'au', ResumeData['summaries']>;
+
 /** English comes straight from the Typst source; Indonesian from resume.id.ts (falls back to English). */
 export const toL10n = (en: string): L10n => ({ en, id: idTranslations[en] ?? en });
 
@@ -34,7 +38,7 @@ export const gpaOf = (degree: string) => degree.split(', GPA')[1]?.trim() ?? '';
 
 /** Every English string from the resume source that must have an Indonesian translation. */
 export function translatableStrings(r: ResumeData = resumeData): string[] {
-  const out = [r.location, ...Object.values(r.summaries)];
+  const out = [r.location, ...Object.values(r.summaries), ...Object.values(regionSummaries).flatMap((s) => Object.values(s))];
   for (const role of r.experience) for (const b of role.bullets) out.push(...(b.title ? [b.title, b.text] : [b.text]));
   for (const s of r.skills) out.push(s.group);
   for (const e of r.education) out.push(degreeName(e.degree));

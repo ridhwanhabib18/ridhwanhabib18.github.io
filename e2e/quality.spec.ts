@@ -418,7 +418,7 @@ test.describe('a personal project has its own page', () => {
     await expect(page).toHaveURL(/\/work\/schomans\/?$/);
     await expect(page.getByRole('heading', { level: 1, name: /SchoMans/ })).toBeVisible();
     await expect(page.getByText('Done', { exact: true }).first()).toBeVisible();
-    for (const h of ['Overview', 'Features', 'System architecture', 'System design', 'Key decisions (ADRs)', 'Tech stack', 'Build phases', 'Getting started', 'Screenshots and flows']) {
+    for (const h of ['Overview', 'Features', 'System architecture', 'System design', 'Key decisions (ADRs)', 'Tech stack', 'Build phases', 'Screenshots and flows']) {
       await expect(page.getByRole('heading', { level: 2, name: h })).toBeVisible();
     }
     // the architecture is drawn as pictures on a wide screen
@@ -469,7 +469,7 @@ test('Experience: a role opens and closes cleanly, and a closed role stays close
 test('the Coffee Roasto page shows its sections, says the code is private, and shows its pictures', async ({ page }) => {
   await page.goto('/work/coffee-roasto/');
   await expect(page.getByRole('heading', { level: 1, name: /Coffee Roasto/ })).toBeVisible();
-  for (const h of ['Overview', 'Features', 'System architecture', 'System design', 'Key decisions (ADRs)', 'Tech stack', 'Getting started']) {
+  for (const h of ['Overview', 'Features', 'System architecture', 'System design', 'Key decisions (ADRs)', 'Tech stack']) {
     await expect(page.getByRole('heading', { level: 2, name: h })).toBeVisible();
   }
   await expect(page.getByRole('heading', { level: 2, name: 'Build phases' })).toHaveCount(0);
@@ -486,7 +486,7 @@ test('the Coffee Roasto page shows its sections, says the code is private, and s
 test('the LineWise page shows its sections, the contents row, the demo credit and its pictures', async ({ page }) => {
   await page.goto('/work/linewise/');
   await expect(page.getByRole('heading', { level: 1, name: /LineWise/ })).toBeVisible();
-  for (const h of ['Overview', 'Features', 'System architecture', 'System design', 'Key decisions (ADRs)', 'Tech stack', 'Build phases', 'Getting started']) {
+  for (const h of ['Overview', 'Features', 'System architecture', 'System design', 'Key decisions (ADRs)', 'Tech stack', 'Build phases']) {
     await expect(page.getByRole('heading', { level: 2, name: h })).toBeVisible();
   }
   await expect(page.locator('a[href*="github.com/ridhwanhabib18/LineWise"]')).toHaveCount(0);
@@ -550,4 +550,16 @@ test('the Resume page offers the United States, Canada and Australia formats', a
     expect(res.status(), href).toBe(200);
     expect((await res.body()).subarray(0, 8).toString('latin1')).toBe('%PDF-2.0');
   }
+});
+
+test('the Resume summary follows the chosen country format', async ({ page }) => {
+  await page.goto('/resume/');
+  await page.getByRole('tab', { name: 'Senior Engineer' }).click();
+  const panel = page.getByRole('tabpanel');
+  await expect(panel).not.toContainText('Seeking a Senior Software Engineer role.');
+  await page.getByRole('button', { name: 'Australia' }).click();
+  await expect(panel).toContainText('Seeking a Senior Software Engineer role.');
+  await page.getByRole('button', { name: 'Canada' }).click();
+  await expect(panel).toContainText('PT Indonesia Epson Industry');
+  await expect(panel).not.toContainText('Seeking a Senior Software Engineer role.');
 });

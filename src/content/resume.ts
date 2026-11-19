@@ -1,4 +1,4 @@
-import { resumeData, toL10n } from './resume-data';
+import { regionSummaries, resumeData, toL10n } from './resume-data';
 import type { L10n } from './types';
 
 export type ResumeKey = 'lead' | 'senior' | 'analyst';
@@ -17,6 +17,11 @@ export const resumeRegions: ResumeRegionInfo[] = [
   { key: 'ca', label: { en: 'Canada', id: 'Kanada' }, note: { en: 'US Letter paper, Canadian format (no photo, no date of birth)', id: 'Kertas US Letter, format Kanada (tanpa foto, tanpa tanggal lahir)' } },
   { key: 'au', label: { en: 'Australia', id: 'Australia' }, note: { en: 'A4 paper, Australian format', id: 'Kertas A4, format Australia' } },
 ];
+
+/** Summary of a role in a country format: the same text as in that country's PDF. */
+export function resumeSummary(region: ResumeRegion, key: ResumeKey): L10n {
+  return toL10n(region === 'us' ? resumeData.summaries[key] : regionSummaries[region][key]);
+}
 
 /** Path under public/ of the PDF for a country and role. The United States keeps the original file names. */
 export function resumePdfPath(region: ResumeRegion, key: ResumeKey): string {

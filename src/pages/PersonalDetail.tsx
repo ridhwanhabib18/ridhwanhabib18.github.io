@@ -51,7 +51,6 @@ export default function PersonalDetail({ p }: { p: PersonalProject }) {
     ['p-stack', t('personal.stack')],
     ...(p.phases.length > 0 ? [['p-phases', t('personal.phases')] as [string, string]] : []),
     ...(p.docs.length > 0 ? [['p-docs', t('personal.docs')] as [string, string]] : []),
-    ['p-start', t('personal.start')],
     ['p-gallery', t('personal.gallery')],
   ];
 
@@ -316,16 +315,6 @@ export default function PersonalDetail({ p }: { p: PersonalProject }) {
 
 </>
 )}
-        <Block id="p-start" title={t('personal.start')} lead={`${t('personal.requirements')}: ${l(p.gettingStarted.requirements)}`}>
-          <div className="mb-3 flex items-center gap-2 text-sm text-muted-foreground">
-            <AppIcon name="terminal" className="text-primary" />
-            {t('personal.start')}
-          </div>
-          <pre tabIndex={0} aria-label={t('personal.start')} className="max-w-3xl overflow-x-auto rounded-lg border bg-card p-4 font-mono text-sm">
-            <code>{p.gettingStarted.commands.join('\n')}</code>
-          </pre>
-        </Block>
-
         <Block id="p-gallery" title={t('personal.gallery')} lead={t('personal.galleryNote')}>
           <h3 className={cn(eyebrow, 'mb-3 flex items-center gap-2')}>
             <AppIcon name="play" />

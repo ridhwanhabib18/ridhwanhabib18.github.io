@@ -78,7 +78,7 @@ export function cardHtml(card, fonts) {
   .id { display: flex; align-items: center; gap: 12px; font-size: 22px; white-space: nowrap; min-width: 0; flex: 1; }
   .id strong { font-weight: 700; }
   .id span { color: #a3afc4; overflow: hidden; text-overflow: ellipsis; }
-  .mark { width: 38px; height: 38px; flex-shrink: 0; border-radius: 10px; background: #26428b; display: grid; place-items: center; }
+  .mark { width: 38px; height: 38px; flex-shrink: 0; border-radius: 10px; background: #214092; display: grid; place-items: center; }
   .domain { font-family: 'OGMono', monospace; font-size: 21px; color: #b7ccff; white-space: nowrap; flex-shrink: 0; }
 </style></head>
 <body>

@@ -9,7 +9,8 @@ import { ogImageName, ogImageUrl } from '../lib/site';
 
 const FONTS = { inter: 'file:///inter.woff2', mono: 'file:///mono.woff2' };
 
-describe('share image names', () => {
+// Renders every pre-rendered page; under a full parallel run this can take longer than the 5 s default.
+describe('share image names', { timeout: 30_000 }, () => {
   it('derives the file name from the page path', () => {
     expect(ogImageName('/')).toBe('home');
     expect(ogImageName('/id')).toBe('id');
