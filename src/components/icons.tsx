@@ -47,6 +47,7 @@ import {
   Wrench,
   Zap,
   MapPin,
+  MessageCircle,
   Activity,
   Cable,
   Cpu,
@@ -122,6 +123,7 @@ export const icons = {
   alert: ShieldAlert,
   thermometer: Thermometer,
   mail: Mail,
+  message: MessageCircle,
 } satisfies Record<string, LucideIcon>;
 
 export type IconName = keyof typeof icons;

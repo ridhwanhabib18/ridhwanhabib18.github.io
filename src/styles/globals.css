@@ -194,6 +194,39 @@
   }
 }
 
+/* Two-column lists (.reveal-sides): the left card slides in from the left and the right card from the right, as they come into
+   view. Only where the grid really has two columns; on a phone the cards keep the plain rise. Same scroll-driven rules as .reveal. */
+@keyframes reveal-from-left {
+  from {
+    opacity: 0;
+    transform: translateX(-1.5rem);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes reveal-from-right {
+  from {
+    opacity: 0;
+    transform: translateX(1.5rem);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) and (min-width: 640px) {
+    .reveal-sides > :nth-child(odd) {
+      animation-name: reveal-from-left;
+    }
+    .reveal-sides > :nth-child(even) {
+      animation-name: reveal-from-right;
+    }
+  }
+}
+
 /* Page intro (.stagger): the children of a page header rise in one after another when the page opens, with a clear
    gap between them so the title, then the lead, then the details read in order. Time based, so it also plays on a
    page that is already fully in view. Reduced motion and print show it still. */

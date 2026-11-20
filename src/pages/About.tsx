@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { useI18n } from '@/i18n';
+import { Stats } from '@/components/Stats';
 import { profile } from '@/content/profile';
 import { eyebrow, h2, narrow } from '@/lib/ui';
 import { cn } from '@/lib/utils';
@@ -54,8 +55,11 @@ export default function About() {
           ))}
         </div>
 
+        <h2 className="sr-only">{t('about.stats')}</h2>
+        <Stats className="mt-8" />
+
         <h2 className={cn(h2, 'mt-12 mb-4')}>{t('about.how')}</h2>
-        <ul className="reveal-items grid gap-4 sm:grid-cols-2">
+        <ul className="reveal-items reveal-sides grid gap-4 sm:grid-cols-2">
           {profile.howIWork.map((h) => (
             <li key={h.title.en}>
               <Card className="h-full flex-row gap-3 px-5">

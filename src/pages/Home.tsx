@@ -6,6 +6,7 @@ import { CopyButton } from '@/components/CopyButton';
 import { AppIcon, IconTile } from '@/components/icons';
 import { CountUp } from '@/components/CountUp';
 import { Seo } from '@/components/Seo';
+import { Stats } from '@/components/Stats';
 import { Reveal } from '@/components/Reveal';
 import { RotatingWord } from '@/components/RotatingWord';
 import { CoreSkills, MetricBadge, ProjectCard, Section, StackChips } from '@/components/Parts';
@@ -131,6 +132,15 @@ export default function Home() {
         </div>
       </section>
 
+      <section aria-labelledby="stats-h" className="border-b py-6">
+        <div className={container}>
+          <h2 id="stats-h" className="sr-only">
+            {t('about.stats')}
+          </h2>
+          <Stats />
+        </div>
+      </section>
+
       <section aria-labelledby="cert-h" className="border-b py-6">
         <div className={container}>
           <h2 id="cert-h" className={cn(eyebrow, 'mb-3 flex items-center gap-2')}>
@@ -191,7 +201,7 @@ export default function Home() {
         </div>
       </Section>
 
-      <Section id="how-h" icon="workflow" title={t('about.how')}>
+      <Section id="how-h" icon="wrench" title={t('about.how')}>
         <ul className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {profile.howIWork.map((h) => (
             <li key={h.title.en} className="flex gap-3">
@@ -234,7 +244,8 @@ export default function Home() {
         <div className="relative flex flex-col items-center overflow-hidden rounded-3xl border bg-card/60 px-6 py-12 text-center sm:py-14">
           <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-[radial-gradient(40rem_16rem_at_50%_0%,var(--glow),transparent_75%)]" />
           <div className="relative flex flex-col items-center">
-          <h2 id="cta-h" className={h2}>
+          <h2 id="cta-h" className={cn(h2, 'flex items-center gap-3')}>
+            <IconTile name="message" size="sm" />
             {t('home.ctaTitle')}
           </h2>
           <p className="mt-2 max-w-xl text-muted-foreground">{t('contact.lead')}</p>
