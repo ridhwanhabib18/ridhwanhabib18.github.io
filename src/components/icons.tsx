@@ -56,6 +56,12 @@ import {
   Gauge,
   ShieldAlert,
   Thermometer,
+  Cloud,
+  GitBranch,
+  Code,
+  Clock,
+  Container,
+  Layers,
   type LucideIcon,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -122,6 +128,12 @@ export const icons = {
   gauge: Gauge,
   alert: ShieldAlert,
   thermometer: Thermometer,
+  cloud: Cloud,
+  git: GitBranch,
+  code: Code,
+  clock: Clock,
+  container: Container,
+  layers: Layers,
   mail: Mail,
   message: MessageCircle,
 } satisfies Record<string, LucideIcon>;
@@ -141,6 +153,29 @@ export function IconTile({ name, size = 'md', className }: { name: IconName; siz
       <AppIcon name={name} className="size-5" />
     </span>
   );
+}
+
+/** A generic icon for a skill, chosen by keyword in its name (first match wins). Anything unknown gets the code icon. */
+const skillRules: [RegExp, IconName][] = [
+  [/sql|postgres|database|dapper|entity framework|npgsql/i, 'database'],
+  [/\baws\b|cloud|\bs3\b|minio|seaweed|\br2\b/i, 'cloud'],
+  [/keycloak|oidc|oauth|auth/i, 'key'],
+  [/signalr|websocket|real-time/i, 'radio'],
+  [/quartz|hangfire|scheduler/i, 'clock'],
+  [/claude|ollama|\bai\b|bedrock|textract/i, 'sparkles'],
+  [/docker|compose|caddy|\biis\b|linux/i, 'container'],
+  [/\bgit|actions|ci\/cd/i, 'git'],
+  [/code review/i, 'clipboard-check'],
+  [/xunit|vitest|playwright|testcontainers|testing|\buat\b/i, 'flask'],
+  [/winforms|wpf|clickonce|desktop/i, 'monitor'],
+  [/report|scottplot|excel|recharts|chart/i, 'chart'],
+  [/arduino|embedded|\bpid\b|serial|max6675|c\/c\+\+/i, 'cpu'],
+  [/\brpa\b|automation/i, 'zap'],
+  [/architecture|system design|\badrs?\b|\bprds?\b|\bsdlc\b|agile|waterfall|requirements|business case|rest api|openapi/i, 'workflow'],
+  [/react|angular|vue|tailwind|shadcn|bootstrap|razor|html|css|vite|zustand|tanstack|rxjs|router|i18n|jquery|ajax|axios|orval/i, 'layers'],
+];
+export function skillIcon(name: string): IconName {
+  return skillRules.find(([re]) => re.test(name))?.[1] ?? 'code';
 }
 
 /** Icons for the topic filters on the Projects page. */

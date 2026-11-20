@@ -3,7 +3,7 @@ import { CertCard } from '@/components/CertCard';
 import { IconTile } from '@/components/icons';
 import { Seo } from '@/components/Seo';
 import { graph, personLd } from '@/lib/jsonld';
-import { CoreSkills, EducationEntry, StackChips } from '@/components/Parts';
+import { CoreSkills, EducationEntry, SkillChips } from '@/components/Parts';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -99,7 +99,7 @@ export default function About() {
           {filteredSkills.map((g) => (
             <div key={g.group.en}>
               <h3 className={cn(eyebrow, 'mb-2')}>{l(g.group)}</h3>
-              <StackChips items={g.items} />
+              <SkillChips items={g.items} />
             </div>
           ))}
         </div>

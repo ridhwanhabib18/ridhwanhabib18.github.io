@@ -3,7 +3,8 @@ import { Link } from '@/components/TransitionLink';
 import { ArrowRight, ExternalLink } from 'lucide-react';
 import { useI18n } from '@/i18n';
 import { profile } from '@/content/profile';
-import { AppIcon, IconTile, type IconName } from '@/components/icons';
+import { AppIcon, IconTile, skillIcon, type IconName } from '@/components/icons';
+import { BrandIcon, skillBrand } from '@/components/brand-skill-icons';
 import type { DiagramDef, Metric, Project } from '@/content/types';
 import type { PersonalProject } from '@/content/personal-projects';
 import { Badge } from '@/components/ui/badge';
@@ -68,6 +69,28 @@ export function StackChips({ items, className }: { items: string[]; className?: 
   );
 }
 
+/** The official logo of a technology when there is one, otherwise a generic icon chosen from its name. */
+function SkillGlyph({ name, className }: { name: string; className: string }) {
+  const brand = skillBrand(name);
+  return brand ? <BrandIcon icon={brand} className={className} /> : <AppIcon name={skillIcon(name)} className={cn(className, 'text-primary')} />;
+}
+
+/** Skills as pills with a small icon: a lift and a brighter border on hover (not with reduced motion), and the same rise-in as the other lists. */
+export function SkillChips({ items, className }: { items: string[]; className?: string }) {
+  return (
+    <ul className={cn('reveal-items flex flex-wrap gap-2', className)}>
+      {items.map((s) => (
+        <li key={s}>
+          <span className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-3 py-1.5 text-left font-mono text-xs transition-all duration-200 hover:scale-105 hover:border-primary/60 hover:bg-primary/10 motion-reduce:transition-none motion-reduce:hover:scale-100">
+            <SkillGlyph name={s} className="size-3.5" />
+            {s}
+          </span>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
 /** The few technologies a reader most wants to see first: large chips above the full skill list. */
 export function CoreSkills({ className }: { className?: string }) {
   const { t } = useI18n();
@@ -76,7 +99,8 @@ export function CoreSkills({ className }: { className?: string }) {
       <h3 className="mb-2 text-xs font-semibold tracking-widest text-primary uppercase">{t('about.core')}</h3>
       <ul className="flex flex-wrap gap-2">
         {profile.coreSkills.map((s) => (
-          <li key={s} className="rounded-xl border border-primary/40 bg-primary/10 px-3.5 py-1.5 font-mono text-sm font-semibold">
+          <li key={s} className="inline-flex items-center gap-2 rounded-full border border-primary/40 bg-primary/10 px-4 py-2 font-mono text-sm font-semibold transition-all duration-200 hover:scale-105 hover:border-primary/70 hover:bg-primary/15 motion-reduce:transition-none motion-reduce:hover:scale-100">
+            <SkillGlyph name={s} className="size-4" />
             {s}
           </li>
         ))}

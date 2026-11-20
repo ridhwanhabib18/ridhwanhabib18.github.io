@@ -9,7 +9,7 @@ import { Seo } from '@/components/Seo';
 import { Stats } from '@/components/Stats';
 import { Reveal } from '@/components/Reveal';
 import { RotatingWord } from '@/components/RotatingWord';
-import { CoreSkills, MetricBadge, ProjectCard, Section, StackChips } from '@/components/Parts';
+import { CoreSkills, MetricBadge, ProjectCard, Section, SkillChips } from '@/components/Parts';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
@@ -233,7 +233,7 @@ export default function Home() {
           {profile.stack.map((g) => (
             <div key={g.group.en}>
               <h3 className={cn(eyebrow, 'mb-2')}>{l(g.group)}</h3>
-              <StackChips items={g.items.slice(0, 8)} />
+              <SkillChips items={g.items.slice(0, 8)} />
             </div>
           ))}
         </div>
