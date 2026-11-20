@@ -82,6 +82,7 @@ export function Layout() {
     ['/experience', t('nav.experience'), 'briefcase'],
     ['/about', t('nav.about'), 'user'],
     ['/resume', t('nav.resume'), 'file'],
+    ['/recommendations', t('nav.recommendations'), 'book'],
     ['/contact', t('nav.contact'), 'mail'],
   ];
 

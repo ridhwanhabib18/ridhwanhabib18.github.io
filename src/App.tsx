@@ -9,6 +9,8 @@ import Experience from './pages/Experience';
 import About from './pages/About';
 import Resume from './pages/Resume';
 import Contact from './pages/Contact';
+import Recommendations from './pages/Recommendations';
+import RecommendationDetail from './pages/RecommendationDetail';
 import NotFound from './pages/NotFound';
 
 function Shell({ lang }: { lang: Lang }) {
@@ -27,6 +29,8 @@ const pages = (
     <Route path="experience" element={<Experience />} />
     <Route path="about" element={<About />} />
     <Route path="resume" element={<Resume />} />
+    <Route path="recommendations" element={<Recommendations />} />
+    <Route path="recommendations/:slug" element={<RecommendationDetail />} />
     <Route path="contact" element={<Contact />} />
     <Route path="*" element={<NotFound />} />
   </>

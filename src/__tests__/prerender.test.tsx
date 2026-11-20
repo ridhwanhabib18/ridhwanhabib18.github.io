@@ -2,15 +2,19 @@ import { describe, expect, it } from 'vitest';
 import { render, routes } from '../entry-server';
 import { personalProjects } from '../content/personal-projects';
 import { projects } from '../content/projects';
+import { recommendationPages } from '../content/recommendations';
 
 // Renders every route; under a full parallel run this can take longer than the 5 s default.
 describe('pre-render entry', { timeout: 30_000 }, () => {
   it('lists every page in both languages', () => {
-    const pageCount = 6 + projects.length + personalProjects.length;
+    const pageCount = 7 + recommendationPages.length + projects.length + personalProjects.length;
     expect(routes).toHaveLength(pageCount * 2);
     expect(routes).toContain('/');
     expect(routes).toContain('/id');
     expect(routes).toContain('/id/work/production-planning-scheduling');
+    expect(routes).toContain('/recommendations');
+    expect(routes).toContain('/id/recommendations');
+    expect(routes).toContain('/recommendations/seven-books-career-restart');
   });
 
   it('provides unique head metadata for every route', () => {

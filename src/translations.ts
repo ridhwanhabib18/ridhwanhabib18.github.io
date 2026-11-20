@@ -1,6 +1,7 @@
 import { roles } from './content/experience';
 import { profile } from './content/profile';
 import { projects } from './content/projects';
+import { recommendations } from './content/recommendations';
 import { resumeRegions, resumeVariants } from './content/resume';
 import { en, id } from './i18n/strings';
 
@@ -39,5 +40,6 @@ export function translationRows(): TranslationRow[] {
   for (const g of resumeRegions) walk({ label: g.label, note: g.note }, 'Resume formats', g.key, out);
   for (const r of roles) walk(r.bullets.map((b) => ({ title: b.title, text: b.text })), 'Experience', r.company, out);
   for (const p of projects) walk({ title: p.title, summary: p.summary, role: p.role, metrics: p.metrics, sections: p.sections }, 'Case studies', p.slug, out);
+  for (const r of recommendations) walk({ title: r.title, summary: r.summary, takeaways: r.takeaways, stages: r.stages, people: r.people, more: r.more }, 'Recommendations', r.slug, out);
   return out;
 }

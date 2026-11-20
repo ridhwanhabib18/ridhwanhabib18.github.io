@@ -19,6 +19,9 @@ const ROUTES = [
   '/experience/',
   '/about/',
   '/resume/',
+  '/recommendations/',
+  '/recommendations/seven-books-career-restart/',
+  '/recommendations/best-linkedin-creators/',
   '/contact/',
   '/id/',
   '/id/work/',
@@ -29,6 +32,9 @@ const ROUTES = [
   '/id/experience/',
   '/id/about/',
   '/id/resume/',
+  '/id/recommendations/',
+  '/id/recommendations/seven-books-career-restart/',
+  '/id/recommendations/best-linkedin-creators/',
   '/id/contact/',
 ];
 
