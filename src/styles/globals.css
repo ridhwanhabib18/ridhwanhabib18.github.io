@@ -277,6 +277,38 @@
   opacity: 0.5;
 }
 
+/* Silhouette of Tugu Yogyakarta (the monument of Yogyakarta, the city of Universitas Gadjah Mada) standing on the bottom edge of the university card on About.
+   The same mechanism as .megamendung: a faint mask over the theme colour. Put .silhouette-tugu on a positioned card with overflow hidden, with positioned content. */
+.silhouette-tugu::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-color: var(--primary);
+  opacity: 0.16;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%2218%200%2064%20140%22%3E%3Cpath%20d%3D%22M50%200L52.3%2021.2H47.7ZM42%2021.2H58V24H42Z%20M44.5%2024H55.5V27L59%2029.5C59%2032%2058%2034%2057.5%2035.6H42.5C42%2034%2041%2032%2041%2029.5L44.5%2027ZM44.2%2035.6H55.8L64.5%2077H35.5ZM33.5%2077H66.5L66%2080.5L63.5%2087.2H36.5L34%2080.5ZM33.5%2077L32.4%2074.4L36.6%2077ZM66.5%2077L67.6%2074.4L63.4%2077ZM37%2087.2H63L64%20111.3H36ZM36%20111.3H64L67%20117H33ZM31%20117H69V129.7H31ZM25.6%20129.7H74.4V135.4H25.6ZM20%20135.4H80V140H20Z%22%2F%3E%3C%2Fsvg%3E") right 1.5rem bottom 0 / auto 88% no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%2218%200%2064%20140%22%3E%3Cpath%20d%3D%22M50%200L52.3%2021.2H47.7ZM42%2021.2H58V24H42Z%20M44.5%2024H55.5V27L59%2029.5C59%2032%2058%2034%2057.5%2035.6H42.5C42%2034%2041%2032%2041%2029.5L44.5%2027ZM44.2%2035.6H55.8L64.5%2077H35.5ZM33.5%2077H66.5L66%2080.5L63.5%2087.2H36.5L34%2080.5ZM33.5%2077L32.4%2074.4L36.6%2077ZM66.5%2077L67.6%2074.4L63.4%2077ZM37%2087.2H63L64%20111.3H36ZM36%20111.3H64L67%20117H33ZM31%20117H69V129.7H31ZM25.6%20129.7H74.4V135.4H25.6ZM20%20135.4H80V140H20Z%22%2F%3E%3C%2Fsvg%3E") right 1.5rem bottom 0 / auto 88% no-repeat;
+  transition: opacity 0.3s;
+}
+/* On a phone the card is stacked and the text runs the full width, so the monument is smaller and fainter there. */
+@media (max-width: 639px) {
+  .silhouette-tugu::before {
+    opacity: 0.1;
+    -webkit-mask-size: auto 52%;
+    mask-size: auto 52%;
+    -webkit-mask-position: right 0.75rem bottom 0;
+    mask-position: right 0.75rem bottom 0;
+  }
+}
+.silhouette-tugu:hover::before {
+  opacity: 0.26;
+}
+@media print {
+  .silhouette-tugu::before {
+    display: none;
+  }
+}
+
 /* Page intro (.stagger): the children of a page header rise in one after another when the page opens, with a clear
    gap between them so the title, then the lead, then the details read in order. Time based, so it also plays on a
    page that is already fully in view. Reduced motion and print show it still. */

@@ -318,8 +318,8 @@ export function EducationEntry({ variant = 'compact', className }: { variant?: '
 
   if (variant === 'card') {
     return (
-      <Card className={cn('lift', className)}>
-        <CardContent className="flex flex-col gap-4 sm:flex-row sm:items-start">
+      <Card className={cn('silhouette-tugu lift relative overflow-hidden', className)}>
+        <CardContent className="relative flex flex-col gap-4 sm:flex-row sm:items-start">
           <span className="self-center sm:self-start">{logo('size-28 p-2', 'size-24', 96)}</span>
           <div className="flex min-w-0 flex-1 flex-col items-start gap-2">
             <h3 className="text-lg leading-snug font-semibold">{e.school}</h3>

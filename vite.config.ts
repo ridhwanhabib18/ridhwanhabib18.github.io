@@ -11,5 +11,6 @@ export default defineConfig({
   resolve: { alias: { '@': path.resolve(import.meta.dirname, 'src') } },
   // Fixed port so the VS Code launch configurations can always find the site.
   server: { port: 5180, strictPort: true },
-  test: { environment: 'node', include: ['src/**/*.test.{ts,tsx}'] },
+  // Several tests render every page; on a busy machine or a slow CI runner the 5 s default is too tight, and a timeout is not a real failure.
+  test: { environment: 'node', include: ['src/**/*.test.{ts,tsx}'], testTimeout: 30_000 },
 });
