@@ -227,6 +227,56 @@
   }
 }
 
+/* Megamendung ("rain cloud", the batik of Cirebon): one large cloud of nested bands, cut off by the bottom-right corner of the card and
+   drawn in the theme blue, so it follows the light and dark theme. Put .megamendung on a positioned card with overflow hidden and make
+   its content positioned too (relative), so the content sits above the cloud. .megamendung-pair adds a mirrored cloud in the
+   bottom-left corner for a wide box; --mega-size sets the size of the cloud. The cloud is only a mask over --primary, so it never
+   changes the text colour, and it is kept faint enough not to lower the contrast of the text on top. */
+.megamendung {
+  --mega: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20108%2056%22%3E%3Cdefs%3E%3Cpath%20id%3D%22c%22%20d%3D%22M10%2054%20C-2%2054%20-2%2038%2012%2038%20C11%2024%2029%2019%2036%2028%20C40%2012%2062%2010%2068%2025%20C79%2018%2096%2025%2094%2040%20C108%2040%20112%2054%2098%2054%20Z%22%2F%3E%3C%2Fdefs%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%23000%22%20stroke-width%3D%223%22%20stroke-linejoin%3D%22round%22%3E%3Cuse%20href%3D%22%23c%22%20transform%3D%22translate(54%2054)%20scale(1)%20translate(-54%20-54)%22%20stroke-opacity%3D%221%22%2F%3E%3Cuse%20href%3D%22%23c%22%20transform%3D%22translate(54%2054)%20scale(0.82)%20translate(-54%20-54)%22%20stroke-opacity%3D%220.8%22%2F%3E%3Cuse%20href%3D%22%23c%22%20transform%3D%22translate(54%2054)%20scale(0.64)%20translate(-54%20-54)%22%20stroke-opacity%3D%220.6%22%2F%3E%3Cuse%20href%3D%22%23c%22%20transform%3D%22translate(54%2054)%20scale(0.46)%20translate(-54%20-54)%22%20stroke-opacity%3D%220.42%22%2F%3E%3Cuse%20href%3D%22%23c%22%20transform%3D%22translate(54%2054)%20scale(0.28)%20translate(-54%20-54)%22%20stroke-opacity%3D%220.26%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E");
+}
+.megamendung::before,
+.megamendung-pair::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-color: var(--primary);
+  opacity: 0.18;
+  -webkit-mask: var(--mega) right -1.75rem bottom -1.25rem / var(--mega-size, 9rem) auto no-repeat;
+  mask: var(--mega) right -1.75rem bottom -1.25rem / var(--mega-size, 9rem) auto no-repeat;
+  transition: opacity 0.3s;
+}
+.megamendung-pair::after {
+  transform: scaleX(-1);
+}
+.megamendung:hover::before,
+.megamendung-pair:hover::after {
+  opacity: 0.3;
+}
+@media print {
+  .megamendung::before,
+  .megamendung-pair::after {
+    display: none;
+  }
+}
+
+/* The "Let's talk" box uses a cluster of line-art clouds instead of the single cloud: a pointed lens with an inner contour and curls, arranged like
+   cloth. Same mechanism as .megamendung (a mask over --primary, mirrored into the other corner by .megamendung-pair); thin lines, so a little stronger. */
+.megamendung-garis {
+  --mega: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20420%20240%22%3E%3Cdefs%3E%3Cg%20id%3D%22u%22%20fill%3D%22none%22%20stroke%3D%22%23000%22%20stroke-linejoin%3D%22round%22%20stroke-linecap%3D%22round%22%3E%3Cpath%20d%3D%22M6%2058%20C34%2056%2052%2030%2096%2026%20C122%2024%20136%2016%20162%2020%20C186%2024%20204%2038%20218%2050%20C202%2060%20186%2062%20170%2062%20C160%2078%20132%2086%20118%2072%20C108%2088%2078%2092%2066%2076%20C52%2084%2026%2078%206%2058%20Z%22%2F%3E%3Cpath%20d%3D%22M6%2058%20C34%2056%2052%2030%2096%2026%20C122%2024%20136%2016%20162%2020%20C186%2024%20204%2038%20218%2050%20C202%2060%20186%2062%20170%2062%20C160%2078%20132%2086%20118%2072%20C108%2088%2078%2092%2066%2076%20C52%2084%2026%2078%206%2058%20Z%22%20transform%3D%22translate(112%2056)%20scale(.9)%20translate(-112%20-56)%22%2F%3E%3Cpath%20d%3D%22M64%2056A1%201%200%200%200%2065%2057A3%203%200%200%200%2068%2054A5%205%200%200%200%2063%2049A7%207%200%200%200%2056%2056A9%209%200%200%200%2065%2065A11%2011%200%200%200%2076%2054A13%2013%200%200%200%2063%2041A15%2015%200%200%200%2048%2056C48%2063%2045%2065.8%2045%2070%22%2F%3E%3Cpath%20d%3D%22M108%2046A1%201%200%200%201%20109%2045A3%203%200%200%201%20112%2048A5%205%200%200%201%20107%2053A7%207%200%200%201%20100%2046A9%209%200%200%201%20109%2037A11%2011%200%200%201%20120%2048A13%2013%200%200%201%20107%2061A15%2015%200%200%201%2092%2046C92%2039%2089%2036.2%2089%2032%22%2F%3E%3Cpath%20d%3D%22M150%2050A0.8%200.8%200%200%200%20150.8%2050.8A2.3%202.3%200%200%200%20153.1%2048.5A3.8%203.8%200%200%200%20149.3%2044.7A5.3%205.3%200%200%200%20144%2050A6.8%206.8%200%200%200%20150.8%2056.8C155.8%2056.8%20157.8%2058.8%20160.8%2058.8%22%2F%3E%3C%2Fg%3E%3C%2Fdefs%3E%3Cg%20transform%3D%22translate(128%206)%20scale(1.25%201.25)%22%20stroke-width%3D%223.20%22%3E%3Cuse%20href%3D%22%23u%22%2F%3E%3C%2Fg%3E%3Cg%20transform%3D%22translate(418%20128)%20scale(-0.9%200.9)%22%20stroke-width%3D%224.44%22%3E%3Cuse%20href%3D%22%23u%22%2F%3E%3C%2Fg%3E%3Cg%20transform%3D%22translate(40%20150)%20scale(0.7%200.7)%22%20stroke-width%3D%225.71%22%3E%3Cuse%20href%3D%22%23u%22%2F%3E%3C%2Fg%3E%3Cg%20transform%3D%22translate(300%20176)%20scale(0.75%200.75)%22%20stroke-width%3D%225.33%22%3E%3Cuse%20href%3D%22%23u%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E");
+}
+.megamendung-garis::before,
+.megamendung-garis.megamendung-pair::after {
+  opacity: 0.36;
+  -webkit-mask-position: right -1rem bottom -0.75rem;
+  mask-position: right -1rem bottom -0.75rem;
+}
+.megamendung-garis:hover::before,
+.megamendung-garis.megamendung-pair:hover::after {
+  opacity: 0.5;
+}
+
 /* Page intro (.stagger): the children of a page header rise in one after another when the page opens, with a clear
    gap between them so the title, then the lead, then the details read in order. Time based, so it also plays on a
    page that is already fully in view. Reduced motion and print show it still. */

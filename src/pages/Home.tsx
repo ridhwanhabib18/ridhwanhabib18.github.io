@@ -241,7 +241,7 @@ export default function Home() {
 
       <section aria-labelledby="cta-h" className="py-12 sm:py-16">
         <div className={container}>
-        <div className="relative flex flex-col items-center overflow-hidden rounded-3xl border bg-card/60 px-6 py-12 text-center sm:py-14">
+        <div className="megamendung megamendung-garis megamendung-pair relative flex flex-col items-center overflow-hidden rounded-3xl border bg-card/60 px-6 py-12 text-center [--mega-size:12rem] sm:py-14 sm:[--mega-size:19rem] lg:[--mega-size:27rem]">
           <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-[radial-gradient(40rem_16rem_at_50%_0%,var(--glow),transparent_75%)]" />
           <div className="relative flex flex-col items-center">
           <h2 id="cta-h" className={cn(h2, 'flex items-center gap-3')}>

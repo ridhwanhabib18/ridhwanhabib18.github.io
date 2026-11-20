@@ -17,21 +17,22 @@ export function Stats({ className }: { className?: string }) {
     { icon: 'award', label: t('stat.certs'), value: String(profile.certifications.length) },
   ];
   return (
-    <ul className={cn('reveal-items grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4', className)}>
-      {stats.map((s) => (
-        <li key={s.label}>
-          <Card className="group relative h-full flex-col items-start gap-3 overflow-hidden px-4 py-4 transition-colors hover:border-primary/60 sm:flex-row sm:items-center sm:gap-4 sm:px-5">
-            <div aria-hidden="true" className="pointer-events-none absolute -top-8 right-0 size-24 rounded-full bg-[radial-gradient(closest-side,var(--glow),transparent)] opacity-60 transition-opacity group-hover:opacity-100" />
-            <IconTile name={s.icon} className="relative size-11 rounded-xl sm:size-12" />
-            <p className="relative flex min-w-0 flex-col break-words">
-              <strong className="text-gradient text-3xl leading-tight font-extrabold tabular-nums">
-                <CountUp text={s.value} />
-              </strong>
-              <span className="text-sm leading-snug text-muted-foreground">{s.label}</span>
-            </p>
-          </Card>
-        </li>
-      ))}
-    </ul>
+    <div className={cn('@container', className)}>
+      <ul className="reveal-items grid grid-cols-2 gap-3 @4xl:grid-cols-4 @4xl:gap-4">
+        {stats.map((s) => (
+          <li key={s.label} className="@container">
+            <Card className="megamendung group relative h-full flex-col items-start gap-3 overflow-hidden px-4 py-4 transition-colors hover:border-primary/60 @[16rem]:flex-row @[16rem]:items-center @[16rem]:gap-4 @[16rem]:px-5">
+              <IconTile name={s.icon} className="relative size-11 rounded-xl @[16rem]:size-12" />
+              <p className="relative flex min-w-0 flex-col">
+                <strong className="text-gradient text-3xl leading-tight font-extrabold tabular-nums">
+                  <CountUp text={s.value} />
+                </strong>
+                <span className="text-sm leading-snug text-muted-foreground">{s.label}</span>
+              </p>
+            </Card>
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 }

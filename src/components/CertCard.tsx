@@ -26,8 +26,8 @@ export function CertCard({ cert, compact = false }: { cert: Cert; compact?: bool
   if (compact) {
     const meta = [cert.level ? l(cert.level) : '', cert.issued && cert.expires ? `${t('cert.valid')} ${formatMonth(cert.issued, lang)} – ${formatMonth(cert.expires, lang)}` : ''].filter(Boolean).join(' · ');
     return (
-      <Card className="lift h-full py-3">
-        <CardContent className="flex items-center gap-4 px-4">
+      <Card className="megamendung lift relative h-full overflow-hidden py-3">
+        <CardContent className="relative flex items-center gap-4 px-4">
           {cert.image && (
             <span className="cert-badge block size-16 shrink-0" style={{ '--badge': `url(${import.meta.env.BASE_URL}${cert.image})` } as CSSProperties}>
               <img src={`${import.meta.env.BASE_URL}${cert.image}`} alt={`${t('cert.badgeOf')} ${cert.name}`} width={64} height={64} loading="lazy" decoding="async" className="size-16" />
@@ -46,8 +46,8 @@ export function CertCard({ cert, compact = false }: { cert: Cert; compact?: bool
     );
   }
   return (
-    <Card className="lift h-full">
-      <CardContent className="flex h-full flex-col gap-4 sm:flex-row sm:items-start">
+    <Card className="megamendung lift relative h-full overflow-hidden">
+      <CardContent className="relative flex h-full flex-col gap-4 sm:flex-row sm:items-start">
         {cert.image && (
           <span className="cert-badge block size-28 shrink-0 self-center sm:self-start" style={{ '--badge': `url(${import.meta.env.BASE_URL}${cert.image})` } as CSSProperties}>
             <img src={`${import.meta.env.BASE_URL}${cert.image}`} alt={`${t('cert.badgeOf')} ${cert.name}`} width={112} height={112} loading="lazy" decoding="async" className="size-28" />
