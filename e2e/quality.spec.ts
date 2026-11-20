@@ -397,7 +397,7 @@ test.describe('the Projects page', () => {
 
   test('the SchoMans page says the code is private and lists the stack by layer', async ({ page }) => {
     await page.goto('/work/schomans/');
-    await expect(page.getByText('The source code is in a private repository and is available on request.')).toBeVisible();
+    await expect(page.getByText('Source code is private, available on request.')).toBeVisible();
     await expect(page.locator('a[href*="github.com/ridhwanhabib18/schomans"]')).toHaveCount(0);
     await expect(page.getByRole('heading', { level: 3, name: 'Testing' })).toBeVisible();
   });
