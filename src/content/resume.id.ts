@@ -54,6 +54,14 @@ export const idTranslations: Record<string, string> = {
     "membangun CI/CD GitHub Actions (tes PR, GitVersion, deploy IIS dengan backup dan migrasi EF), tes integrasi API dan database, serta melakukan reverse-engineering PRD, ERD, dan ADR untuk sistem yang sudah ada",
   "Implemented and tested RS-232 and RS-485 communication modules on embedded boards using Arduino, C and C++":
     "Mengimplementasikan dan menguji modul komunikasi RS-232 dan RS-485 pada board embedded dengan Arduino, C, dan C++",
+  "Designed the electronics of competition robots: schematic diagrams, PCB layout and hardware assembly":
+    "Merancang elektronik robot kompetisi: diagram skematik, tata letak PCB, dan perakitan perangkat keras",
+  "Developed firmware in C++ on Arduino and STM32 boards and implemented PID control":
+    "Mengembangkan firmware C++ pada board Arduino dan STM32 dan mengimplementasikan kontrol PID",
+  "Worked with OpenCV for computer vision and ROS for robot software":
+    "Bekerja dengan OpenCV untuk computer vision dan ROS untuk perangkat lunak robot",
+  "Took part twice in Kontes Robot Indonesia (KRI), the national robotics contest":
+    "Dua kali mengikuti Kontes Robot Indonesia (KRI), kontes robotika nasional",
   "Programming & Backend":
     "Pemrograman & Backend",
   "Frontend":

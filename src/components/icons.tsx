@@ -169,7 +169,7 @@ const skillRules: [RegExp, IconName][] = [
   [/xunit|vitest|playwright|testcontainers|testing|\buat\b/i, 'flask'],
   [/winforms|wpf|clickonce|desktop/i, 'monitor'],
   [/report|scottplot|excel|recharts|chart/i, 'chart'],
-  [/arduino|embedded|\bpid\b|serial|max6675|c\/c\+\+/i, 'cpu'],
+  [/arduino|embedded|\bpid\b|serial|max6675|c\/c\+\+|stm32|pcb|opencv|\bros\b/i, 'cpu'],
   [/\brpa\b|automation/i, 'zap'],
   [/architecture|system design|\badrs?\b|\bprds?\b|\bsdlc\b|agile|waterfall|requirements|business case|rest api|openapi/i, 'workflow'],
   [/react|angular|vue|tailwind|shadcn|bootstrap|razor|html|css|vite|zustand|tanstack|rxjs|router|i18n|jquery|ajax|axios|orval/i, 'layers'],

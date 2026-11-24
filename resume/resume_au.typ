@@ -88,9 +88,15 @@
   location: "Bandung, Indonesia",
   dates: dates-helper(start-date: "Jan 2021", end-date: "Feb 2021"),
 )
-- Implemented and tested RS-232 and RS-485 communication modules on embedded development boards
-- Developed embedded programs using Arduino, C and C++
-- Assisted in hardware–software integration and system validation
+- Implemented and tested RS-232 and RS-485 communication modules on embedded boards (Arduino, C, C++)
+
+#work(
+  title: "Robotics Engineer",
+  company: "Gadjah Mada Robotics Team (GMRT)",
+  location: "Yogyakarta, Indonesia",
+  dates: dates-helper(start-date: "Oct 2019", end-date: "Feb 2022"),
+)
+- Robot electronics and PCB design, C++ firmware (STM32, PID), OpenCV and ROS; competed twice in the KRI robot contest
 
 == Personal Projects
 
@@ -117,15 +123,12 @@
 - *Architecture & Delivery:* System design, N-layered Architecture, Clean Architecture, Vertical Slice Architecture, REST APIs, SDLC, Agile, Waterfall, Requirements Gathering, Business Case and ROI, PRDs, ADRs, UAT
 - *DevOps & Testing:* Git, GitHub Actions (CI/CD), GitVersion, IIS, Docker, Docker Compose, Caddy, Linux, xUnit, Testcontainers, Vitest, Playwright, integration testing, code review
 - *Desktop & Reporting:* WinForms, ClickOnce, WPF (MVVM, WPF-UI, CommunityToolkit.Mvvm), ScottPlot, ExcelDataReader, Telerik Reporting, SQL Server Reporting Services, Robotic Process Automation (RPA)
-- *Additional Technical Skills:* Vue.js, PHP, Laravel, Arduino, C/C++, embedded firmware, PID control, serial communication (USB, RS-232, RS-485), MAX6675
+- *Additional Technical Skills:* Vue.js, PHP, Laravel, Arduino, C/C++, embedded firmware, PID control, PCB design, STM32, OpenCV, ROS, serial communication (USB, RS-232, RS-485), MAX6675
 
 == Certifications
 
-- *AWS Certified Cloud Practitioner (CLF-C02)*, Amazon Web Services \
-  #link("https://www.credly.com/badges/bc1ed2db-21b9-462e-b08a-b3e727911062")[Verify credential]
-
-- *AWS Certified AI Practitioner (AIF-C01)*, Amazon Web Services \
-  #link("https://www.credly.com/badges/995a969c-1ada-49e5-84de-53b483dca02f")[Verify credential]
+- *AWS Certified Cloud Practitioner (CLF-C02)*, Amazon Web Services, #link("https://www.credly.com/badges/bc1ed2db-21b9-462e-b08a-b3e727911062")[verify]
+- *AWS Certified AI Practitioner (AIF-C01)*, Amazon Web Services, #link("https://www.credly.com/badges/995a969c-1ada-49e5-84de-53b483dca02f")[verify]
 
 == Languages
 

@@ -76,6 +76,7 @@ describe('case studies stay consistent with the resume source', () => {
   it('lists only skills from the resume source in the role tech stack', () => {
     const skills = resumeData.skills.flatMap((s) => s.items).join(' | ');
     for (const r of roles) {
+      if (r.id === 'bangkit') continue; // site-only entry, deliberately not in the resume source
       const source = resumeData.experience.find((e) => e.company === r.company)!;
       const evidence = `${skills} | ${source.bullets.map((b) => b.text).join(' | ')}`;
       for (const item of r.stack.filter((t) => t.length > 1)) expect(mentions(evidence, item), `${r.company}: "${item}" is not in the resume skills or bullets`).toBe(true);

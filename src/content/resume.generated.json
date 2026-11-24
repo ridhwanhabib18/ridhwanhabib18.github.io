@@ -63,6 +63,27 @@
           "text": "Implemented and tested RS-232 and RS-485 communication modules on embedded boards using Arduino, C and C++"
         }
       ]
+    },
+    {
+      "title": "Robotics Engineer",
+      "company": "Gadjah Mada Robotics Team (GMRT)",
+      "location": "Yogyakarta, Indonesia",
+      "start": "Oct 2019",
+      "end": "Feb 2022",
+      "bullets": [
+        {
+          "text": "Designed the electronics of competition robots: schematic diagrams, PCB layout and hardware assembly"
+        },
+        {
+          "text": "Developed firmware in C++ on Arduino and STM32 boards and implemented PID control"
+        },
+        {
+          "text": "Worked with OpenCV for computer vision and ROS for robot software"
+        },
+        {
+          "text": "Took part twice in Kontes Robot Indonesia (KRI), the national robotics contest"
+        }
+      ]
     }
   ],
   "education": [
@@ -202,6 +223,11 @@
         "C/C++",
         "embedded firmware",
         "PID control",
+        "electronic design",
+        "schematic and PCB design",
+        "STM32",
+        "OpenCV",
+        "ROS",
         "serial communication (USB, RS-232, RS-485)",
         "MAX6675"
       ]

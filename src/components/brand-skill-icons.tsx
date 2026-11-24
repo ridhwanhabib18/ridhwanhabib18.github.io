@@ -22,6 +22,9 @@ import {
   siMinio,
   siOllama,
   siOpenapiinitiative,
+  siOpencv,
+  siRos,
+  siStmicroelectronics,
   siPhp,
   siPostgresql,
   siPython,
@@ -80,6 +83,9 @@ const brandRules: [RegExp, SimpleIcon][] = [
   [/^php/i, siPhp],
   [/^laravel/i, siLaravel],
   [/^arduino/i, siArduino],
+  [/^opencv/i, siOpencv],
+  [/^ros$/i, siRos],
+  [/^stm32/i, siStmicroelectronics],
   [/^openapi/i, siOpenapiinitiative],
 ];
 

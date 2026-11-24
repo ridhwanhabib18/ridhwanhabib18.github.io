@@ -84,6 +84,17 @@
 )
 - Implemented and tested RS-232 and RS-485 communication modules on embedded boards using Arduino, C and C++
 
+#work(
+  title: "Robotics Engineer",
+  company: "Gadjah Mada Robotics Team (GMRT)",
+  location: "Yogyakarta, Indonesia",
+  dates: dates-helper(start-date: "Oct 2019", end-date: "Feb 2022"),
+)
+- Designed the electronics of competition robots: schematic diagrams, PCB layout and hardware assembly
+- Developed firmware in C++ on Arduino and STM32 boards and implemented PID control
+- Worked with OpenCV for computer vision and ROS for robot software
+- Took part twice in Kontes Robot Indonesia (KRI), the national robotics contest
+
 == Personal Projects
 
 - *SchoMans, School Management System (2026):* system architect, system designer and author (assisted by Claude) of an end-to-end school platform for 6 roles: real-time QR attendance (SignalR), grading, assignments, admissions, announcements, approval workflows, PDF report cards and AI features with human review (.NET 10, Clean Architecture, SQL Server, Keycloak, Hangfire, React 19, TypeScript). Unit, integration and Playwright end-to-end tests with test evidence for each phase; demo and documentation at #link("https://ridhwanhabib18.github.io/work/schomans/")[ridhwanhabib18.github.io/work/schomans]
@@ -107,7 +118,7 @@
 - *Architecture & Delivery:* System design, N-layered Architecture, Clean Architecture, Vertical Slice Architecture, REST APIs, SDLC, Agile, Waterfall, Requirements Gathering, Business Case and ROI, PRDs, ADRs, UAT
 - *DevOps & Quality:* Git, GitHub Actions (CI/CD), GitVersion, IIS, Docker, Docker Compose, Caddy, Linux, xUnit, Testcontainers, Vitest, Playwright, integration testing, code review
 - *Desktop, Reporting & Automation:* WinForms, ClickOnce, WPF (MVVM, WPF-UI, CommunityToolkit.Mvvm), ScottPlot, ExcelDataReader, Telerik Reporting, SQL Server Reporting Services, Robotic Process Automation (RPA)
-- *Additional Technologies:* Vue.js, PHP, Laravel, Arduino, C/C++, embedded firmware, PID control, serial communication (USB, RS-232, RS-485), MAX6675
+- *Additional Technologies:* Vue.js, PHP, Laravel, Arduino, C/C++, embedded firmware, PID control, electronic design, schematic and PCB design, STM32, OpenCV, ROS, serial communication (USB, RS-232, RS-485), MAX6675
 
 == Certifications
 
